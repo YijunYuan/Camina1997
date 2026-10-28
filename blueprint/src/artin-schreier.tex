@@ -251,7 +251,8 @@ every prescribed integer bound.
 \label{lem:artin-schreier-laurent-parameter}
 \uses{lem:artin-schreier-complete-residue,lem:artin-schreier-integer-topology}
 \source{camina1997:page-0005}
-\notready
+\lean{Camina1997.ArtinSchreier.powerSeriesEval, Camina1997.ArtinSchreier.weightedOrder_powerSeriesEval, Camina1997.ArtinSchreier.powerSeriesEval_uniformizerSeries, Camina1997.ArtinSchreier.powerSeriesEquiv, Camina1997.ArtinSchreier.laurentParameterEquiv, Camina1997.ArtinSchreier.weightedOrder_laurentParameterEquiv, Camina1997.ArtinSchreier.laurentParameterHomeomorph}
+\leanok
 For every $\pi\in L$ with $w(\pi)=1$, the map
 \[
  k((T))\longrightarrow L,\qquad
@@ -262,20 +263,16 @@ the order in $T$ with $w$.
 \end{lemma}
 
 \begin{proof}
-The sum converges by completeness, since
-$w(c_n\pi^n)\ge n$ and the negative-exponent part is finite.
-If the first nonzero coefficient has index $r$, the term
-$c_r\pi^r$ has valuation $r$ and the remaining tail has
-valuation at least $r+1$. The latter bound holds for the limit:
-if a convergent sequence has valuations at least $r+1$,
-then sufficiently small differences from its limit give the
-same bound on the limit. The valuation of the sum is thus $r$.
-This proves injectivity and the asserted preservation of order.
-Finite sums preserve addition and multiplication. Their tails
-tend to zero; for products of two Laurent series the omitted
-terms also tend to zero, since both series have lower support
-bounds. Passing to the limits proves that the map preserves
-addition and multiplication, and it plainly fixes $k$.
+First evaluate power series into the valuation ring. Completeness,
+the linear valuation topology, and $w(\pi^n)=n$ give the
+convergent evaluation homomorphism $k[[T]]\to\mathcal O_L$.
+It fixes constants and sends $T$ to $\pi$.
+For a nonzero power series write $f=T^r u$, where
+$r$ is its order and $u$ is a unit. A ring homomorphism sends
+units to units, and every unit of $\mathcal O_L$ has value
+zero: both it and its inverse have nonnegative value, whose
+sum is zero. Hence evaluation sends $f$ to an element of
+value $r$. In particular this evaluation is injective.
 
 To prove surjectivity, first take $x$ with $w(x)\ge0$.
 Put $x_0=x$. The residue-field assertion supplies a unique
@@ -285,11 +282,15 @@ $x_{n+1}=(x_n-c_n)/\pi$. Then $w(x_{n+1})\ge0$ and induction gives
  x=\sum_{j=0}^{N-1}c_j\pi^j+\pi^N x_N.
 \]
 The remainder has valuation at least $N$, so the partial sums
-converge to $x$. An arbitrary element of $L$ becomes integral
-after multiplication by a sufficiently large power of $\pi$,
-giving its Laurent expansion as well. Finally preservation of
-order makes both this map and its inverse continuous for the
-valuation topologies.
+converge to $x$. Thus evaluation is an isomorphism $k[[T]]\simeq\mathcal O_L$.
+The fraction fields of these rings are respectively $k((T))$
+and $L$, so localization extends it to a $k$-algebra isomorphism
+between these fields. For a quotient $a/b$ of power series,
+additivity of both valuations gives preservation of order from
+the power-series case. This also identifies the extension with
+the displayed Laurent evaluation. Finally preservation of order
+makes both this map and its inverse uniformly continuous for
+the valuation topologies.
 \end{proof}
 
 \begin{lemma}[Depth of an Artin--Schreier translation]

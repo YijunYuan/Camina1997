@@ -8,11 +8,14 @@ $(st)(x)=s(t(x))$.
 
 \begin{lemma}[Linear independence of distinct field homomorphisms]
 \label{lem:field-hom-linear-independence}
-\notready
-Let $F,E$ be fields and let $\varphi_1,\ldots,\varphi_r:F\to E$
-be distinct field homomorphisms. If $a_1,\ldots,a_r\in E$ satisfy
+\lean{Camina1997.Witt.linearIndependent_smul}
+\leanok
+Let a group $G$ act faithfully on a field $L$ by field
+automorphisms, and let $\varphi_1,\ldots,\varphi_r:L\to L$
+be the maps of distinct elements of $G$.
+If $a_1,\ldots,a_r\in L$ satisfy
 \[
- \sum_{i=1}^r a_i\varphi_i(x)=0\qquad\text{for every }x\in F,
+ \sum_{i=1}^r a_i\varphi_i(x)=0\qquad\text{for every }x\in L,
 \]
 then all the $a_i$ are zero.
 \end{lemma}
@@ -32,20 +35,21 @@ at $x$ from the relation at $bx$. Multiplicativity gives
 \]
 The coefficient at $i_0$ is now zero, while the coefficient at
 $j$ is nonzero, because it is a product of two nonzero elements
-of the field $E$. No previously zero coefficient becomes nonzero.
+of the field $L$. No previously zero coefficient becomes nonzero.
 This contradicts minimality of the chosen support.
 \end{proof}
 
 \begin{lemma}[An element of Galois trace one]
 \label{lem:galois-trace-one}
 \uses{lem:field-hom-linear-independence}
-\notready
-Let $L/K$ be a finite Galois extension, with
-$G=\operatorname{Gal}(L/K)$. There exists $\alpha\in L$ with
+\lean{Camina1997.Witt.exists_sum_smul_eq_one}
+\leanok
+Let a finite group $G$ act faithfully on a field $L$ by field
+automorphisms. There exists $\alpha\in L$ with
 \[
  \sum_{s\in G}s(\alpha)=1.
 \]
-Thus the Galois trace $\operatorname{Tr}_{L/K}(x)=\sum_{s\in G}s(x)$
+In particular, for a finite Galois extension $L/K$ and its Galois group, the Galois trace $\operatorname{Tr}_{L/K}(x)=\sum_{s\in G}s(x)$
 takes the value one, in arbitrary characteristic.
 \end{lemma}
 
@@ -79,7 +83,8 @@ through this inclusion into $L$.
 \begin{lemma}[Solving the additive two-cocycle equation]
 \label{lem:witt-two-cocycle-solution}
 \source{camina1997:page-0003}
-\notready
+\lean{Camina1997.Witt.twoCocycleSolution_spec, Camina1997.Witt.twoCocycleSolution_one}
+\leanok
 Let $c:G\times G\to\mathbf F_p$ be a normalized two-cocycle,
 meaning that $c(1,s)=c(s,1)=0$ and
 \[
@@ -119,7 +124,8 @@ $\alpha$ has trace one.
 
 \begin{lemma}[Solving an additive one-cocycle equation]
 \label{lem:witt-one-cocycle-solution}
-\notready
+\lean{Camina1997.Witt.oneCocycleSolution_spec}
+\leanok
 Let $\eta:G\to L$ satisfy
 \[
  \eta_{st}=\eta_s+s(\eta_t)\qquad(s,t\in G).
@@ -153,7 +159,8 @@ Subtracting $\gamma$ gives the assertion.
 \label{lem:witt-artin-schreier-cocycle}
 \uses{lem:witt-two-cocycle-solution,lem:witt-one-cocycle-solution}
 \source{camina1997:page-0003,camina1997:page-0004}
-\notready
+\lean{Camina1997.Witt.pow_sub_isOneCocycle_of_twoCocycle, Camina1997.Witt.oneCocycleSolution_spec}
+\leanok
 For the normalized two-cocycle $c$ and the elements $\delta_s$
 above, put $\wp(x)=x^p-x$ and $\eta_s=\wp(\delta_s)$.
 Then $\eta_{st}=\eta_s+s(\eta_t)$, and the element
@@ -185,16 +192,18 @@ trace-one element $\alpha$ now proves the formula for $\gamma$.
 \label{thm:witt-additive-equations}
 \uses{lem:galois-trace-one,lem:witt-two-cocycle-solution,lem:witt-artin-schreier-cocycle}
 \source{camina1997:page-0003,camina1997:page-0004}
-\notready
-Let $L/K$ be a finite Galois extension of characteristic $p$ and
-let $c:\operatorname{Gal}(L/K)^2\to\mathbf F_p$ be a normalized
+\lean{Camina1997.Witt.exists_witt_equations}
+\leanok
+Let a finite group $G$ act faithfully on a field $L$ of
+characteristic $p$, and let $c:G^2\to\mathbf F_p$ be a normalized
 two-cocycle for the trivial action on $\mathbf F_p$.
+This includes the Galois action for any finite Galois extension.
 There are elements $\delta_s\in L$ and $\gamma\in L$ satisfying
 \[
  \delta_s+s(\delta_t)-\delta_{st}=c(s,t),\qquad
  s(\gamma)-\gamma=\delta_s^p-\delta_s
 \]
-for all $s,t\in\operatorname{Gal}(L/K)$, with $\delta_1=0$.
+for all $s,t\in G$, with $\delta_1=0$.
 \end{theorem}
 
 \begin{proof}
