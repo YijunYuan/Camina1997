@@ -1,0 +1,220 @@
+\section{Topological groups and closed embeddings}
+
+Fix a prime number $p$. All homomorphisms described as continuous are
+continuous for the stated group topologies. The definitions in this section
+make explicit the topological conventions used in
+\cite{Camina1997}.
+
+\begin{definition}[Pro-$p$ group]
+\label{def:pro-p-group}
+\notready
+A pro-$p$ group is a compact Hausdorff topological group $P$ with a
+neighbourhood basis at the identity consisting of open normal subgroups
+$N$ for which $[P:N]$ is a finite power of $p$.
+\end{definition}
+
+\begin{definition}[Countable base]
+\label{def:countably-based}
+\notready
+A topological group is countably based if its identity has a countable
+neighbourhood basis. Thus there are open identity neighbourhoods
+$U_1,U_2,\ldots$ such that every identity neighbourhood contains some
+$U_n$.
+\end{definition}
+
+\begin{definition}[Finite generation]
+\label{def:topologically-finitely-generated}
+\notready
+A topological group $P$ is topologically finitely generated when some
+finite subset $S\subseteq P$ generates a dense subgroup of $P$.
+\end{definition}
+
+\begin{definition}[Closed group embedding]
+\label{def:closed-group-embedding}
+\notready
+A closed group embedding $f:P\longrightarrow G$ is a group homomorphism
+which is a homeomorphism from $P$ onto its image with the subspace
+topology, and whose image is closed in $G$.
+\end{definition}
+
+\begin{lemma}[Compact source and Hausdorff target]
+\label{lem:compact-injection-closed-embedding}
+\uses{def:closed-group-embedding}
+\source{camina1997:page-0012}
+\notready
+Let $P$ be a compact topological group and $G$ a Hausdorff topological
+group. Every continuous injective homomorphism
+$f:P\longrightarrow G$ is a closed group embedding.
+\end{lemma}
+
+\begin{proof}
+First, a compact subset $K$ of a Hausdorff space is closed. Indeed, if
+$y\notin K$, separate $y$ and each $x\in K$ by disjoint open
+neighbourhoods $V_x$ and $W_x$, with $x\in V_x$ and $y\in W_x$.
+Finitely many $V_{x_1},\ldots,V_{x_r}$ cover $K$. Their corresponding
+intersection $W_{x_1}\cap\cdots\cap W_{x_r}$ is an open neighbourhood
+of $y$ disjoint from $K$. The empty compact set is closed as well.
+
+For every closed subset $C$ of $P$, compactness of $P$ implies compactness
+of $C$: add $P\setminus C$ to any open cover of $C$, then restrict a
+finite subcover of $P$. Continuity of $f$ implies that $f(C)$ is compact,
+because the inverse images of an open cover of $f(C)$ cover $C$.
+The preceding paragraph therefore shows that $f(C)$ is closed in $G$,
+and hence in $f(P)$. The map $P\longrightarrow f(P)$ is a continuous
+bijection by injectivity of $f$; the closed-set assertion just proved
+shows that its inverse is continuous. Taking $C=P$ also proves that
+$f(P)$ is closed in $G$. Finally, the image of a homomorphism is a
+subgroup, so all the requirements of a closed group embedding hold.
+\end{proof}
+
+This lemma states the compactness argument at the end of Camina's proof
+of Theorem~5 in a form independent of the Nottingham group; the proof
+above supplies the elementary topological details.
+
+\section{The Nottingham group and the universality target}
+
+Write $R=\mathbf F_p[[t]]$ and $\mathfrak m=tR$. Endow $R$ with its
+$\mathfrak m$-adic topology. A series is a unit precisely when its
+constant coefficient is nonzero: the coefficients of its inverse are
+determined successively by the equations for their product to be $1$.
+Consequently $\mathfrak m$ is the set of nonunits and is preserved by
+every ring automorphism of $R$.
+
+\begin{definition}[Normalized automorphisms and congruence neighbourhoods]
+\label{def:nottingham-group}
+\source{camina1997:page-0001,camina1997:page-0002}
+\notready
+Let $A$ be the group of continuous $\mathbf F_p$-algebra automorphisms
+of $R$, with multiplication given by composition. The Nottingham group
+is
+\[
+ J_p=\{\sigma\in A:\sigma(t)-t\in\mathfrak m^2\}.
+\]
+For $n\geq1$, put
+\[
+ J_{p,n}=\{\sigma\in J_p:\sigma(t)-t\in\mathfrak m^{n+1}\}.
+\]
+The congruence topology on $J_p$ is the topology whose neighbourhood
+basis at $\sigma\in J_p$ consists of the cosets $\sigma J_{p,n}$.
+\end{definition}
+
+This uses the normalized ring-automorphism description in the introduction
+of \cite{Camina1997}. Continuity places no extra restriction on ring
+automorphisms here: an automorphism preserves $\mathfrak m$, and therefore
+every power $\mathfrak m^n$, so it and its inverse are continuous for the
+$\mathfrak m$-adic topology. The action on $\mathfrak m/\mathfrak m^2$
+is the identity exactly when $\sigma(t)-t\in\mathfrak m^2$.
+Camina's Definition~1 also gives a Laurent-series field description.
+Using that description in place of the present ring description requires
+an extension-and-restriction equivalence of the automorphism groups,
+compatible with the congruence subgroups.
+
+\begin{lemma}[The congruence topology is Hausdorff]
+\label{lem:nottingham-hausdorff-group}
+\uses{def:nottingham-group}
+\notready
+The set $J_p$ is a subgroup of $A$. Each $J_{p,n}$ is a normal subgroup
+of $J_p$, these subgroups decrease with $n$, and their cosets define a
+Hausdorff topological group structure on $J_p$.
+\end{lemma}
+
+\begin{proof}
+Every element of $A$ preserves $\mathfrak m$, so $A$ acts linearly on
+$\mathfrak m/\mathfrak m^2$. This vector space has basis the class of
+$t$. The kernel of this action is therefore exactly $J_p$, proving
+that $J_p$ is a subgroup.
+
+For each $n$, reduction modulo $\mathfrak m^{n+1}$ gives an action of
+$J_p$ on $R/\mathfrak m^{n+1}$. Every element of this quotient is
+represented by a polynomial in $t$ of degree at most $n$, and the
+automorphisms fix $\mathbf F_p$. Thus an automorphism induces the
+identity on this quotient if and only if it fixes the class of $t$.
+The kernel of the action is exactly $J_{p,n}$, which proves normality.
+The inclusion $\mathfrak m^{n+2}\subseteq\mathfrak m^{n+1}$ proves
+$J_{p,n+1}\subseteq J_{p,n}$.
+
+The nested cosets form a basis: if two such cosets contain $\sigma$,
+then the coset $\sigma J_{p,k}$ with $k$ the larger of their indices
+lies in their intersection. Normality implies
+\[
+ (\sigma J_{p,n})(\tau J_{p,n})=\sigma\tau J_{p,n},
+ \qquad (\sigma J_{p,n})^{-1}=\sigma^{-1}J_{p,n}.
+\]
+These formulas prove continuity of multiplication and inversion for
+the resulting topology.
+
+If $\sigma$ belongs to every $J_{p,n}$, the quotient actions show that
+$\sigma(f)-f$ belongs to every $\mathfrak m^{n+1}$ for every $f\in R$.
+A series divisible by every power of $t$ has every coefficient zero,
+so $\sigma(f)=f$ for every $f$ and $\sigma$ is the identity.
+For distinct $\sigma,\tau$, choose $n$ such that
+$\sigma^{-1}\tau\notin J_{p,n}$. The two cosets
+$\sigma J_{p,n}$ and $\tau J_{p,n}$ are disjoint open neighbourhoods,
+which proves the Hausdorff property.
+\end{proof}
+
+\begin{definition}[Closed universality property]
+\label{def:closed-universality}
+\uses{def:pro-p-group,def:countably-based,def:closed-group-embedding,def:nottingham-group,lem:nottingham-hausdorff-group}
+\source{camina1997:page-0001,camina1997:page-0012}
+\notready
+For a topological group $G$, let $\mathcal U_p(G)$ denote the following
+property: for every countably based pro-$p$ group $P$, there exists a
+closed group embedding $P\longrightarrow G$.
+The universality assertion of Camina's Corollary~2 is
+$\mathcal U_p(J_p)$, for each prime $p$.
+\end{definition}
+
+This definition specifies the full countably based assertion. It does
+not assert that the property holds, and topological finite generation
+is not part of its hypothesis on $P$.
+
+\section{The conditional reduction}
+
+\begin{theorem}[Reduction through finitely generated pro-$p$ groups]
+\label{thm:countable-reduction}
+\uses{def:pro-p-group,def:countably-based,def:topologically-finitely-generated,def:closed-universality,lem:compact-injection-closed-embedding}
+\source{camina1997:page-0012}
+\notready
+Let $G$ be a Hausdorff topological group. Suppose that both of the
+following hypotheses hold:
+\begin{enumerate}
+\item Every topologically finitely generated pro-$p$ group $Q$ admits
+a continuous injective homomorphism $Q\longrightarrow G$.
+\item For every countably based pro-$p$ group $P$, there exist a
+topologically finitely generated pro-$p$ group $Q$ and a continuous
+injective homomorphism $P\longrightarrow Q$.
+\end{enumerate}
+Then $\mathcal U_p(G)$ holds.
+\end{theorem}
+
+\begin{proof}
+Let $P$ be a countably based pro-$p$ group. The second hypothesis
+provides a topologically finitely generated pro-$p$ group $Q$ and a
+continuous injective homomorphism $i:P\longrightarrow Q$. The first
+hypothesis then provides a continuous injective homomorphism
+$j:Q\longrightarrow G$. The composite $j\circ i$ is a homomorphism:
+for $x,y\in P$,
+\[
+ j(i(xy))=j(i(x)i(y))=j(i(x))j(i(y)).
+\]
+It is continuous as a composite of continuous maps, and injective
+because equality of its values first implies equality under $i$ by
+injectivity of $j$, and then equality in $P$ by injectivity of $i$.
+The group $P$ is compact by the definition of a pro-$p$ group, and $G$
+is Hausdorff by assumption. The compact-source lemma therefore makes
+$j\circ i$ a closed group embedding. As $P$ was arbitrary, this is
+$\mathcal U_p(G)$.
+\end{proof}
+
+For $G=J_p$, the first hypothesis is supplied by Camina's Theorem~5.
+Her Theorem~6, attributed to Lubotzky and Wilson, supplies a single
+two-generator pro-$p$ group containing all countably based pro-$p$
+groups, and hence is stronger than the second hypothesis above.
+The theorem just proved isolates the composition and closed-image
+argument in Corollary~2; it does not prove either of those two input
+theorems. In particular, the finite-group realization and depth-control
+arguments used to establish Theorem~5 are separate mathematical
+obligations. Continuity is an explicit hypothesis of both maps in the
+reduction; no assertion about automatic continuity of abstract
+homomorphisms is used here.
