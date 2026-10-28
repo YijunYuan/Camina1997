@@ -4,29 +4,24 @@ Formalization project for Rachel Camina, *Subgroups of the Nottingham Group*,
 Journal of Algebra **196** (1997), 101–113,
 [doi:10.1006/jabr.1997.7082](https://doi.org/10.1006/jabr.1997.7082).
 
-The goal is the introductory theorem, restated as Corollary 2 on printed
+This project proves the introductory theorem, restated as Corollary 2 on printed
 page 112: for each prime `p`, every countably based pro-`p` group admits a
 continuous injective homomorphism into the Nottingham group over `F_p`,
 which is a homeomorphism onto a closed subgroup.
 
 ## Current status
 
-The Nottingham group, congruence topology, compactness, finite quotients,
-depth, and Laurent-series automorphism correspondence are formalized.
-The cyclic Artin–Schreier quotient, its Galois action, complete weighted
-valuation, residue field, and topological Laurent coordinates are also proved.
-The construction now gives actual cyclic Nottingham subgroups at every positive
-prime-to-`p` depth. Unique reduced Artin–Schreier representatives and explicit
-trace-one solutions of Witt's equations are formalized, together with the
-semilinear automorphisms they induce on the concrete quotient.
-These units passed serialized kernel builds, standard-axiom audits, and
-independent honesty/source review.
+The full unconditional theorem is
+[`Camina1997.Nottingham.exists_closedEmbedding`](Camina1997/Main.lean).
+For every prime `p` and every pro-`p` group `G` with a countable neighborhood
+basis at the identity, it constructs a `ContinuousMonoidHom G (Nottingham p)`
+whose underlying map satisfies `Topology.IsClosedEmbedding`. This includes
+injectivity and the homeomorphism onto a closed subgroup. The target is the
+normalized power-series automorphism group with its congruence topology.
 
-The unconditional universality theorem remains **unproved**. Current work
-builds the action of a given central extension from Witt's equations and the
-Artin–Schreier quotient basis. The value-group index equals the cyclic extension degree.
-Finite-group realization, depth-preserving lifts, and both infinite-group
-embedding steps remain open in Lean.
+The configured build and the transitive axiom audit pass. The theorem and
+its producers use only `propext`, `Classical.choice`, and `Quot.sound`;
+there are no added mathematical axioms or `sorryAx` dependencies.
 
 - [Blueprint](blueprint/src/content.tex) and full roadmap: `CAMINA`.
 - Source library: [manifest](../references/manifest.yaml), including Camina
@@ -34,8 +29,7 @@ embedding steps remain open in Lean.
 - Camina vision transcriptions: all 13 PDF pages; printed page = PDF page + 100.
 - Lean: `leanprover/lean4:v4.35.0`.
 - Mathlib: `1e75e9dd53d483fa01eff9ac7d4ea0472ce9d1fa`, pinned in Lake and Horizon.
-- Completed task: `CAM-001`; continuing task: `CAM-MAIN`, covering the entire
-  theorem.
+- Horizon tasks: `CAM-001` (foundations) and `CAM-MAIN` (the entire theorem).
 
 ## Proof route
 
@@ -43,14 +37,30 @@ embedding steps remain open in Lean.
 2. Prove the Artin–Schreier/Witt finite realization and ramification results.
 3. Prove depth-preserving extension steps (Camina Theorem 4).
 4. Establish the finitely generated case (Theorem 5), including continuity.
-5. Establish the Lubotzky–Wilson theorem quoted as Theorem 6.
+5. Construct a finitely generated pro-`p` group containing the given countably
+   based group, using the Lubotzky–Wilson sparse wreath-product construction.
 6. Compose embeddings and verify the full Corollary 2 and its dependency cone.
 
-The blueprint supplies detailed proofs for the chosen Witt and
-Lubotzky–Wilson routes, with original-source references. Those arguments still
-require Lean implementations and complete dependency audits. The continuity
-and closedness of the final embeddings must be proved explicitly.
-No cited theorem is accepted as a new Lean axiom.
+All six steps are implemented. The blueprint supplies complete proofs with
+original-source references. The auxiliary Lubotzky–Wilson group is constructed
+for each input group; the stronger source statement giving one universal
+two-generator group is not needed for Camina's conclusion. Continuity and
+closedness are proved explicitly, and no cited theorem is accepted as a new
+Lean axiom.
+
+## Reproduce the verification
+
+From this project directory, with the pinned Lean toolchain and Lake
+dependencies available:
+
+```sh
+lake build
+lake env lean scripts/CheckAxioms.lean
+```
+
+The audit script prints the exact main theorem and the transitive axioms of
+the theorem and its main producers. Every axiom list contains only the three
+standard foundational axioms listed above.
 
 ## Working in Horizon
 
@@ -68,7 +78,7 @@ Run the kernel build from this project directory:
 horizon --root .. check --json
 ```
 
-The ongoing theorem task is managed by the user service
+The theorem task has been managed by the user service
 `camina-horizon-prover.service`. Check its status or stop it with:
 
 ```sh
