@@ -1,0 +1,281 @@
+\section{A proper central Frattini lifting step}
+
+We prove the cyclic-kernel case of the construction in
+\cite{Witt1936}, pp.~238--240, in the form used by
+\cite{Camina1997}, pp.~103--104. Witt treats a central elementary
+abelian kernel; Camina's remark (ii) permits successive kernels of
+order $p$. We use Camina's Frattini hypothesis and express the
+properness argument through maximal subgroups. The two additive
+equations are supplied by the explicit constructions above.
+
+\begin{lemma}[A Frattini subgroup has no proper supplement]
+\label{lem:frattini-no-proper-supplement}
+\notready
+Let $E$ be a finite group. Write $\Phi(E)$ for the intersection
+of its maximal proper subgroups. If $N\le\Phi(E)$ and $H\le E$
+satisfy $NH=E$, then $H=E$.
+\end{lemma}
+
+\begin{proof}
+Suppose $H$ is proper. The set of proper subgroups containing
+$H$ is nonempty and finite. A maximal member $M$ of this set
+is a maximal proper subgroup of $E$: any larger proper subgroup
+would still contain $H$ and contradict its choice.
+Then $N\le\Phi(E)\le M$ and $H\le M$, so $NH\subseteq M$.
+This contradicts $NH=E$ and $M\ne E$.
+\end{proof}
+
+Fix a prime $p$, a field $F$ of characteristic $p$, and a finite
+Galois extension $K/F$ with $G=\operatorname{Gal}(K/F)$.
+For the next four lemmas, let $E$ be a finite group and
+$q:E\to G$ a surjective homomorphism. Assume that
+$N=\ker q$ is central, has order $p$, and lies in $\Phi(E)$.
+Choose an isomorphism $\iota:(\mathbf F_p,+)\to N$, with
+its values also regarded as elements of $E$, and a section
+$u:G\to E$ of $q$ with $u_1=1$.
+The inclusion of $\mathbf F_p$ into $K$ is understood whenever
+prime-field values occur in a field equation. Group actions on
+fields are on the left, so $(st)(x)=s(t(x))$.
+
+\begin{lemma}[The factor set of a central section]
+\label{lem:central-extension-factor-set}
+\source{witt1936:page-0002,camina1997:page-0003}
+\notready
+There is a unique function $c:G\times G\to\mathbf F_p$ with
+\[
+ u_su_t=\iota(c(s,t))u_{st}.
+\]
+It is a normalized two-cocycle:
+$c(1,s)=c(s,1)=0$ and
+\[
+ c(s,t)+c(st,r)=c(t,r)+c(s,tr).
+\]
+Every element of $E$ has a unique expression $\iota(a)u_s$,
+and multiplication in these coordinates is
+\[
+ (\iota(a)u_s)(\iota(b)u_t)
+   =\iota(a+b+c(s,t))u_{st}.
+\]
+\end{lemma}
+
+\begin{proof}
+The element $u_su_tu_{st}^{-1}$ belongs to $\ker q=N$.
+Existence and uniqueness of $c(s,t)$ follow from bijectivity
+of $\iota$ onto $N$. Setting either argument equal to $1$
+and using $u_1=1$ gives normalization.
+Compute $(u_su_t)u_r$ and $u_s(u_tu_r)$ using the defining
+formula. Since $N$ is central, their respective expressions are
+\[
+ \iota(c(s,t)+c(st,r))u_{str},\qquad
+ \iota(c(t,r)+c(s,tr))u_{str}.
+\]
+Canceling $u_{str}$ and using injectivity of $\iota$ gives
+the two-cocycle identity.
+For $e\in E$, put $s=q(e)$. Then $eu_s^{-1}\in N$, giving
+$e=\iota(a)u_s$ for a unique $a$. Applying $q$ to any such
+expression recovers $s$, so both coordinates are unique.
+Finally centrality permits moving $\iota(b)$ past $u_s$,
+and the section formula gives the asserted multiplication.
+\end{proof}
+
+\begin{lemma}[The Frattini hypothesis makes the parameter nontrivial]
+\label{lem:witt-frattini-parameter-not-image}
+\uses{lem:frattini-no-proper-supplement,lem:central-extension-factor-set}
+\source{witt1936:page-0004,camina1997:page-0004}
+\notready
+Suppose $\delta_s\in K$ and $\gamma\in K$ satisfy
+\[
+ \delta_1=0,\qquad
+ \delta_s+s(\delta_t)-\delta_{st}=c(s,t),\qquad
+ s(\gamma)-\gamma=\delta_s^p-\delta_s.
+\]
+Then $\gamma\notin\wp(K)$, where $\wp(x)=x^p-x$.
+\end{lemma}
+
+\begin{proof}
+Suppose $\gamma=\wp(\beta)$ with $\beta\in K$.
+Put $a_s=\delta_s-(s(\beta)-\beta)$. Additivity of $\wp$
+and its compatibility with automorphisms give
+\[
+ \wp(a_s)=\wp(\delta_s)-(s(\gamma)-\gamma)=0.
+\]
+The roots of $X^p-X$ in $K$ are exactly $\mathbf F_p$:
+the $p$ prime-field elements are distinct roots of this
+degree-$p$ polynomial, so there can be no others.
+Thus each $a_s$ lies in $\mathbf F_p$ and is fixed by $G$.
+In particular $a_1=0$.
+Subtracting the identity
+\[
+ (s(\beta)-\beta)+s(t(\beta)-\beta)
+       -(st(\beta)-\beta)=0
+\]
+from the equation for $\delta$ gives
+$a_s+a_t-a_{st}=c(s,t)$.
+
+Define $v_s=\iota(-a_s)u_s$.
+The central-coordinate multiplication formula now gives
+\[
+ v_sv_t
+   =\iota(-a_s-a_t+c(s,t))u_{st}
+   =\iota(-a_{st})u_{st}=v_{st}.
+\]
+Also $v_1=1$ and $q(v_s)=s$, so $v$ is a group-homomorphic
+section of $q$. Its image $H$ is a subgroup of $E$.
+We have $NH=E$, since replacing $u_s$ by $v_s$ changes it
+by an element of $N$. The Frattini lemma forces $H=E$.
+On the other hand, $H\cap N=\{1\}$: if $v_s\in N$, then
+$s=q(v_s)=1$ and $v_s=v_1=1$.
+This contradicts $H=E$ and $|N|=p>1$.
+\end{proof}
+
+\begin{lemma}[The lifted action on the Artin--Schreier field]
+\label{lem:witt-lifted-automorphisms}
+\uses{lem:central-extension-factor-set,lem:witt-frattini-parameter-not-image,lem:artin-schreier-irreducible}
+\source{witt1936:page-0004,camina1997:page-0004}
+\notready
+For $\delta$ and $\gamma$ satisfying the equations of the
+preceding lemma, set
+\[
+ L=K[Y]/(Y^p-Y-\gamma)
+\]
+and let $\theta$ be the class of $Y$.
+Then $L$ is a field with $[L:K]=p$, and there is an injective
+homomorphism $\rho:E\to\operatorname{Aut}_F(L)$ given by
+\[
+ \rho(\iota(a)u_s)(x)=s(x)\quad(x\in K),\qquad
+ \rho(\iota(a)u_s)(\theta)=\theta+a+\delta_s.
+\]
+\end{lemma}
+
+\begin{proof}
+The preceding lemma gives $\gamma\notin\wp(K)$.
+The Artin--Schreier irreducibility lemma therefore applies to
+$Y^p-Y-\gamma$. Its quotient is a field: a nonzero residue
+class, represented by a polynomial of degree less than $p$,
+is relatively prime to the irreducible modulus, so a Bezout
+identity supplies its inverse. Monic division also gives the
+basis $1,\theta,\ldots,\theta^{p-1}$ over $K$ and degree $p$.
+
+For $a\in\mathbf F_p$ and $s\in G$, apply $s$ to polynomial
+coefficients and evaluate the variable at $\theta+a+\delta_s$.
+This defines a unital $F$-algebra map $K[Y]\to L$.
+The image of its modulus is zero, because
+\[
+ (\theta+a+\delta_s)^p-(\theta+a+\delta_s)
+   =\gamma+\wp(\delta_s)=s(\gamma).
+\]
+Thus it factors through an $F$-algebra map $\varphi_{a,s}:L\to L$
+with the displayed formulas. These formulas determine the map,
+since every element is a polynomial in $\theta$ with
+coefficients in $K$.
+
+On $K$, the composite $\varphi_{a,s}\varphi_{b,t}$ acts by $st$.
+On the root it acts by
+\[
+ \theta+a+b+\delta_s+s(\delta_t)
+   =\theta+a+b+c(s,t)+\delta_{st}.
+\]
+Consequently
+$\varphi_{a,s}\varphi_{b,t}
+ =\varphi_{a+b+c(s,t),st}$.
+Also $\varphi_{0,1}$ is the identity because $\delta_1=0$.
+The coordinate multiplication in $E$ shows that assigning
+$\varphi_{a,s}$ to $\iota(a)u_s$ respects multiplication and
+identity. In particular the element assigned to $e^{-1}$
+is a two-sided inverse of the element assigned to $e$.
+These maps are therefore automorphisms and define $\rho$.
+
+If $\rho(\iota(a)u_s)$ is the identity, restriction to $K$
+gives $s=1$. Its action on $\theta$ then gives
+$\theta+a=\theta$, so $a=0$. Thus $\rho$ has trivial kernel
+and is injective.
+\end{proof}
+
+\begin{lemma}[The lifted action is the full Galois group]
+\label{lem:witt-lift-full-galois-group}
+\uses{lem:witt-lifted-automorphisms}
+\source{witt1936:page-0004,camina1997:page-0004}
+\notready
+The field $L$ above is a finite Galois extension of $F$.
+The map $\rho$ is an isomorphism
+$E\simeq\operatorname{Gal}(L/F)$, and restriction to $K$
+under this isomorphism is exactly $q$.
+\end{lemma}
+
+\begin{proof}
+The extension $L/F$ is finite, since
+$[L:F]=[L:K][K:F]=p[K:F]$.
+It is separable: $K/F$ is separable, and the minimal polynomial
+$Y^p-Y-\gamma$ of $\theta$ over $K$ has derivative $-1$;
+separability is transitive in a finite tower.
+
+Choose an algebraic closure containing $L$ and let
+$j:L\to\overline F$ be any $F$-embedding.
+Normality of $K/F$ implies $j(K)=K$, so its restriction is
+some $s\in G$. The element $j(\theta)$ is a root of
+$Y^p-Y-s(\gamma)$. That polynomial has the $p$ distinct roots
+\[
+ \theta+\delta_s+a\qquad(a\in\mathbf F_p),
+\]
+because $\wp(\theta+\delta_s)=s(\gamma)$; these are all its
+roots by its degree. Hence $j(\theta)\in L$, and the
+polynomial basis shows $j(L)\subseteq L$.
+This proves normality of $L/F$. Explicitly, for $z\in L$
+and any root $z'$ of its minimal polynomial over $F$, the
+embedding $F(z)\to\overline F$ sending $z$ to $z'$ extends
+to $L$: adjoin a finite list of algebraic generators and at
+each step send the next generator to a root of its transported
+minimal polynomial in the algebraic closure. The resulting
+$F$-embedding sends $L$ into $L$ by the argument just given,
+so $z'\in L$. Thus every such minimal polynomial splits in
+$L$, the defining normality condition.
+
+Finally let $\tau\in\operatorname{Gal}(L/F)$. Its restriction
+to $K$ is some $s\in G$, and the same root calculation gives
+$\tau(\theta)=\theta+\delta_s+a$ for a unique
+$a\in\mathbf F_p$.
+Therefore $\tau$ and $\rho(\iota(a)u_s)$ agree on $K$
+and $\theta$, hence on all of $L$. This proves surjectivity;
+injectivity was proved in the preceding lemma.
+The displayed action on $K$ says
+$\rho(e)|_K=q(e)$ for every $e\in E$, as asserted.
+\end{proof}
+
+\begin{theorem}[Proper lifting across a central Frattini kernel of order $p$]
+\label{thm:witt-central-frattini-lift}
+\uses{lem:central-extension-factor-set,thm:witt-additive-equations,lem:witt-frattini-parameter-not-image,lem:witt-lifted-automorphisms,lem:witt-lift-full-galois-group}
+\source{witt1936:page-0003,witt1936:page-0004,camina1997:page-0003,camina1997:page-0004}
+\notready
+Let $F$ have characteristic $p$, let $K/F$ be finite Galois,
+and let $E$ be a finite $p$-group. Suppose
+\[
+ q:E\longrightarrow\operatorname{Gal}(K/F)
+\]
+is surjective and $N=\ker q$ has order $p$ with
+$N\le Z(E)\cap\Phi(E)$.
+There is a field extension $L/K$ of degree $p$ such that
+$L/F$ is Galois and an isomorphism
+\[
+ \rho:E\longrightarrow\operatorname{Gal}(L/F)
+ \quad\text{satisfying}\quad\rho(e)|_K=q(e).
+\]
+\end{theorem}
+
+\begin{proof}
+Choose a nonidentity element of $N$. Its order divides $p$
+and is not one, so it has order $p$ and generates $N$.
+Sending $a\in\mathbf F_p$ to the corresponding power of this
+generator gives an isomorphism $\iota:(\mathbf F_p,+)\to N$.
+Choose a representative $u_s$ of each fiber of $q$, taking
+$u_1=1$. The factor-set lemma supplies a normalized
+$\mathbf F_p$-valued two-cocycle $c$.
+The theorem on Witt's additive equations constructs
+$\delta_s,\gamma\in K$ satisfying the three required
+identities. The Frattini parameter lemma proves
+$\gamma\notin\wp(K)$.
+Form the actual quotient field
+$L=K[Y]/(Y^p-Y-\gamma)$ and the lifted automorphisms as above.
+The quotient has degree $p$ over $K$, and the full-Galois-group
+lemma gives the required isomorphism and its restriction
+identity.
+\end{proof}
