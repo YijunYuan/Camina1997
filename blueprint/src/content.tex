@@ -73,45 +73,200 @@ above supplies the elementary topological details.
 
 \section{The Nottingham group and the universality target}
 
-Write $R=\mathbf F_p[[t]]$ and $\mathfrak m=tR$. Endow $R$ with its
-$\mathfrak m$-adic topology. A series is a unit precisely when its
-constant coefficient is nonzero: the coefficients of its inverse are
-determined successively by the equations for their product to be $1$.
-Consequently $\mathfrak m$ is the set of nonunits and is preserved by
-every ring automorphism of $R$.
+Write $k=\mathbf F_p$, $R=k[[t]]$, and $\mathfrak m=tR$. More generally,
+the algebraic assertions below hold for any field $k$. Multiplication of
+automorphisms means $(\sigma\tau)(f)=\sigma(\tau(f))$.
+This is the ring-automorphism description in the introduction of
+\cite{Camina1997}; the Laurent-series description on the next page is
+related to it by the extension-and-restriction statement below.
 
-\begin{definition}[Normalized automorphisms and congruence neighbourhoods]
-\label{def:nottingham-group}
+\begin{lemma}[Constant coefficients and continuity]
+\label{lem:power-series-aut-continuity}
 \source{camina1997:page-0001,camina1997:page-0002}
 \notready
-Let $A$ be the group of continuous $\mathbf F_p$-algebra automorphisms
-of $R$, with multiplication given by composition. The Nottingham group
-is
+Every $k$-algebra automorphism $\sigma$ of $R$ satisfies
+$[t^0]\sigma(t)=0$ and $[t^0]\sigma(f)=[t^0]f$ for every $f\in R$.
+It and its inverse are continuous for the $\mathfrak m$-adic topology.
+\end{lemma}
+
+\begin{proof}
+A series $f=\sum a_it^i$ is a unit exactly when $a_0\ne0$.
+Necessity follows by taking constant coefficients of an inverse equation.
+For sufficiency define $b_0=a_0^{-1}$ and, for $n>0$, define
+$b_n=-a_0^{-1}\sum_{i=1}^n a_i b_{n-i}$. The product of $f$ with
+$\sum b_nt^n$ has constant coefficient $1$ and all other coefficients
+zero, and commutativity gives a two-sided inverse.
+Thus $\mathfrak m$ is precisely the set of nonunits. Automorphisms and
+their inverses preserve units, so they preserve $\mathfrak m$; in
+particular $[t^0]\sigma(t)=0$.
+Write $f=tg+a_0$, where $g=\sum_{i\ge0}a_{i+1}t^i$.
+Applying $\sigma$ and taking constant coefficients gives
+$[t^0]\sigma(f)=[t^0]\sigma(t)[t^0]\sigma(g)+a_0=a_0$.
+
+The preservation of $\mathfrak m$ implies preservation of every
+$\mathfrak m^n$, since an automorphism preserves sums and products.
+A basic neighbourhood of $\sigma(f)$ is
+$\sigma(f)+\mathfrak m^n$, and its inverse image is
+$f+\mathfrak m^n$. Hence $\sigma$ is continuous. Applying the same
+argument to $\sigma^{-1}$ proves continuity of the inverse.
+\end{proof}
+
+\begin{lemma}[Linear coefficient of an automorphism]
+\label{lem:power-series-aut-linear-coeff}
+\uses{lem:power-series-aut-continuity}
+\source{camina1997:page-0002}
+\notready
+For every $k$-algebra automorphism $\sigma$ of $R$ and every $f\in R$,
 \[
- J_p=\{\sigma\in A:\sigma(t)-t\in\mathfrak m^2\}.
+ [t]\sigma(f)=[t]\sigma(t)\,[t]f.
 \]
-For $n\geq1$, put
+\end{lemma}
+
+\begin{proof}
+Write $f=tg+a_0$ as above, so $[t^0]g=[t]f$.
+The linear coefficient of a product $uv$ is
+$[t]u[t^0]v+[t^0]u[t]v$. Since $\sigma$ fixes constants,
+$\sigma(f)=\sigma(t)\sigma(g)+a_0$. The preceding lemma gives
+$[t^0]\sigma(t)=0$ and $[t^0]\sigma(g)=[t^0]g$.
+Substitution in the product formula proves the assertion.
+\end{proof}
+
+\begin{definition}[Normalization]
+\label{def:normalized-aut}
+\source{camina1997:page-0001,camina1997:page-0002}
+\notready
+A $k$-algebra automorphism $\sigma$ of $R$ is normalized if
+$[t]\sigma(t)=1$.
+\end{definition}
+
+\begin{lemma}[Equivalent normalization conditions]
+\label{lem:normalization-iff}
+\uses{def:normalized-aut,lem:power-series-aut-linear-coeff}
+\source{camina1997:page-0001,camina1997:page-0002}
+\notready
+For a $k$-algebra automorphism $\sigma$ of $R$, the following conditions
+are equivalent:
+\begin{enumerate}
+\item $\sigma$ is normalized;
+\item $\sigma(t)-t\in\mathfrak m^2$;
+\item $\sigma(f)-f\in\mathfrak m^2$ for every $f\in R$;
+\item $\sigma(f)-f\in\mathfrak m^2$ for every $f\in\mathfrak m$.
+\end{enumerate}
+In particular normalization means that the induced action on
+$\mathfrak m/\mathfrak m^2$ is the identity.
+\end{lemma}
+
+\begin{proof}
+A series is in $t^2R$ exactly when its constant and linear
+coefficients vanish: dividing the tail by $t^2$ proves sufficiency,
+and the product formula proves necessity.
+The constant coefficient of $\sigma(t)-t$ is zero, and its linear
+coefficient is $[t]\sigma(t)-1$. This proves (1)$\Leftrightarrow$(2).
+For arbitrary $f$, constant coefficients of $\sigma(f)-f$ vanish.
+Under (1), the linear-coefficient formula also gives
+$[t](\sigma(f)-f)=(1-1)[t]f=0$, proving (3).
+Condition (3) implies (4) by restriction, and (4) implies (2) by
+setting $f=t$. Preservation of $\mathfrak m$ and $\mathfrak m^2$
+makes the quotient action well-defined, and (4) says exactly that
+this action is the identity.
+\end{proof}
+
+\begin{lemma}[Closure of normalization]
+\label{lem:normalized-aut-closure}
+\uses{def:normalized-aut,lem:power-series-aut-linear-coeff}
+\source{camina1997:page-0002}
+\notready
+The identity is normalized. The composite of two normalized
+$k$-algebra automorphisms is normalized, and the inverse of a normalized
+$k$-algebra automorphism is normalized.
+\end{lemma}
+
+\begin{proof}
+The identity sends $t$ to $t$, whose linear coefficient is $1$.
+The linear-coefficient formula gives
+$[t](\sigma\tau)(t)=[t]\sigma(t)[t]\tau(t)=1$ for normalized
+$\sigma,\tau$. Finally apply that formula to $\sigma$ and
+$f=\sigma^{-1}(t)$:
+$1=[t]t=[t]\sigma(t)[t]\sigma^{-1}(t)$.
+If $\sigma$ is normalized this equality reads
+$1=[t]\sigma^{-1}(t)$, proving closure under inverse.
+\end{proof}
+
+\begin{definition}[The Nottingham group]
+\label{def:nottingham-group}
+\uses{lem:normalized-aut-closure,lem:normalization-iff,lem:power-series-aut-continuity}
+\source{camina1997:page-0001,camina1997:page-0002}
+\notready
+For a prime $p$, the Nottingham group $J_p$ is the subgroup of
+$\operatorname{Aut}_{\mathbf F_p\text{-alg}}(\mathbf F_p[[t]])$
+consisting of normalized automorphisms, with multiplication given by
+composition. Equivalently, it is precisely the group of continuous
+$\mathbf F_p$-algebra automorphisms with continuous inverses satisfying
+$\sigma(t)-t\in t^2\mathbf F_p[[t]]$.
+\end{definition}
+
+\begin{lemma}[Extension and restriction to Laurent series]
+\label{lem:nottingham-laurent-equivalence}
+\uses{def:nottingham-group}
+\source{camina1997:page-0001,camina1997:page-0002}
+\notready
+Put $K=\mathbf F_p((t))$, with its valuation topology, and identify
+$R=\mathbf F_p[[t]]$ with its valuation ring. Extension to fractions
+is a group isomorphism from $J_p$ to the group of continuous
+$\mathbf F_p$-algebra automorphisms $\gamma$ of $K$ with
+$\gamma(t)-t\in t^2R$. Its inverse is restriction to $R$.
+For every $n\ge1$ this isomorphism preserves the condition
+$\sigma(t)-t\in t^{n+1}R$.
+\end{lemma}
+
+\begin{proof}
+Each nonzero series has the form $t^r u$ with $r\ge0$ and $u$ a
+unit, by taking its first nonzero coefficient. Consequently every
+Laurent series is a fraction of power series, and an automorphism
+$\sigma$ of $R$ has a unique extension
+$\widetilde\sigma(a/b)=\sigma(a)/\sigma(b)$ to $K$.
+The fraction formula is independent of the representation because
+$a/b=c/d$ implies $ad=bc$, and applying $\sigma$ preserves this
+equality. The extension of $\sigma^{-1}$ is its inverse.
+For normalized $\sigma$, write $\sigma(t)=tv$ with $v\in1+tR$ a
+unit. The image of $t^r u$, for $r\in\mathbf Z$ and $u\in R^\times$,
+has valuation $r$. Thus the extension preserves valuation and is
+continuous, and has the asserted normalization.
+
+Conversely, suppose $\gamma$ is such a continuous automorphism of
+$K$. Put $z=\gamma(t)$, which has valuation one by normalization.
+For $f=\sum_{i\ge0}a_it^i\in R$, its polynomial partial sums
+converge to $f$. Continuity and fixation of the coefficients imply
+$\gamma(f)=\sum_{i\ge0}a_i z^i$. This sum belongs to $R$: each term
+has nonnegative valuation, and the tails have valuations tending
+to infinity. If $a_0\ne0$, the image also has nonzero constant
+coefficient $a_0$. Writing a nonzero Laurent series as $t^r u$
+therefore shows that $\gamma$ preserves valuation. Surjectivity on
+$K$ now gives surjectivity on $R$, since a preimage of an element
+of nonnegative valuation also has nonnegative valuation.
+Hence restriction gives an automorphism of $R$, which is normalized.
+The two constructions are inverse by the fraction formula. The same
+formula proves compatibility with composition. Finally the image of
+$t$ is unchanged by extension or restriction, so every stated
+congruence condition is preserved.
+\end{proof}
+
+\begin{definition}[Congruence neighbourhoods]
+\label{def:nottingham-congruence}
+\uses{def:nottingham-group}
+\source{camina1997:page-0002}
+\notready
+For $n\ge1$, put
 \[
  J_{p,n}=\{\sigma\in J_p:\sigma(t)-t\in\mathfrak m^{n+1}\}.
 \]
-The congruence topology on $J_p$ is the topology whose neighbourhood
-basis at $\sigma\in J_p$ consists of the cosets $\sigma J_{p,n}$.
+The congruence topology on $J_p$ has neighbourhood basis
+$\{\sigma J_{p,n}:n\ge1\}$ at $\sigma\in J_p$.
 \end{definition}
-
-This uses the normalized ring-automorphism description in the introduction
-of \cite{Camina1997}. Continuity places no extra restriction on ring
-automorphisms here: an automorphism preserves $\mathfrak m$, and therefore
-every power $\mathfrak m^n$, so it and its inverse are continuous for the
-$\mathfrak m$-adic topology. The action on $\mathfrak m/\mathfrak m^2$
-is the identity exactly when $\sigma(t)-t\in\mathfrak m^2$.
-Camina's Definition~1 also gives a Laurent-series field description.
-Using that description in place of the present ring description requires
-an extension-and-restriction equivalence of the automorphism groups,
-compatible with the congruence subgroups.
 
 \begin{lemma}[The congruence topology is Hausdorff]
 \label{lem:nottingham-hausdorff-group}
-\uses{def:nottingham-group}
+\uses{def:nottingham-group,def:nottingham-congruence}
 \notready
 The set $J_p$ is a subgroup of $A$. Each $J_{p,n}$ is a normal subgroup
 of $J_p$, these subgroups decrease with $n$, and their cosets define a
@@ -168,6 +323,22 @@ $\mathcal U_p(J_p)$, for each prime $p$.
 This definition specifies the full countably based assertion. It does
 not assert that the property holds, and topological finite generation
 is not part of its hypothesis on $P$.
+
+\section{The unconditional universality target}
+
+\begin{theorem}[Camina's universality theorem]
+\label{thm:camina-universality}
+\uses{def:pro-p-group,def:countably-based,def:closed-group-embedding,def:nottingham-group,lem:nottingham-hausdorff-group}
+\source{camina1997:page-0001,camina1997:page-0012}
+\notready
+For every prime $p$ and every countably based pro-$p$ group $P$,
+there exists a group homomorphism
+\[
+ \iota:P\longrightarrow J_p
+\]
+that is a homeomorphism onto its image and has closed image, where
+$J_p$ has the congruence topology.
+\end{theorem}
 
 \section{The conditional reduction}
 
