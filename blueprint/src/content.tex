@@ -84,7 +84,8 @@ related to it by the extension-and-restriction statement below.
 \begin{lemma}[Constant coefficients and continuity]
 \label{lem:power-series-aut-continuity}
 \source{camina1997:page-0001,camina1997:page-0002}
-\notready
+\lean{PowerSeries.constantCoeff_algEquiv_X, PowerSeries.constantCoeff_algEquiv, PowerSeries.continuous_algEquiv}
+\leanok
 Every $k$-algebra automorphism $\sigma$ of $R$ satisfies
 $[t^0]\sigma(t)=0$ and $[t^0]\sigma(f)=[t^0]f$ for every $f\in R$.
 It and its inverse are continuous for the $\mathfrak m$-adic topology.
@@ -116,7 +117,8 @@ argument to $\sigma^{-1}$ proves continuity of the inverse.
 \label{lem:power-series-aut-linear-coeff}
 \uses{lem:power-series-aut-continuity}
 \source{camina1997:page-0002}
-\notready
+\lean{PowerSeries.coeff_one_algEquiv}
+\leanok
 For every $k$-algebra automorphism $\sigma$ of $R$ and every $f\in R$,
 \[
  [t]\sigma(f)=[t]\sigma(t)\,[t]f.
