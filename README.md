@@ -11,26 +11,29 @@ which is a homeomorphism onto a closed subgroup.
 
 ## Current status
 
-Workspace setup and the first Horizon task are complete. Run `0001` proved
-the algebraic Nottingham group, its normalization API, coefficient formulas,
-and automatic continuity for the `t`-adic topology. The configured build and
-the axiom audit of all 24 named declarations passed at commit `13e2fe9`;
-the audit found only Lean's standard axioms, with no `sorryAx` or added axioms.
-An independent honesty review approved the bounded task's completion.
+The Nottingham group, congruence topology, compactness, finite quotients,
+depth, and Laurent-series automorphism correspondence are formalized.
+The cyclic Artin–Schreier quotient, its Galois action and surjective weighted
+valuation are also proved. Commit `c99cf75` proves completeness for that
+valuation and identifies its canonical residue field with the coefficient
+field. Both modules passed a serialized kernel build; their main declarations
+passed transitive axiom checks using only Lean's standard axioms, with
+independent honesty/source review.
 
-The [blueprint](blueprint/src/content.tex) has six verified nodes. The
-unconditional universality theorem remains **unproved**. The topology and
-finite quotients of the Nottingham group, the Laurent-series model bridge,
-and the embedding theorems are separate outstanding obligations.
+The unconditional universality theorem remains **unproved**. The current
+source-facing frontier is the Laurent-parameter isomorphism for the cyclic
+extension (`CAMINA.2.2.4`). The explicit value-group index and total-ramification
+statement remain separate pending obligations. Witt realization, depth control,
+and the subsequent embedding theorems also remain open in Lean.
 
-- Source library: [manifest](../references/manifest.yaml) and
-  [verified paper](../references/camina1997/camina1997.pdf).
-- Vision transcriptions: PDF pages 1–2 and 9–12. Printed page = PDF page + 100.
+- [Blueprint](blueprint/src/content.tex) and full roadmap: `CAMINA`.
+- Source library: [manifest](../references/manifest.yaml), including Camina
+  (1997), Witt (1936), and Lubotzky–Wilson (1984).
+- Camina vision transcriptions: all 13 PDF pages; printed page = PDF page + 100.
 - Lean: `leanprover/lean4:v4.35.0`.
 - Mathlib: `1e75e9dd53d483fa01eff9ac7d4ea0472ce9d1fa`, pinned in Lake and Horizon.
 - Completed task: `CAM-001`; continuing task: `CAM-MAIN`, covering the entire
-  theorem. Its next milestone is `CAMINA.1.2` (congruence subgroups, topology
-  and finite quotients). The complete roadmap is under `CAMINA`.
+  theorem.
 
 ## Proof route
 
@@ -41,10 +44,10 @@ and the embedding theorems are separate outstanding obligations.
 5. Establish the Lubotzky–Wilson theorem quoted as Theorem 6.
 6. Compose embeddings and verify the full Corollary 2 and its dependency cone.
 
-Original Witt and Lubotzky–Wilson sources still need retrieval and proof
-audits. Camina also invokes *Analytic pro-p Groups*, Corollary 1.21(i), for
-continuity; that input must be proved or replaced by a documented argument.
-The finite case of the inverse-limit construction needs explicit treatment.
+The blueprint supplies detailed proofs for the chosen Witt and
+Lubotzky–Wilson routes, with original-source references. Those arguments still
+require Lean implementations and complete dependency audits. The continuity
+and closedness of the final embeddings must be proved explicitly.
 No cited theorem is accepted as a new Lean axiom.
 
 ## Working in Horizon

@@ -163,10 +163,10 @@ The formula on constant basis expressions gives $w|_K=p v$.
 \label{lem:artin-schreier-complete-residue}
 \uses{lem:artin-schreier-weighted-valuation}
 \source{camina1997:page-0005,camina1997:page-0006}
-\notready
+\lean{Camina1997.ArtinSchreier.weightedValued_completeSpace, Camina1997.ArtinSchreier.rootBasisUniformEquiv, Camina1997.ArtinSchreier.exists_unique_constant_sub_weightedOrder_pos, Camina1997.ArtinSchreier.residueFieldEquiv}
+\leanok
 The valued field $(L,w)$ is complete. Its residue field is
-canonically $k$, and the ramification index of $L/K$ is $p$.
-In particular $L/K$ is totally ramified.
+canonically $k$.
 \end{lemma}
 
 \begin{proof}
@@ -199,15 +199,57 @@ The class of every valuation-ring element is therefore represented
 by a constant in $k$. A nonzero constant has valuation zero,
 so distinct constants give distinct residue classes. Reduction
 on constants is a field homomorphism, proving the claimed
-residue-field identification. Finally
-$w(L^\times)=\mathbf Z$ and $w(K^\times)=p\mathbf Z$;
-their index is $p=[L:K]$. Together with the trivial residue
-extension, this is total ramification.
+residue-field identification.
+\end{proof}
+
+\begin{lemma}[Ramification index of the reduced-pole extension]
+\label{lem:artin-schreier-total-ramification}
+\uses{lem:artin-schreier-cyclic-extension,lem:artin-schreier-weighted-valuation,lem:artin-schreier-complete-residue}
+\source{camina1997:page-0005,camina1997:page-0006}
+\notready
+The ramification index of $L/K$ is $p$, and $L/K$ is totally ramified.
+\end{lemma}
+
+\begin{proof}
+The weighted valuation is surjective, so $w(L^\times)=\mathbf Z$.
+Its restriction to $K$ is $pv$, and $v(K^\times)=\mathbf Z$,
+so $w(K^\times)=p\mathbf Z$. The cosets of $p\mathbf Z$
+are represented uniquely by $0,1,\ldots,p-1$; hence their index
+is $p=[L:K]$. The residue-field identification shows that the
+residue extension has degree one. These two assertions give
+total ramification.
+\end{proof}
+
+\begin{lemma}[The complete valuation ring]
+\label{lem:artin-schreier-integer-topology}
+\uses{lem:artin-schreier-complete-residue,lem:artin-schreier-weighted-valuation}
+\source{camina1997:page-0005}
+\lean{Camina1997.ArtinSchreier.isClosed_weightedInteger, Camina1997.ArtinSchreier.weightedInteger_completeSpace, Camina1997.ArtinSchreier.weightedInteger_t2Space, Camina1997.ArtinSchreier.weightedInteger_isLinearTopology, Camina1997.ArtinSchreier.weightedInteger_isTopologicallyNilpotent}
+\leanok
+The valuation ring $\mathcal O=\{x\in L:w(x)\ge0\}$ is a complete
+Hausdorff topological ring. Its neighborhoods of zero have a
+basis of ideals. If $w(\pi)=1$, then $\pi^n\longrightarrow0$
+in $\mathcal O$.
+\end{lemma}
+
+\begin{proof}
+The nonarchimedean inequality and multiplicativity show that
+$\mathcal O$ is a subring and that, for every integer $r$,
+$\{x\in\mathcal O:w(x)>r\}$ is an ideal. These sets form a
+neighborhood basis at zero for the induced topology.
+If $w(x)<0$, every $z$ with $w(z-x)>w(x)$ satisfies
+$w(z)=w(x)<0$. Thus the complement of $\mathcal O$ is open,
+and $\mathcal O$ is closed in the complete field $L$.
+A Cauchy filter on this closed subspace converges in $L$ and
+its limit remains in the subspace, proving completeness.
+The valuation separates distinct points, so the topology
+is Hausdorff. Finally $w(\pi^n)=n$, which eventually exceeds
+every prescribed integer bound.
 \end{proof}
 
 \begin{lemma}[A Laurent-series parameter for the extension]
 \label{lem:artin-schreier-laurent-parameter}
-\uses{lem:artin-schreier-complete-residue}
+\uses{lem:artin-schreier-complete-residue,lem:artin-schreier-integer-topology}
 \source{camina1997:page-0005}
 \notready
 For every $\pi\in L$ with $w(\pi)=1$, the map
@@ -252,9 +294,10 @@ valuation topologies.
 
 \begin{lemma}[Depth of an Artin--Schreier translation]
 \label{lem:artin-schreier-translation-depth}
-\uses{lem:artin-schreier-cyclic-extension,lem:artin-schreier-weighted-valuation,lem:artin-schreier-laurent-parameter}
+\uses{lem:artin-schreier-cyclic-extension,lem:artin-schreier-weighted-valuation,lem:artin-schreier-complete-residue}
 \source{camina1997:page-0008}
-\notready
+\lean{Camina1997.ArtinSchreier.weightedOrder_translation, Camina1997.ArtinSchreier.uniformContinuous_translation, Camina1997.ArtinSchreier.weightedOrder_rootMonomial_eq_one, Camina1997.ArtinSchreier.weightedOrder_translation_sub_uniformizer, Camina1997.ArtinSchreier.exists_uniformizer_translation_depth}
+\leanok
 Choose $1\le b<p$ and an integer $a$ with $ap-bm=1$, and put
 $\pi=t^a y^b$. Then $w(\pi)=1$, every $\sigma_c$ is a
 valuation-preserving continuous automorphism of $L$, and for
@@ -268,32 +311,31 @@ $c\in\mathbf F_p^\times$,
 Multiplication by $m$ permutes the nonzero residue classes modulo
 $p$, so $b$ exists with $bm\equiv-1\pmod p$; taking
 $a=(bm+1)/p$ gives the desired identity and $w(\pi)=1$.
-For each basis term, expand
-$\sigma_c(a_i y^i)=a_i(y+c)^i$.
-Its degree-$i$ term is $a_i y^i$. Every other nonzero term has
-degree $j<i$ and a nonzero constant binomial coefficient, so its
-weight exceeds that of $a_i y^i$ by $m(i-j)>0$.
-The unique least-weight term of an arbitrary nonzero basis
-expression therefore remains unchanged by $\sigma_c$.
-Thus $w(\sigma_c(x))=w(x)$ for every $x$, and the same equality
-applied to differences proves continuity, including continuity
-of the inverse $\sigma_{-c}$.
+Since $w(y)=-m<0$ and every constant has nonnegative valuation,
+$w(y+c)=w(y)$. Multiplicativity then gives
+$w(a_i(y+c)^i)=w(a_i y^i)$ for each basis term. The inequality
+for finite sums implies $w(\sigma_c(x))\ge w(x)$.
+Apply the same inequality to $\sigma_{-c}$ and $\sigma_c(x)$
+to obtain equality. Applying equality to differences proves
+uniform continuity of $\sigma_c$, including continuity of its
+inverse $\sigma_{-c}$.
 
-For $c\ne0$, put $u=c/y$, so $w(u)=m>0$. Since $\sigma_c$
-fixes $t$,
+For $c\ne0$, expand the displacement directly:
 \[
  \sigma_c(\pi)-\pi
-   =\pi\bigl((1+u)^b-1\bigr).
+ =t^a\sum_{j=0}^{b-1}\binom bj y^j c^{b-j}.
 \]
-In the binomial expansion the linear term $bu$ has valuation
-$m$, because $1\le b<p$. Every nonzero term of degree at least
-two has valuation at least $2m>m$. The expression in parentheses
-therefore has valuation $m$, proving the formula.
+The term of degree $b-1$ has nonzero coefficient $bc$,
+because $1\le b<p$. Its weighted order before multiplication
+by $t^a$ is $-m(b-1)$. Every other nonzero term has degree
+$j<b-1$, and hence strictly larger weighted order $-mj$.
+The unique least term cannot cancel. The displacement therefore
+has order $ap-m(b-1)=1+m$, as claimed.
 \end{proof}
 
 \begin{theorem}[Cyclic subgroups with prescribed prime-to-$p$ depth]
 \label{thm:nottingham-cyclic-prescribed-depth}
-\uses{lem:artin-schreier-translation-depth,lem:nottingham-laurent-equivalence,def:nottingham-depth,lem:nottingham-depth-filtration}
+\uses{lem:artin-schreier-translation-depth,lem:artin-schreier-laurent-parameter,lem:nottingham-laurent-equivalence,def:nottingham-depth,lem:nottingham-depth-filtration}
 \source{camina1997:page-0005,camina1997:page-0008}
 \notready
 For every positive $m$ with $p\nmid m$, the Nottingham group
