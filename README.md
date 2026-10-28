@@ -13,18 +13,20 @@ which is a homeomorphism onto a closed subgroup.
 
 The Nottingham group, congruence topology, compactness, finite quotients,
 depth, and Laurent-series automorphism correspondence are formalized.
-The cyclic Artin–Schreier quotient, its Galois action and surjective weighted
-valuation are also proved. Commit `c99cf75` proves completeness for that
-valuation and identifies its canonical residue field with the coefficient
-field. Both modules passed a serialized kernel build; their main declarations
-passed transitive axiom checks using only Lean's standard axioms, with
+The cyclic Artin–Schreier quotient, its Galois action, complete weighted
+valuation, residue field, and topological Laurent coordinates are also proved.
+The construction now gives actual cyclic Nottingham subgroups at every positive
+prime-to-`p` depth. Unique reduced Artin–Schreier representatives and explicit
+trace-one solutions of Witt's equations are formalized, together with the
+semilinear automorphisms they induce on the concrete quotient.
+These units passed serialized kernel builds, standard-axiom audits, and
 independent honesty/source review.
 
-The unconditional universality theorem remains **unproved**. The current
-source-facing frontier is the Laurent-parameter isomorphism for the cyclic
-extension (`CAMINA.2.2.4`). The explicit value-group index and total-ramification
-statement remain separate pending obligations. Witt realization, depth control,
-and the subsequent embedding theorems also remain open in Lean.
+The unconditional universality theorem remains **unproved**. Current work
+builds the action of a given central extension from Witt's equations and the
+Artin–Schreier quotient basis. The value-group index equals the cyclic extension degree.
+Finite-group realization, depth-preserving lifts, and both infinite-group
+embedding steps remain open in Lean.
 
 - [Blueprint](blueprint/src/content.tex) and full roadmap: `CAMINA`.
 - Source library: [manifest](../references/manifest.yaml), including Camina

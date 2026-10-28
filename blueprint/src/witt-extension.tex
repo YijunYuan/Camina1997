@@ -27,7 +27,7 @@ This contradicts $NH=E$ and $M\ne E$.
 
 Fix a prime $p$, a field $F$ of characteristic $p$, and a finite
 Galois extension $K/F$ with $G=\operatorname{Gal}(K/F)$.
-For the next four lemmas, let $E$ be a finite group and
+For the central-extension statements below, let $E$ be a finite group and
 $q:E\to G$ a surjective homomorphism. Assume that
 $N=\ker q$ is central, has order $p$, and lies in $\Phi(E)$.
 Choose an isomorphism $\iota:(\mathbf F_p,+)\to N$, with
@@ -40,7 +40,8 @@ fields are on the left, so $(st)(x)=s(t(x))$.
 \begin{lemma}[The factor set of a central section]
 \label{lem:central-extension-factor-set}
 \source{witt1936:page-0002,camina1997:page-0003}
-\notready
+\lean{Camina1997.Witt.factorSet_spec, Camina1997.Witt.factorSet_one_left, Camina1997.Witt.factorSet_one_right, Camina1997.Witt.factorSet_cocycle, Camina1997.Witt.centralCoordinate_unique, Camina1997.Witt.centralCoordinates, Camina1997.Witt.central_coordinates_mul}
+\leanok
 There is a unique function $c:G\times G\to\mathbf F_p$ with
 \[
  u_su_t=\iota(c(s,t))u_{st}.
@@ -128,13 +129,104 @@ $s=q(v_s)=1$ and $v_s=v_1=1$.
 This contradicts $H=E$ and $|N|=p>1$.
 \end{proof}
 
+\begin{lemma}[Semilinear automorphisms of the Artin--Schreier quotient]
+\label{lem:witt-semilinear-quotient-lifts}
+\uses{thm:witt-additive-equations}
+\source{witt1936:page-0004,camina1997:page-0004}
+\lean{Camina1997.Witt.liftEquiv, Camina1997.Witt.wittLift_algebraMap, Camina1997.Witt.wittLift_root, Camina1997.Witt.wittLift_mul, Camina1997.Witt.wittLift_one, Camina1997.Witt.wittLift_injective, Camina1997.Witt.wittLiftAlgEquiv}
+\leanok
+Suppose a group $G$ acts faithfully on a field $K$ of characteristic
+$p$. Let $c:G^2\to\mathbf F_p$, $\delta:G\to K$, and $\gamma\in K$
+satisfy
+\[
+ \delta_1=0,\qquad
+ \delta_s+s(\delta_t)-\delta_{st}=c(s,t),\qquad
+ s(\gamma)-\gamma=\delta_s^p-\delta_s.
+\]
+Put $A=K[Y]/(Y^p-Y-\gamma)$ and let $y$ denote the class of $Y$.
+For each $s\in G$ and $a\in\mathbf F_p$ there is a ring automorphism
+$\varphi_{s,a}$ of $A$ satisfying
+\[
+ \varphi_{s,a}(x)=s(x)\quad(x\in K),\qquad
+ \varphi_{s,a}(y)=y+\delta_s+a.
+\]
+The map $(s,a)\mapsto\varphi_{s,a}$ is injective, and
+\[
+ \varphi_{s,a}\varphi_{t,b}=\varphi_{st,a+b+c(s,t)},\qquad
+ \varphi_{1,0}=1.
+\]
+If the action on $K$ fixes a coefficient algebra $F$, these are
+$F$-algebra automorphisms. No irreducibility of the modulus is needed here.
+\end{lemma}
+
+\begin{proof}
+More generally, if $d^p-d=s(\gamma)-\gamma$, apply $s$ to
+coefficients and send $Y$ to $y+d$. The defining polynomial maps to
+\[
+ (y+d)^p-(y+d)-s(\gamma)
+ =\gamma+(d^p-d)-s(\gamma)=0,
+\]
+so this map descends to $A$. Its inverse applies $s^{-1}$ to
+coefficients and sends $y$ to $y-s^{-1}(d)$; the inverse correction
+satisfies the same relation for $s^{-1}$. The composites fix the
+coefficients and $y$, hence every residue class.
+Take $d=\delta_s+a$, using $a^p=a$.
+The formulas on $K$ and $y$ give the asserted multiplication rule
+by the equation for $\delta$, and give the identity when $s=1,a=0$.
+The coefficient map $K\to A$ is injective because the monic modulus
+has positive degree. Equality of two such automorphisms therefore
+implies equality of their actions on $K$, whence $s=t$ by
+faithfulness. Their values on $y$ then give $a=b$.
+Finally the coefficient formula shows that each automorphism fixes
+$F$ whenever the original action does.
+\end{proof}
+
+\begin{lemma}[A faithful central-extension action on a quotient ring]
+\label{lem:witt-central-quotient-action}
+\uses{lem:central-extension-factor-set,thm:witt-additive-equations,lem:witt-semilinear-quotient-lifts}
+\source{witt1936:page-0004,camina1997:page-0004}
+\lean{Camina1997.Witt.exists_centralLift, Camina1997.Witt.centralLift, Camina1997.Witt.centralLift_injective, Camina1997.Witt.centralLift_algebraMap, Camina1997.Witt.centralLift_root, Camina1997.Witt.centralLiftAlgHom, Camina1997.Witt.centralLiftAlgHom_injective}
+\leanok
+More generally, let a finite group $G$ act faithfully on a field $K$
+of characteristic $p$, and let
+\[
+ 1\longrightarrow (\mathbf F_p,+)\xrightarrow{\iota}E
+   \xrightarrow{q}G\longrightarrow1
+\]
+be a central extension. There are $\gamma\in K$ and an injective
+homomorphism $\rho:E\to\operatorname{Aut}(A)$, where
+$A=K[Y]/(Y^p-Y-\gamma)$, such that
+\[
+ \rho(e)(x)=q(e)(x)\qquad(x\in K).
+\]
+If the action on $K$ fixes a coefficient algebra $F$, the same
+construction takes values in $\operatorname{Aut}_F(A)$.
+This assertion concerns the quotient ring; it does not assert
+that the quotient is a field.
+\end{lemma}
+
+\begin{proof}
+Choose a normalized section $u$ of $q$ and its factor set $c$.
+The trace-one formulas construct $\delta,\gamma$ satisfying
+Witt's equations for $c$, with $\delta_1=0$.
+Assign to $e=\iota(a)u_s$ the automorphism $\varphi_{s,a}$ of
+the preceding lemma. Unique central coordinates make this a
+well-defined function. The central-coordinate multiplication
+formula agrees exactly with
+$\varphi_{s,a}\varphi_{t,b}=\varphi_{st,a+b+c(s,t)}$,
+and the identity corresponds to $(1,0)$, so it is a homomorphism.
+Injectivity follows from injectivity of the coordinate equivalence
+and of $(s,a)\mapsto\varphi_{s,a}$. The coefficient formula gives
+both the restriction identity and the assertion about $F$.
+\end{proof}
+
 \begin{lemma}[The lifted action on the Artin--Schreier field]
 \label{lem:witt-lifted-automorphisms}
-\uses{lem:central-extension-factor-set,lem:witt-frattini-parameter-not-image,lem:artin-schreier-irreducible}
+\uses{lem:central-extension-factor-set,lem:witt-frattini-parameter-not-image,lem:artin-schreier-irreducible,lem:witt-semilinear-quotient-lifts}
 \source{witt1936:page-0004,camina1997:page-0004}
 \notready
-For $\delta$ and $\gamma$ satisfying the equations of the
-preceding lemma, set
+For $\delta$ and $\gamma$ satisfying the equations of
+Lemma~\ref{lem:witt-frattini-parameter-not-image}, set
 \[
  L=K[Y]/(Y^p-Y-\gamma)
 \]
@@ -148,7 +240,8 @@ homomorphism $\rho:E\to\operatorname{Aut}_F(L)$ given by
 \end{lemma}
 
 \begin{proof}
-The preceding lemma gives $\gamma\notin\wp(K)$.
+Lemma~\ref{lem:witt-frattini-parameter-not-image} gives
+$\gamma\notin\wp(K)$.
 The Artin--Schreier irreducibility lemma therefore applies to
 $Y^p-Y-\gamma$. Its quotient is a field: a nonzero residue
 class, represented by a polynomial of degree less than $p$,

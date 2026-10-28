@@ -206,8 +206,12 @@ residue-field identification.
 \label{lem:artin-schreier-total-ramification}
 \uses{lem:artin-schreier-cyclic-extension,lem:artin-schreier-weighted-valuation,lem:artin-schreier-complete-residue}
 \source{camina1997:page-0005,camina1997:page-0006}
-\notready
-The ramification index of $L/K$ is $p$, and $L/K$ is totally ramified.
+\lean{Camina1997.ArtinSchreier.finiteValueSubgroup_weighted_comap, Camina1997.ArtinSchreier.finiteValueSubgroup_weighted, Camina1997.ArtinSchreier.index_finiteValueSubgroup_eq_finrank, Camina1997.ArtinSchreier.residueFieldEquiv}
+\leanok
+For the valuations $v,w$ above, define the ramification index by
+$e(L/K)=[w(L^\times):w(K^\times)]$. Then $e(L/K)=p=[L:K]$.
+In particular $L/K$ is totally ramified in the value-group sense
+$e(L/K)=[L:K]$; its residue field is identified with $k$ by constants.
 \end{lemma}
 
 \begin{proof}
@@ -336,9 +340,10 @@ has order $ap-m(b-1)=1+m$, as claimed.
 
 \begin{theorem}[Cyclic subgroups with prescribed prime-to-$p$ depth]
 \label{thm:nottingham-cyclic-prescribed-depth}
-\uses{lem:artin-schreier-translation-depth,lem:artin-schreier-laurent-parameter,lem:nottingham-laurent-equivalence,def:nottingham-depth,lem:nottingham-depth-filtration}
+\uses{lem:artin-schreier-translation-depth,lem:artin-schreier-laurent-parameter,def:nottingham-depth,lem:nottingham-depth-filtration}
 \source{camina1997:page-0005,camina1997:page-0008}
-\notready
+\lean{Camina1997.ArtinSchreier.exists_cyclicNottinghamHom, Camina1997.ArtinSchreier.depth_cyclicNottinghamHom, Camina1997.ArtinSchreier.cyclicNottinghamHom_injective}
+\leanok
 For every positive $m$ with $p\nmid m$, the Nottingham group
 $J_p$ contains a cyclic subgroup of order $p$ whose nonidentity
 elements all have depth $m$.
@@ -346,15 +351,17 @@ elements all have depth $m$.
 
 \begin{proof}
 Take $\gamma=t^{-m}$ and the field and parameter constructed
-above. Transport the automorphisms $\sigma_c$ to $k((T))$
-through the parameter isomorphism. They are continuous
-$k$-algebra automorphisms, and their parameter differences have
-order $m+1\ge2$ when $c\ne0$; for $c=0$ the difference is zero.
-A Laurent series of order at least two is $T^2$ times a power
-series. The Laurent--Nottingham equivalence therefore identifies
-each transported automorphism with an element of $J_p$ and
-respects their composition. The translations are distinct and
-compose according to addition in $\mathbf F_p$, so their image
-is cyclic of order $p$. The order formula for every nonzero $c$
-gives exactly depth $m$.
+above. Translations preserve the weighted valuation, so they restrict
+to automorphisms of $\mathcal O_L$. Conjugate these restrictions by
+the power-series evaluation isomorphism
+$k[[T]]\simeq\mathcal O_L$. This gives $k$-algebra automorphisms
+$g_c$ of $k[[T]]$, with $g_{c+d}=g_cg_d$ and $g_0=1$.
+Evaluation sends $g_c(T)-T$ to $\sigma_c(\pi)-\pi$.
+For $c\ne0$, preservation of order therefore gives
+$\operatorname{ord}_T(g_c(T)-T)=m+1\ge2$.
+For $c=0$ the difference is zero. Hence every $g_c$ is normalized
+and belongs to $J_p$. The exact order formula gives depth $m$
+for nonzero $c$, so no nonzero $c$ maps to the identity.
+Thus $c\mapsto g_c$ is injective, and its image is a cyclic
+subgroup of order $p$ with the required depths.
 \end{proof}
