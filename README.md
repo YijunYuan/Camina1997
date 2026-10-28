@@ -1,13 +1,90 @@
 # Camina1997
 
-## GitHub configuration
+Formalization project for Rachel Camina, *Subgroups of the Nottingham Group*,
+Journal of Algebra **196** (1997), 101–113,
+[doi:10.1006/jabr.1997.7082](https://doi.org/10.1006/jabr.1997.7082).
 
-To set up your new GitHub repository, follow these steps:
+The goal is the introductory theorem, restated as Corollary 2 on printed
+page 112: for each prime `p`, every countably based pro-`p` group admits a
+continuous injective homomorphism into the Nottingham group over `F_p`,
+which is a homeomorphism onto a closed subgroup.
 
-* Under your repository name, click **Settings**.
-* In the **Actions** section of the sidebar, click "General".
-* Check the box **Allow GitHub Actions to create and approve pull requests**.
-* Click the **Pages** section of the settings sidebar.
-* In the **Source** dropdown menu, select "GitHub Actions".
+## Current status
 
-After following the steps above, you can remove this section from the README file.
+Workspace setup is complete. Lean sources are still the starter skeleton;
+the main theorem and its mathematical prerequisites are **not formalized**.
+The initial [blueprint](blueprint/src/content.tex) contains foundational
+mathematics and a conditional reduction. Its embedding hypotheses remain
+separate proof obligations; the reduction is not the unconditional theorem.
+
+- Source library: [manifest](../references/manifest.yaml) and
+  [verified paper](../references/camina1997/camina1997.pdf).
+- Vision transcriptions: PDF pages 1–2 and 9–12. Printed page = PDF page + 100.
+- Lean: `leanprover/lean4:v4.35.0`.
+- Mathlib: `1e75e9dd53d483fa01eff9ac7d4ea0472ce9d1fa`, pinned in Lake and Horizon.
+- First queued task: `CAM-001`, defining the Nottingham group and proving its
+  normalization API. The complete roadmap is under `CAMINA`.
+
+## Proof route
+
+1. Define the normalized automorphism group, filtration, topology and depth.
+2. Prove the Artin–Schreier/Witt finite realization and ramification results.
+3. Prove depth-preserving extension steps (Camina Theorem 4).
+4. Establish the finitely generated case (Theorem 5), including continuity.
+5. Establish the Lubotzky–Wilson theorem quoted as Theorem 6.
+6. Compose embeddings and verify the full Corollary 2 and its dependency cone.
+
+Original Witt and Lubotzky–Wilson sources still need retrieval and proof
+audits. Camina also invokes *Analytic pro-p Groups*, Corollary 1.21(i), for
+continuity; that input must be proved or replaced by a documented argument.
+The finite case of the inverse-limit construction needs explicit treatment.
+No cited theorem is accepted as a new Lean axiom.
+
+## Working in Horizon
+
+Run these commands from the workspace root, one directory above this file:
+
+```sh
+horizon roadmap list --focus CAMINA
+horizon task show CAM-001 --json
+horizon graph -p Camina1997 frontier
+```
+
+Run the kernel build from this project directory:
+
+```sh
+horizon --root .. check --json
+```
+
+When ready to start the queued task, run this command in the foreground from
+the workspace root:
+
+```sh
+horizon run CAM-001 --no-dashboard
+```
+
+The pilot uses Codex `gpt-6-astra` with explicit `xhigh` effort, one round,
+one concurrent session, and session/run ceilings of 100,000 output tokens.
+These are Horizon stop thresholds, not guaranteed exact token or monetary
+caps. Agent-launched tasks/runs and GitHub issue synchronization are disabled.
+The configured GitHub repository is `YijunYuan/Camina1997`.
+The existing ChatGPT login supplies Codex authentication; `.env` has no active
+keys and remains excluded from version control.
+
+The live dashboard is at <http://127.0.0.1:8765>, managed by the transient
+user service `camina-horizon-dashboard.service` for the current login/boot.
+
+```sh
+systemctl --user status camina-horizon-dashboard
+systemctl --user stop camina-horizon-dashboard
+journalctl --user -u camina-horizon-dashboard
+```
+
+After a reboot or after stopping the transient service, start a foreground
+dashboard with `horizon dashboard --host 127.0.0.1 --port 8765` from the
+workspace root.
+
+Horizon commits source changes to `../.archon-horizon/vcs/workspace.git`.
+The original project Git history and remote are preserved in `.git.disabled`;
+they are not the active Horizon ledger. Inspect that history explicitly with
+`git --git-dir=.git.disabled --work-tree=. log`. Nothing is pushed automatically.
