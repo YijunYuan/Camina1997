@@ -11,7 +11,7 @@ this changes no displacement orders from the paper's right-action convention.
 \label{lem:normalized-monomial-displacement}
 \source{camina1997:page-0006,camina1997:page-0007}
 \lean{PowerSeries.order_pow_sub_pow_of_linear_coeff_one}
-\notready
+\leanok
 Let $k$ be a field, let $y\in k[[X]]$ have constant coefficient zero
 and coefficient of $X$ equal to one, and suppose
 $v(y-X)=n+1<\infty$. If $m$ is a natural number whose image in $k$
@@ -38,7 +38,7 @@ $(m-1)+(n+1)+0=m+n$.
 \uses{lem:normalized-monomial-displacement}
 \source{camina1997:page-0006,camina1997:page-0007}
 \lean{PowerSeries.order_algEquiv_sub_of_order}
-\notready
+\leanok
 Let $g$ be a normalized automorphism of $k[[X]]$ with
 $v(g(X)-X)=n+1<\infty$. If $v(f)=m<\infty$ and the image
 of $m$ in $k$ is nonzero, then
@@ -65,9 +65,142 @@ second has order at least $m+n+1$. Their leading terms cannot cancel,
 which proves the assertion.
 \end{proof}
 
+\begin{lemma}[Displacement of a Frobenius split]
+\label{lem:frobenius-split-displacement}
+\uses{lem:normalized-leading-displacement}
+\source{camina1997:page-0006,camina1997:page-0007}
+\lean{PowerSeries.displacement_orders_of_frobenius_split, PowerSeries.le_order_displacement_of_frobenius_split, PowerSeries.order_displacement_of_frobenius_split}
+\leanok
+Let $p$ be prime and $k$ a field of characteristic $p$. Let $g$ be a normalized
+$k$-algebra automorphism of $k[[X]]$, and suppose
+$v(g(X)-X)=n+1<\infty$. Let $A,B\in k[[X]]$ satisfy
+$v(A)=1$ and $v(B)=u<\infty$, where the image of $u$ in $k$
+is nonzero. For $T=A^p+B$,
+\[
+ v\bigl((g(A)-A)^p\bigr)=p(n+1),\qquad
+ v(g(B)-B)=u+n,
+\]
+and
+\[
+ v(g(T)-T)\ge\min\{p(n+1),u+n\}.
+\]
+If $p(n+1)\ne u+n$, the last inequality is an equality.
+\end{lemma}
+
+\begin{proof}
+The leading-displacement lemma applied first to $A$ and then to
+$B$ gives $v(g(A)-A)=n+1$ and $v(g(B)-B)=u+n$.
+Multiplicativity of order gives the stated order of the $p$th
+power. As $g$ respects addition and powers, and Frobenius is
+additive in characteristic $p$,
+\[
+ g(T)-T=(g(A)-A)^p+(g(B)-B).
+\]
+The order of a sum is at least the minimum of the two orders.
+When these orders differ, the unique term of lower order has
+a nonzero leading coefficient which the other summand cannot
+cancel. The sum then has precisely that lower order.
+\end{proof}
+
+\begin{lemma}[A fixed Frobenius split determines its leading exponent]
+\label{lem:frobenius-split-fixed-break}
+\uses{lem:frobenius-split-displacement}
+\source{camina1997:page-0006}
+\lean{PowerSeries.first_exponent_eq_of_fixed_frobenius_split}
+\leanok
+Under the hypotheses of Lemma~\ref{lem:frobenius-split-displacement},
+if $g(A^p+B)=A^p+B$, then $u=n(p-1)+p$.
+\end{lemma}
+
+\begin{proof}
+If $p(n+1)\ne u+n$, the exact-order conclusion would make
+$g(A^p+B)-(A^p+B)$ have finite order, contrary to its being zero.
+Hence $p(n+1)=u+n$, and subtracting $n$ gives the asserted formula.
+\end{proof}
+
+\begin{lemma}[Depth equality for a Frobenius split]
+\label{lem:frobenius-split-depth-equality}
+\uses{lem:frobenius-split-displacement}
+\source{camina1997:page-0007}
+\lean{PowerSeries.depth_eq_of_frobenius_split}
+\leanok
+Under the hypotheses of Lemma~\ref{lem:frobenius-split-displacement},
+suppose there are natural numbers $r,d$ such that
+\[
+ u=r(p-1)+p,\qquad d<r,\qquad
+ v(g(A^p+B)-(A^p+B))=p(d+1).
+\]
+Then $n=d$.
+\end{lemma}
+
+\begin{proof}
+If $n\ge r$, then
+\[
+ p(n+1)\ge p(r+1)>p(d+1),\qquad
+ u+n=r(p-1)+p+n\ge p(r+1)>p(d+1).
+\]
+The lower bound of Lemma~\ref{lem:frobenius-split-displacement}
+would contradict the prescribed displacement order. Thus $n<r$.
+Since $p>1$, we obtain
+\[
+ p(n+1)<r(p-1)+p+n=u+n.
+\]
+The exact-order conclusion of that lemma now gives
+$p(d+1)=p(n+1)$. Cancelling the positive factor $p$ gives $d=n$.
+\end{proof}
+
+\begin{lemma}[The Frobenius decomposition of a degree-$p$ parameter]
+\label{lem:degree-p-parameter-frobenius-decomposition}
+\source{camina1997:page-0006,camina1997:page-0007}
+\lean{PowerSeries.eq_frobeniusRootPart_pow_add, PowerSeries.order_frobeniusRootPart_of_order_eq_prime, PowerSeries.order_frobeniusRemainder, PowerSeries.exists_frobeniusRemainder_order, PowerSeries.exists_frobeniusRemainder_order_gt_prime}
+\leanok
+Let $k=\mathbf F_p$ and let
+\[
+ T=\sum_{i\ge p}a_iX^i,\qquad a_p\ne0.
+\]
+Suppose $u$ is the least index not divisible by $p$ for which
+$a_u\ne0$. Then there are $A,B\in k[[X]]$ such that
+\[
+ T=A^p+B,\qquad v(A)=1,\qquad v(B)=u,
+\]
+and the image of $u$ in $k$ is nonzero. If $T$ is not a $p$th
+power in $k[[X]]$, such an index $u$ exists and satisfies $u>p$.
+\end{lemma}
+
+\begin{proof}
+Define
+\[
+ A=\sum_{j\ge1}a_{pj}X^j,\qquad
+ B=\sum_{\substack{i\ge p\\p\nmid i}}a_iX^i.
+\]
+In characteristic $p$, the $p$th power of a power series has
+coefficient $a^p$ in degree $pj$ when the original coefficient
+in degree $j$ is $a$, and zero coefficients in other degrees.
+Indeed the identity holds for finite truncations by additivity
+of Frobenius; every fixed coefficient of the original series and
+its $p$th power is determined by a sufficiently long finite
+truncation. Since $a^p=a$ in $\mathbf F_p$, the coefficients
+of $A^p$ are exactly those of $T$ in degrees divisible by $p$.
+The complementary coefficients are precisely those of $B$,
+so $T=A^p+B$. The constant term of $A$ vanishes and its
+coefficient of $X$ is $a_p\ne0$, giving $v(A)=1$.
+The definition of $u$ makes all coefficients of $B$ below $u$
+zero and its coefficient of $X^u$ nonzero, giving $v(B)=u$.
+Finally $p\nmid u$ says exactly that the image of $u$ in $k$
+is nonzero.
+
+For the final assertion, if $B=0$ the identity $T=A^p+B$ would
+make $T$ a $p$th power. Thus $B\ne0$, so its nonzero coefficients
+have a least index $u$. The defining coefficients of $B$ imply
+$p\nmid u$ and that $a_u\ne0$ is the first nonzero coefficient
+of $T$ at such an index. Since $v(T)=p$, there are no nonzero
+coefficients below $p$, and $p\mid p$ excludes $u=p$.
+Hence $u>p$.
+\end{proof}
+
 \begin{lemma}[The two possible leading displacement orders]
 \label{lem:degree-p-parameter-displacement}
-\uses{lem:normalized-leading-displacement}
+\uses{lem:degree-p-parameter-frobenius-decomposition,lem:frobenius-split-displacement}
 \source{camina1997:page-0006,camina1997:page-0007}
 \notready
 Let $k=\mathbf F_p$ and let
@@ -84,28 +217,15 @@ If $p(n+1)\ne u+n$, equality holds.
 \end{lemma}
 
 \begin{proof}
-Separate the terms with exponent divisible by $p$ from the other terms:
-\[
- T=A^p+B,\qquad
- A=\sum_{j\ge1}a_{pj}X^j,\qquad
- B=\sum_{\substack{i\ge p\\p\nmid i}}a_iX^i.
-\]
-Frobenius fixes $k$ and is continuous for the order topology, so this
-identity holds coefficient by coefficient. We have $v(A)=1$ and
-$v(B)=u$. The leading-displacement lemma gives
-$v(g(A)-A)=n+1$ and $v(g(B)-B)=u+n$.
-Since $g$ commutes with powers and Frobenius is additive,
-\[
- g(T)-T=(g(A)-A)^p+(g(B)-B).
-\]
-The two summands have orders $p(n+1)$ and $u+n$ respectively.
-The order of a sum is at least their minimum, and is exactly that
-minimum when their orders differ.
+Lemma~\ref{lem:degree-p-parameter-frobenius-decomposition}
+gives $T=A^p+B$ with $v(A)=1$, $v(B)=u$, and $u$ nonzero
+in $k$. Apply Lemma~\ref{lem:frobenius-split-displacement}
+to obtain both assertions.
 \end{proof}
 
 \begin{lemma}[The first exponent detects the degree-p ramification break]
 \label{lem:camina-four-depth-equation}
-\uses{lem:degree-p-parameter-displacement}
+\uses{lem:degree-p-parameter-frobenius-decomposition,lem:frobenius-split-fixed-break}
 \source{camina1997:page-0006}
 \notready
 Under the preceding hypotheses, if $g(T)=T$, then
@@ -115,37 +235,35 @@ Under the preceding hypotheses, if $g(T)=T$, then
 \end{lemma}
 
 \begin{proof}
-If $p(n+1)$ and $u+n$ differed, the displacement lemma would give
-$g(T)-T$ finite order, whereas it is zero. Therefore
-$p(n+1)=u+n$. Subtracting $n$ proves the formula.
+Take the decomposition $T=A^p+B$ supplied by
+Lemma~\ref{lem:degree-p-parameter-frobenius-decomposition}.
+Its orders satisfy all the hypotheses of
+Lemma~\ref{lem:frobenius-split-fixed-break}, and $g(T)=T$ is
+its fixed-point hypothesis. That lemma gives the formula.
 \end{proof}
 
 \begin{lemma}[Depth below a new ramification break is unchanged]
 \label{lem:camina-five-depth-preservation}
-\uses{lem:degree-p-parameter-displacement}
+\uses{lem:degree-p-parameter-frobenius-decomposition,lem:frobenius-split-depth-equality}
 \source{camina1997:page-0007}
 \notready
-Under the degree-p parameter hypotheses, suppose
+Under the degree-p parameter hypotheses, suppose that for a natural number $d$
 \[
- g(T)=T+\sum_{j\ge k+1}\beta_jT^j,\qquad \beta_{k+1}\ne0,
+ g(T)=T+\sum_{j\ge d+1}\beta_jT^j,\qquad \beta_{d+1}\ne0,
 \]
-and $u=r(p-1)+p$ for a natural number $r>k$.
-If $v(g(X)-X)=n+1<\infty$, then $n=k$.
+and $u=r(p-1)+p$ for a natural number $r>d$.
+If $v(g(X)-X)=n+1<\infty$, then $n=d$.
 \end{lemma}
 
 \begin{proof}
-Since $v(T)=p$, the displayed displacement has order $p(k+1)$:
-its first summand has that order and every later summand has strictly
-larger order. If $n\ge r$, then
-\[
- p(n+1)\ge p(r+1)>p(k+1),\qquad
- u+n=r(p-1)+p+n\ge p(r+1)>p(k+1).
-\]
-The lower bound in the displacement lemma contradicts the known order.
-Thus $n<r$. Since $p>1$, this gives
-\[
- p(n+1)<r(p-1)+p+n=u+n.
-\]
-The exact-order clause of the displacement lemma now gives
-$p(k+1)=p(n+1)$. As $p>0$, cancellation gives $k=n$.
+Since $v(T)=p$, write the given displacement as
+$T^{d+1}V(T)$ with $V(Z)=\beta_{d+1}+\beta_{d+2}Z+\cdots$.
+The substitution converges because $v(T)>0$, and $V(T)$
+has constant coefficient $\beta_{d+1}\ne0$, hence order zero.
+Thus $v(g(T)-T)=p(d+1)$.
+Take the decomposition $T=A^p+B$ of
+Lemma~\ref{lem:degree-p-parameter-frobenius-decomposition}.
+Lemma~\ref{lem:frobenius-split-depth-equality} applies:
+its remaining hypotheses are $u=r(p-1)+p$ and $d<r$.
+It gives $n=d$ as required.
 \end{proof}

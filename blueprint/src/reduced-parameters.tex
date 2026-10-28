@@ -12,7 +12,9 @@ We give proofs of the reduced representatives in
 argument in the proof of her Theorem~4. The latter is expressed
 directly through additive characters instead of cohomology.
 The final parameter choice uses a single bound for all the
-finitely many desired pole inequalities.
+finitely many desired pole inequalities. Over Laurent fields this
+choice also supplies irreducibility without a Frattini hypothesis:
+a sufficiently deep reduced pole cannot be an Artin--Schreier image.
 
 For the first three lemmas, let $K=k((T))$ and let $v_T$ be
 its additive order valuation, with $v_T(T)=1$ and
@@ -141,81 +143,16 @@ write
 for the $k$-linear map induced by the inclusion. It is
 well-defined because the inclusion commutes with $\wp$.
 
-\begin{lemma}[The kernel of restriction consists of additive characters]
-\label{lem:artin-schreier-restriction-kernel}
-\uses{lem:galois-trace-one,lem:witt-one-cocycle-solution}
-\source{camina1997:page-0009}
-\notready
-If $K/F$ is finite Galois with $G=\operatorname{Gal}(K/F)$,
-there is a canonical $k$-linear isomorphism
-\[
- \ker(\operatorname{res})
-   \simeq \operatorname{Hom}(G,(k,+)).
-\]
-It sends the class of $a\in F$ with $a=\wp(\theta)$,
-$\theta\in K$, to the character
-$g\mapsto g(\theta)-\theta$.
-In particular the kernel is finite-dimensional over $k$.
-\end{lemma}
-
-\begin{proof}
-A class $[a]\in F/\wp(F)$ is in the kernel precisely when
-$a=\wp(\theta)$ for some $\theta\in K$.
-For such a root,
-\[
- \wp(g(\theta)-\theta)=g(a)-a=0.
-\]
-The roots of $X^p-X$ in $K$ are exactly $k$, since its
-$p$ prime-field roots already exhaust its degree. Thus the
-proposed character has values in $k$.
-For $g,h\in G$,
-\[
- (gh)(\theta)-\theta
-   =g(h(\theta)-\theta)+(g(\theta)-\theta)
-   =(h(\theta)-\theta)+(g(\theta)-\theta),
-\]
-because $G$ fixes $k$. This is the required group homomorphism
-to the additive group of $k$.
-
-Two choices of $\theta$ differ by an element of $k$, so give
-the same character. Replacing $a$ by $a+\wp(b)$ with $b\in F$
-allows replacing $\theta$ by $\theta+b$, which also leaves
-the character unchanged. These facts prove well-definedness
-on the kernel of restriction. Taking sums of roots and their
-$k$-multiples proves $k$-linearity.
-If the resulting character is zero, $\theta$ is fixed by
-all elements of $G$. The fixed field of $\operatorname{Gal}(K/F)$
-is $F$, so $\theta\in F$ and $[a]=0$ in $F/\wp(F)$.
-The map is therefore injective.
-
-Conversely, let $\chi:G\to(k,+)$ be a character.
-Regarded as a $K$-valued function it is a one-cocycle:
-$\chi(gh)=\chi(g)+g(\chi(h))$, because the action on $k$
-is trivial. Choose $\alpha\in K$ with
-$\sum_{t\in G}t(\alpha)=1$. The one-cocycle formula gives
-\[
- \theta=-\sum_{t\in G}\chi(t)t(\alpha),\qquad
- g(\theta)-\theta=\chi(g).
-\]
-Put $a=\wp(\theta)$. For every $g$,
-$g(a)-a=\wp(\chi(g))=0$, so again the fixed-field theorem
-gives $a\in F$. Its class lies in the restriction kernel,
-and the construction sends it to $\chi$.
-This proves surjectivity and the stated isomorphism.
-Finally the character space is a $k$-subspace of the function
-space $k^G$. Since $G$ is finite, $k^G$ has a finite basis
-given by its coordinate functions. Hence the kernel is
-finite-dimensional.
-\end{proof}
-
 \begin{lemma}[The restriction kernel is finite]
 \label{lem:artin-schreier-restriction-finite-kernel}
 \source{camina1997:page-0009}
 \lean{Camina1997.ArtinSchreier.restriction, Camina1997.ArtinSchreier.exists_root_of_mem_ker_restriction, Camina1997.ArtinSchreier.finite_wpKernel, Camina1997.ArtinSchreier.finite_ker_restriction, Camina1997.ArtinSchreier.moduleFinite_ker_restriction}
 \leanok
-If $K/F$ is finite Galois, the kernel of
-$F/\wp(F)\to K/\wp(K)$ is a finite set, hence a finite-dimensional
-$\mathbf F_p$-vector space.
+For a finite Galois extension $K/F$, the kernel of the map
+\[
+ F/\wp(F)\longrightarrow K/\wp(K)
+\]
+is a finite set, hence a finite-dimensional $\mathbf F_p$-vector space.
 \end{lemma}
 
 \begin{proof}
@@ -314,9 +251,11 @@ with $p\nmid m$, and the bound on its order gives $m>B$.
 \label{thm:witt-simultaneous-pole-adjustment}
 \uses{lem:artin-schreier-deep-parameter-adjustment}
 \source{camina1997:page-0005,camina1997:page-0009,witt1936:page-0004}
-\notready
-Suppose $F=k((t))\subseteq K=k((T))$ is finite Galois,
-with group $G$. Let $c:G\times G\to k$ and let
+\lean{Camina1997.Witt.adjustedDelta, Camina1997.Witt.adjustedDelta_one, Camina1997.Witt.adjustedDelta_twoCocycle, Camina1997.Witt.adjustedDelta_parameter, Camina1997.Witt.exists_adjusted_witt_equations}
+\leanok
+Suppose $F\subseteq K=k((T))$ is finite Galois,
+with group $G$, and $F/\wp(F)$ has infinite dimension over $k$.
+This hypothesis holds in particular if $F\simeq k((t))$. Let $c:G\times G\to k$ and let
 $\delta_s,\gamma\in K$ satisfy
 \[
  \delta_1=0,\qquad
@@ -339,25 +278,11 @@ same $c$. Moreover $\widehat\gamma$ is reduced and
 \end{theorem}
 
 \begin{proof}
-Write $\gamma=r_0+\wp(\mu_0)$ with $r_0$ reduced.
-Choose an integer $M\ge B$ at least as large as every pole
-exponent occurring in $r_0$, taking zero when none occurs.
-Then $v_T(r_0)\ge-M$, including the case $r_0=0$.
-The restriction image is infinite-dimensional, so it contains
-a class whose reduced representative $r_b$ has
-$v_T(r_b)<-M$. Choose $b\in F$ representing a preimage of
-that class. Reduction in $K$ gives
-$b=r_b+\wp(\mu_b)$ for some $\mu_b\in K$.
-Set $\mu=\mu_0+\mu_b$. Then
-\[
- \gamma+b-\wp(\mu)=r_0+r_b.
-\]
-This is still a reduced expression. Its lowest-degree term
-comes from $r_b$, since $v_T(r_b)<-M\le v_T(r_0)$, so it
-cannot cancel. Consequently
-$v_T(\widehat\gamma)=v_T(r_b)<-M\le-B$.
-The reduced representative lemma makes this valuation $-m$
-with $m>0$ and $p\nmid m$.
+Apply Lemma~\ref{lem:artin-schreier-deep-parameter-adjustment}
+to $\gamma$ and $B$. It supplies $b\in F$, $\mu\in K$, and a
+reduced $r=\gamma+b-\wp(\mu)$ of order $-m$, where $m>B$
+and $p\nmid m$. Put $\widehat\gamma=r$ and define
+$\widehat\delta_s=\delta_s-(s(\mu)-\mu)$.
 
 Since $b\in F$, every $s\in G$ fixes $b$.
 Additivity of $\wp$ and its commutation with automorphisms give
@@ -390,3 +315,284 @@ $v_T(\widehat\gamma)<-d_i$ for every $i$.
 This establishes the simultaneous pole condition used in
 Camina's Theorem~4; the comparison of the depths upstairs and
 downstairs requires the subsequent ramification arguments.
+
+
+\begin{theorem}[A central lift with an arbitrarily deep reduced parameter]
+\label{thm:witt-reduced-central-lift}
+\uses{lem:central-extension-factor-set,thm:witt-additive-equations,thm:witt-simultaneous-pole-adjustment,lem:artin-schreier-no-root-from-pole,lem:artin-schreier-irreducible,lem:witt-semilinear-quotient-lifts,lem:full-galois-action-from-degree}
+\source{camina1997:page-0009,witt1936:page-0004}
+\lean{Camina1997.Witt.exists_reduced_galois_centralLift, Camina1997.Witt.not_moduleFinite_quotient_of_laurentEquiv, Camina1997.Witt.exists_reduced_galois_centralLift_laurentBase}
+\leanok
+Let $F\subseteq K=k((T))$ be finite Galois, let
+$G=\operatorname{Gal}(K/F)$, and suppose $F/\wp(F)$ has
+infinite dimension over $k$, as it does when $F\simeq k((t))$.
+Let
+\[
+ 1\longrightarrow(k,+)\xrightarrow{\iota}E
+ \xrightarrow{q}G\longrightarrow1
+\]
+be a central extension with $E$ finite. For every integer $B\ge0$
+there are a reduced $r\in K$ and an integer $m>B$ with $p\nmid m$
+and $v_T(r)=-m$ such that
+\[
+ L=K[Y]/(Y^p-Y-r)
+\]
+is a field of degree $p$ over $K$, is Galois over $F$, and admits
+an isomorphism $\rho:E\simeq\operatorname{Gal}(L/F)$ whose
+restriction to $K$ is $q$.
+No inclusion of the kernel in $\Phi(E)$ is required.
+\end{theorem}
+
+\begin{proof}
+Choose a normalized section of $q$ and its central factor set $c$.
+Witt's additive equations give $\delta_s,\gamma\in K$ with
+\[
+ \delta_1=0,\qquad
+ \delta_s+s(\delta_t)-\delta_{st}=c(s,t),\qquad
+ s(\gamma)-\gamma=\wp(\delta_s).
+\]
+The preceding simultaneous adjustment gives $r$ of order $-m$,
+with $m>B$ and $p\nmid m$, and corrected increments satisfying
+the same equations for $c$. The pole obstruction shows that
+$r\notin\wp(K)$, so $Y^p-Y-r$ is irreducible. Thus its quotient
+$L$ is a field and has the basis $1,y,\ldots,y^{p-1}$ over $K$.
+The semilinear quotient automorphisms, with these corrected
+increments, give a faithful action of $E$ on $L$ fixing $F$;
+their restrictions to $K$ are the prescribed elements $q(e)$.
+As a set $E$ is the product of $G$ and its kernel, hence
+\[
+ |E|=p|G|=p[K:F]=[L:F].
+\]
+Lemma~\ref{lem:full-galois-action-from-degree} proves that the
+extension is Galois and that the action is its full Galois group.
+If $F$ is identified with $k((t))$, its field isomorphism induces
+an isomorphism of Artin--Schreier quotients, because it commutes
+with $\wp$ and fixes the prime field. The quotient basis then
+proves the infinite-dimensional hypothesis.
+
+This argument combines Witt's explicit lifted action with the
+parameter adjustment in Camina's proof of Theorem~4. Here the
+negative reduced pole proves properness directly, in place of
+the Frattini argument used for an arbitrary characteristic-$p$
+base field.
+\end{proof}
+
+\begin{lemma}[Semilinear lifts preserve the weighted valuation]
+\label{lem:artin-schreier-semilinear-valuation}
+\uses{lem:artin-schreier-weighted-valuation}
+\lean{Camina1997.ArtinSchreier.weightedOrder_semilinear, Camina1997.ArtinSchreier.uniformContinuous_semilinear}
+\leanok
+Let $K=k((T))$, let $r\in K$ satisfy $v_T(r)=-m$ with
+$m>0$ and $p\nmid m$, and put $L=K[Y]/(Y^p-Y-r)$.
+Write $y$ for the class of $Y$ and $w$ for the weighted valuation
+\[
+ w\left(\sum_{i=0}^{p-1}a_i y^i\right)
+   =\min_{0\le i<p}\bigl(pv_T(a_i)-mi\bigr).
+\]
+Suppose $s$ is a ring automorphism of $K$ preserving $v_T$,
+and $e$ is a ring automorphism of $L$ whose restriction to $K$
+is $s$. Then $w(e(x))=w(x)$ for every $x\in L$, and $e$
+is uniformly continuous for the topology defined by $w$.
+\end{lemma}
+
+\begin{proof}
+Put $z=e(y)$. Applying $e$ to the defining equation of $y$
+gives $z^p-z=s(r)$. Since $w|_K=pv_T$, its right-hand side
+has value $-pm<0$. Thus $z\ne0$ and $w(z)$ is a finite integer.
+If $w(z)\ge0$, the valuation inequality would give
+$w(z^p-z)\ge\min\{pw(z),w(z)\}\ge0$, a contradiction.
+Consequently $w(z)<0$. Since $p>1$, the two summands
+$z^p$ and $-z$ have distinct values $pw(z)<w(z)$;
+therefore $w(z^p-z)=pw(z)$. It follows that $w(z)=-m$.
+
+Write $x=\sum_{i=0}^{p-1}a_i y^i$. Then
+$e(x)=\sum_{i=0}^{p-1}s(a_i)z^i$, and each term has value
+\[
+ w(s(a_i)z^i)=pv_T(s(a_i))+i w(z)=pv_T(a_i)-mi.
+\]
+Each displayed value is at least $w(x)$, so the valuation
+inequality for a finite sum gives $w(e(x))\ge w(x)$.
+The inverse maps satisfy the same hypotheses. Indeed,
+$e^{-1}(a)=s^{-1}(a)$ on $K$, and applying valuation preservation
+by $s$ to $s^{-1}(a)$ gives $v_T(s^{-1}(a))=v_T(a)$.
+Apply the inequality just proved to $e^{-1}$ and $e(x)$:
+\[
+ w(x)=w(e^{-1}(e(x)))\ge w(e(x)).
+\]
+The two inequalities give the required equality, also when
+$x=0$ and the values are $+\infty$.
+Finally $e(x)-e(x')=e(x-x')$, so the equality just proved
+preserves each condition $w(x-x')>n$. These conditions are
+a basis of entourages for the valuation uniformity, which
+proves uniform continuity.
+\end{proof}
+
+
+\begin{theorem}[Central lifting in Laurent coordinates]
+\label{thm:witt-laurent-central-lift}
+\uses{thm:witt-reduced-central-lift,lem:artin-schreier-semilinear-valuation,lem:artin-schreier-weighted-valuation,lem:artin-schreier-laurent-parameter}
+\source{camina1997:page-0005,camina1997:page-0009}
+\lean{Camina1997.Witt.exists_laurent_centralLift}
+\leanok
+Put $K=k((T))$ and write $v$ for its order valuation.
+Let $F$ be a field with an isomorphism $e_F:F\simeq K$, and put
+$v_F=v\circ e_F$. Let $\alpha:F\hookrightarrow K$ be a field
+embedding making $K/F$ finite Galois, and write
+$G=\operatorname{Gal}_{\alpha}(K/F)$ for its Galois group.
+Suppose
+\[
+ v(g(x))=v(x)\quad(g\in G,\ x\in K),\qquad
+ v(\alpha(a))=|G|v_F(a)\quad(a\in F).
+\]
+Let $E$ be finite and let $q:E\twoheadrightarrow G$ have a
+central kernel of order $p$. There is a field embedding
+$\beta:F\hookrightarrow K$ making $K/F$ finite Galois and an
+isomorphism $\rho:E\simeq\operatorname{Gal}_{\beta}(K/F)$ such that
+\[
+ v(\rho(e)(x))=v(x)\quad(e\in E,\ x\in K),\qquad
+ v(\beta(a))=|E|v_F(a)\quad(a\in F).
+\]
+Here $\alpha$ and $\beta$ are possibly different embeddings into
+the same Laurent-series field.
+\end{theorem}
+
+\begin{proof}
+A group of order $p$ is cyclic: the order of any nonidentity
+element divides $p$ and is greater than one, hence equals $p$.
+An isomorphism from $(k,+)$ onto $\ker q$ therefore presents
+$q$ as a central extension of the form used in
+Theorem~\ref{thm:witt-reduced-central-lift}.
+Apply that theorem with $B=0$. It gives a reduced parameter
+$r\in K$ with $v(r)=-m$, $m>0$, and $p\nmid m$, a degree-$p$
+field
+\[
+ A=K[Y]/(Y^p-Y-r),
+\]
+and an isomorphism $\tau:E\simeq\operatorname{Gal}(A/F)$ whose
+restriction to $K$ is $q$. Write $j:K\hookrightarrow A$ for
+the coefficient inclusion and $w$ for the weighted valuation.
+Every $q(e)$ preserves $v$ by hypothesis, so
+Lemma~\ref{lem:artin-schreier-semilinear-valuation} gives
+$w(\tau(e)(z))=w(z)$ for every $z\in A$.
+
+The weighted valuation is surjective, so choose $\pi\in A$
+with $w(\pi)=1$. The Laurent parameter theorem constructs a
+$k$-algebra isomorphism $u:K\simeq A$ with
+$w(u(x))=v(x)$. Define
+\[
+ \beta=u^{-1}\circ j\circ\alpha,
+ \qquad
+ \rho(e)=u^{-1}\circ\tau(e)\circ u.
+\]
+The first map is a field embedding, and $u$ identifies the
+extension of $F$ through $\beta$ with $A/F$. It is therefore
+finite Galois; conjugation by $u$ identifies its full Galois
+group with that of $A/F$. This proves the assertion about
+$\rho$.
+For $e\in E$ and $x\in K$,
+\[
+ v(\rho(e)(x))=w(\tau(e)(u(x)))=w(u(x))=v(x).
+\]
+Also $w(j(b))=pv(b)$ for $b\in K$, so
+\[
+ v(\beta(a))=w(j(\alpha(a)))=p v(\alpha(a))
+   =p|G|v_F(a)=|E|v_F(a),
+\]
+where the last equality follows from $|\ker q|=p$ and
+surjectivity of $q$.
+
+The parameter adjustment used here is the one from Camina's
+proof of Theorem~4. It supplies a negative reduced pole at every
+central step, without requiring a Frattini kernel; the Laurent
+coordinate construction gives explicitly the field identification
+used in the proof of her Theorem~3.
+\end{proof}
+
+
+\begin{theorem}[Finite $p$-groups as Galois groups in Laurent coordinates]
+\label{thm:witt-finite-laurent-realization}
+\uses{lem:finite-p-group-central-prime-step,thm:witt-laurent-central-lift}
+\source{camina1997:page-0005}
+\lean{Camina1997.Witt.exists_laurent_galois_realization}
+\leanok
+Put $K=k((T))$ with its order valuation $v$.
+Let $F$ be a field equipped with an isomorphism $e_F:F\simeq K$,
+and set $v_F=v\circ e_F$. For every finite $p$-group $H$ there
+are a field embedding $\beta:F\hookrightarrow K$ making $K/F$
+finite Galois and an isomorphism
+$\rho:H\simeq\operatorname{Gal}_{\beta}(K/F)$ such that
+\[
+ v(\rho(h)(x))=v(x)\quad(h\in H,\ x\in K),\qquad
+ v(\beta(a))=|H|v_F(a)\quad(a\in F).
+\]
+\end{theorem}
+
+\begin{proof}
+We use strong induction on $|H|$. If $H$ is trivial, take
+$\beta=e_F$. Then $\beta$ is onto, so $K/F$ has degree one,
+its Galois group is trivial, and its unique action preserves $v$.
+The second identity reduces to the definition of $v_F$.
+
+Suppose $H$ is nontrivial. Choose a central subgroup $N$ of
+order $p$. It is normal, and $Q=H/N$ is a $p$-group of strictly
+smaller order. The induction hypothesis gives an embedding
+$\alpha:F\hookrightarrow K$ and an isomorphism
+$\sigma:Q\simeq\operatorname{Gal}_{\alpha}(K/F)$ with the two
+valuation properties. Compose the quotient map $H\to Q$ with
+$\sigma$ to obtain
+\[
+ q:H\twoheadrightarrow\operatorname{Gal}_{\alpha}(K/F).
+\]
+Because $\sigma$ is injective, $\ker q=N$, so this kernel is
+central of order $p$. Every automorphism in the target of $q$
+is $\sigma(s)$ for some $s\in Q$ and hence preserves $v$.
+Moreover $|Q|=|\operatorname{Gal}_{\alpha}(K/F)|$, so the
+inductive base-valuation identity has exactly the hypothesis
+required in Theorem~\ref{thm:witt-laurent-central-lift}.
+That theorem produces the desired embedding $\beta$ and full
+Galois-group isomorphism for $H$, with both valuation identities.
+This completes the induction.
+
+This construction implements the realization used in Camina's
+Theorem~3 directly in Laurent coordinates. Choosing a deep reduced
+parameter at each central step allows all finite $p$-groups to be
+handled by the same induction, including elementary abelian groups.
+\end{proof}
+
+\begin{lemma}[Valuation-preserving Laurent actions restrict faithfully]
+\label{lem:laurent-action-nottingham-restriction}
+\uses{lem:nottingham-laurent-extension,lem:pgroup-power-series-normalization}
+\source{camina1997:page-0005}
+\lean{Camina1997.Nottingham.restrictLaurentAction, Camina1997.Nottingham.coe_restrictLaurentAction, Camina1997.Nottingham.restrictLaurentAction_injective_iff, Camina1997.Nottingham.ofLaurentAction, Camina1997.Nottingham.toLaurent_ofLaurentAction, Camina1997.Nottingham.ofLaurentAction_injective_iff, Camina1997.Nottingham.isClosedEmbedding_ofLaurentAction}
+\leanok
+Let $G$ be a group acting on $k((T))$ by $k$-algebra automorphisms,
+and suppose each automorphism preserves the order valuation.
+Restriction defines an action on $k[[T]]$ by $k$-algebra
+automorphisms, and this action is faithful if and only if the
+original action is faithful. If $G$ is a $p$-group, the restricted
+action factors through $J_p$, and its Laurent extension recovers
+the given action. If in addition $G$ is finite and discrete and
+the action is faithful, this gives a closed topological embedding
+$G\hookrightarrow J_p$.
+\end{lemma}
+
+\begin{proof}
+The power-series ring inside $k((T))$ is precisely the set of
+nonnegative-order elements. A valuation-preserving automorphism
+and its inverse therefore preserve that ring. Their restrictions
+are inverse algebra automorphisms, and restricting a composite
+is the composite of the restrictions. Thus restriction gives a
+group action, agreeing with the original action on every power
+series.
+Every Laurent series is a fraction of power series: multiplying
+it by a sufficiently large nonnegative power of $T$ removes all
+negative exponents. Consequently two field automorphisms which
+agree on power series agree on every Laurent series, by applying
+them to such a fraction. This proves preservation and reflection
+of faithfulness, as well as recovery of the original action after
+extending the restriction to the fraction field.
+For a $p$-group the restricted automorphisms are normalized by
+Lemma~\ref{lem:pgroup-power-series-normalization}, so their action
+factors through $J_p$. That lemma also supplies the closed
+embedding assertion for a faithful finite discrete action.
+\end{proof}

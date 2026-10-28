@@ -694,6 +694,38 @@ is not part of its hypothesis on $P$.
 \input{witt}
 \input{witt-extension}
 \input{reduced-parameters}
+
+
+\begin{theorem}[Finite $p$-groups embed in Nottingham]
+\label{thm:nottingham-finite-p-group}
+\uses{thm:witt-finite-laurent-realization,lem:laurent-action-nottingham-restriction}
+\source{camina1997:page-0005}
+\lean{Camina1997.Nottingham.exists_injective_hom_of_finite, Camina1997.Nottingham.exists_closedEmbedding_of_finite}
+\leanok
+For every prime $p$ and every finite $p$-group $H$, there is an
+injective homomorphism $H\hookrightarrow J_p$. With the discrete
+topology on $H$ and the congruence topology on $J_p$, this is a
+homeomorphism onto a closed subgroup.
+\end{theorem}
+
+\begin{proof}
+Apply Theorem~\ref{thm:witt-finite-laurent-realization} with
+$F=k((t))$ and a coefficient-preserving renaming isomorphism
+$e_F:k((t))\simeq k((T))$. It gives a finite Galois realization
+of $H$ on $k((T))$ in which every automorphism preserves the
+order valuation. Every field automorphism in characteristic $p$
+fixes the prime field $k=\mathbf F_p$, since it fixes $1$ and
+therefore all sums and additive inverses of $1$.
+Thus this is a faithful action by $k$-algebra automorphisms.
+Lemma~\ref{lem:laurent-action-nottingham-restriction} supplies
+the injective homomorphism into $J_p$ and its closed topological
+embedding property.
+The algebraic assertion is Camina's Theorem~3; the topological
+conclusion also follows because a finite discrete space is
+compact and $J_p$ is Hausdorff.
+\end{proof}
+
+\input{ramification-depth}
 \input{finite-generation}
 \input{lubotzky-wilson}
 
