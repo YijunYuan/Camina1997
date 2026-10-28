@@ -108,7 +108,8 @@ polynomial and hence is normal and separable.
 \label{lem:artin-schreier-weighted-valuation}
 \uses{lem:artin-schreier-cyclic-extension}
 \source{camina1997:page-0005,camina1997:page-0006}
-\notready
+\lean{Camina1997.ArtinSchreier.weightedValuation, Camina1997.ArtinSchreier.weightedValuation_apply, Camina1997.ArtinSchreier.weightedOrder_mul, Camina1997.ArtinSchreier.weightedOrder_algebraMap, Camina1997.ArtinSchreier.weightedOrder_root, Camina1997.ArtinSchreier.weightedValuation_surjective}
+\leanok
 For $L$, $y$, $m$ as above, the formula
 \[
  w\left(\sum_{i=0}^{p-1}a_i y^i\right)
@@ -150,11 +151,12 @@ leading coefficient. Consequently
 $w(xz)=w(x)+w(z)$. The assertion also holds when a factor is zero.
 Applying it to $xx^{-1}=1$ gives $w(x^{-1})=-w(x)$.
 
-The formula gives $w(t)=p$ and $w(y)=-m$. Since $p\nmid m$,
-there are integers $a,b$ with $ap-bm=1$; the nonzero element
-$t^a y^b$ has valuation one. Its integral powers realize every
-integer, proving surjectivity. The formula on constant basis
-expressions gives $w|_K=p v$.
+The formula gives $w(t)=p$ and $w(y)=-m$. For any integer $n$,
+choose $0\le i<p$ with $mi\equiv-n\pmod p$; this is possible
+because $m$ is invertible modulo $p$. Put $a=(n+mi)/p\in\mathbf Z$.
+The single basis term $t^a y^i$ has weight $pa-mi=n$.
+Every integer is therefore realized, and zero realizes $+\infty$.
+The formula on constant basis expressions gives $w|_K=p v$.
 \end{proof}
 
 \begin{lemma}[Completeness and residue field]
