@@ -1,0 +1,208 @@
+\section{The two additive equations in Witt's construction}
+
+The two choices in steps (d) and (e) of the Witt algorithm in
+\cite{Camina1997}, pp.~103--104, can be made by explicit finite sums.
+The arguments below supply the trace-one argument and the summation
+details behind those choices. Actions are written on the left, with
+$(st)(x)=s(t(x))$.
+
+\begin{lemma}[Linear independence of distinct field homomorphisms]
+\label{lem:field-hom-linear-independence}
+\notready
+Let $F,E$ be fields and let $\varphi_1,\ldots,\varphi_r:F\to E$
+be distinct field homomorphisms. If $a_1,\ldots,a_r\in E$ satisfy
+\[
+ \sum_{i=1}^r a_i\varphi_i(x)=0\qquad\text{for every }x\in F,
+\]
+then all the $a_i$ are zero.
+\end{lemma}
+
+\begin{proof}
+If there is a nonzero relation, choose one with the smallest
+positive number of nonzero coefficients. Let $i_0$ have a nonzero
+coefficient. There must be a second such index $j$: a relation
+supported at $i_0$ alone, evaluated at $1$, would say $a_{i_0}=0$.
+Since $\varphi_j\ne\varphi_{i_0}$, choose $b\in F$ with
+$\varphi_j(b)\ne\varphi_{i_0}(b)$.
+For arbitrary $x$, subtract $\varphi_{i_0}(b)$ times the relation
+at $x$ from the relation at $bx$. Multiplicativity gives
+\[
+ \sum_i a_i\bigl(\varphi_i(b)-\varphi_{i_0}(b)\bigr)
+           \varphi_i(x)=0.
+\]
+The coefficient at $i_0$ is now zero, while the coefficient at
+$j$ is nonzero, because it is a product of two nonzero elements
+of the field $E$. No previously zero coefficient becomes nonzero.
+This contradicts minimality of the chosen support.
+\end{proof}
+
+\begin{lemma}[An element of Galois trace one]
+\label{lem:galois-trace-one}
+\uses{lem:field-hom-linear-independence}
+\notready
+Let $L/K$ be a finite Galois extension, with
+$G=\operatorname{Gal}(L/K)$. There exists $\alpha\in L$ with
+\[
+ \sum_{s\in G}s(\alpha)=1.
+\]
+Thus the Galois trace $\operatorname{Tr}_{L/K}(x)=\sum_{s\in G}s(x)$
+takes the value one, in arbitrary characteristic.
+\end{lemma}
+
+\begin{proof}
+The distinct automorphisms in the finite group $G$ are linearly
+independent as maps $L\to L$ by the preceding lemma. Their sum
+is not the zero map: otherwise its coefficients, all equal to
+one, would give a nonzero linear relation. Choose $\beta\in L$
+such that $z=\sum_{s\in G}s(\beta)\ne0$.
+For each $h\in G$, left multiplication by $h$ permutes $G$, so
+\[
+ h(z)=\sum_{s\in G}(hs)(\beta)=z.
+\]
+Set $\alpha=\beta/z$. Since every $s$ fixes $z$, we obtain
+\[
+ \sum_{s\in G}s(\alpha)
+   =z^{-1}\sum_{s\in G}s(\beta)=z^{-1}z=1.
+\]
+In particular this argument does not divide by $|G|$.
+\end{proof}
+
+For the following three lemmas, let $L$ be a field of
+characteristic $p$, where $p$ is prime, and let a finite group
+$G$ act on $L$ by field automorphisms. The prime subfield
+$\mathbf F_p\subseteq L$ is fixed by every element of $G$.
+Suppose that $\alpha\in L$ satisfies
+$\sum_{t\in G}t(\alpha)=1$.
+All values in $\mathbf F_p$ in the formulas below are viewed
+through this inclusion into $L$.
+
+\begin{lemma}[Solving the additive two-cocycle equation]
+\label{lem:witt-two-cocycle-solution}
+\source{camina1997:page-0003}
+\notready
+Let $c:G\times G\to\mathbf F_p$ be a normalized two-cocycle,
+meaning that $c(1,s)=c(s,1)=0$ and
+\[
+ c(s,t)+c(st,u)=c(t,u)+c(s,tu)
+ \qquad(s,t,u\in G).
+\]
+Define
+\[
+ \delta_s=\sum_{u\in G}c(s,u)\,(su)(\alpha).
+\]
+Then $\delta_1=0$ and
+\[
+ \delta_s+s(\delta_t)-\delta_{st}=c(s,t)
+ \qquad(s,t\in G).
+\]
+\end{lemma}
+
+\begin{proof}
+The equation $\delta_1=0$ follows term by term from $c(1,u)=0$.
+In the sum defining $\delta_s$, reindex by $u\mapsto tu$.
+In the sum defining $s(\delta_t)$, use that $s$ fixes
+$c(t,u)\in\mathbf F_p$. We get
+\[
+\begin{aligned}
+ \delta_s+s(\delta_t)-\delta_{st}
+ &=\sum_{u\in G}
+       \bigl(c(s,tu)+c(t,u)-c(st,u)\bigr)(stu)(\alpha)\\
+ &=\sum_{u\in G}c(s,t)(stu)(\alpha)\\
+ &=c(s,t)\sum_{u\in G}(stu)(\alpha)\\
+ &=c(s,t).
+\end{aligned}
+\]
+The second equality is the two-cocycle identity. The final sum
+is one because left multiplication by $st$ permutes $G$ and
+$\alpha$ has trace one.
+\end{proof}
+
+\begin{lemma}[Solving an additive one-cocycle equation]
+\label{lem:witt-one-cocycle-solution}
+\notready
+Let $\eta:G\to L$ satisfy
+\[
+ \eta_{st}=\eta_s+s(\eta_t)\qquad(s,t\in G).
+\]
+Set
+\[
+ \gamma=-\sum_{t\in G}\eta_t\,t(\alpha).
+\]
+Then $s(\gamma)-\gamma=\eta_s$ for every $s\in G$.
+\end{lemma}
+
+\begin{proof}
+For a fixed $s$, the one-cocycle identity gives
+$s(\eta_t)=\eta_{st}-\eta_s$. Therefore
+\[
+\begin{aligned}
+ s(\gamma)
+ &=-\sum_{t\in G}s(\eta_t)(st)(\alpha)\\
+ &=-\sum_{t\in G}(\eta_{st}-\eta_s)(st)(\alpha)\\
+ &=-\sum_{t\in G}\eta_{st}(st)(\alpha)
+      +\eta_s\sum_{t\in G}(st)(\alpha)\\
+ &=\gamma+\eta_s.
+\end{aligned}
+\]
+Both sums in the last line are obtained from their defining sums
+by the permutation $t\mapsto st$, and the second equals one.
+Subtracting $\gamma$ gives the assertion.
+\end{proof}
+
+\begin{lemma}[The Artin--Schreier image of the two-cocycle solution]
+\label{lem:witt-artin-schreier-cocycle}
+\uses{lem:witt-two-cocycle-solution,lem:witt-one-cocycle-solution}
+\source{camina1997:page-0003,camina1997:page-0004}
+\notready
+For the normalized two-cocycle $c$ and the elements $\delta_s$
+above, put $\wp(x)=x^p-x$ and $\eta_s=\wp(\delta_s)$.
+Then $\eta_{st}=\eta_s+s(\eta_t)$, and the element
+\[
+ \gamma=-\sum_{t\in G}\wp(\delta_t)\,t(\alpha)
+\]
+satisfies
+\[
+ (s-1)\gamma:=s(\gamma)-\gamma=\wp(\delta_s)
+ \qquad(s\in G).
+\]
+\end{lemma}
+
+\begin{proof}
+In characteristic $p$, the binomial theorem gives
+$(x+z)^p=x^p+z^p$, since each intermediate binomial coefficient
+is divisible by $p$. Thus $\wp$ is additive, preserves negatives,
+and commutes with every field automorphism. It vanishes on the
+prime subfield, since $c^p=c$ for $c\in\mathbf F_p$.
+Apply $\wp$ to
+$\delta_s+s(\delta_t)-\delta_{st}=c(s,t)$.
+The right side becomes zero, and the left side becomes
+$\eta_s+s(\eta_t)-\eta_{st}$, proving the one-cocycle identity.
+The preceding lemma applied to this $\eta$ and the given
+trace-one element $\alpha$ now proves the formula for $\gamma$.
+\end{proof}
+
+\begin{theorem}[Solutions of Witt's two additive equations]
+\label{thm:witt-additive-equations}
+\uses{lem:galois-trace-one,lem:witt-two-cocycle-solution,lem:witt-artin-schreier-cocycle}
+\source{camina1997:page-0003,camina1997:page-0004}
+\notready
+Let $L/K$ be a finite Galois extension of characteristic $p$ and
+let $c:\operatorname{Gal}(L/K)^2\to\mathbf F_p$ be a normalized
+two-cocycle for the trivial action on $\mathbf F_p$.
+There are elements $\delta_s\in L$ and $\gamma\in L$ satisfying
+\[
+ \delta_s+s(\delta_t)-\delta_{st}=c(s,t),\qquad
+ s(\gamma)-\gamma=\delta_s^p-\delta_s
+\]
+for all $s,t\in\operatorname{Gal}(L/K)$, with $\delta_1=0$.
+\end{theorem}
+
+\begin{proof}
+Choose $\alpha$ by the trace-one lemma. Apply the explicit
+two-cocycle construction to obtain $\delta_s$, and then apply
+the Artin--Schreier cocycle lemma to obtain
+$\gamma=-\sum_t\wp(\delta_t)t(\alpha)$.
+The two previously proved identities are exactly the required
+equations, and the two-cocycle construction also gives
+$\delta_1=0$.
+\end{proof}
