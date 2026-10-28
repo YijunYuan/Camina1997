@@ -396,3 +396,292 @@ order on the two sides. Subtracting one gives the depth assertion.
 Finally the faithful finite discrete action gives a closed
 embedding by Lemma~\ref{lem:pgroup-power-series-normalization}.
 \end{proof}
+
+\begin{lemma}[Depth preservation for a compatible Artin--Schreier action]
+\label{lem:artin-schreier-depth-of-restriction}
+\uses{lem:artin-schreier-base-parameter,lem:artin-schreier-uniformizer-action,lem:artin-schreier-cyclic-extension,lem:artin-schreier-translation-depth,lem:nottingham-depth-fixed-parameter,lem:nottingham-laurent-extension}
+\source{camina1997:page-0009,camina1997:page-0010}
+\lean{Camina1997.Nottingham.orderTop_toLaurent_sub_parameter, Camina1997.ArtinSchreier.translationPowerSeries_baseParameter, Camina1997.ArtinSchreier.depth_nottinghamAction_of_restriction}
+\leanok
+Let $k=\mathbf F_p$, let $K=k((t))$, and let $\gamma\in K$
+have order $-m$, where $m>0$ and $p\nmid m$.
+Put $L=K[y]$ with $y^p-y=\gamma$, and equip it with the weighted
+valuation $w$ and the coefficient inclusion $j:K\hookrightarrow L$.
+For $c\in k$, let $\tau_c$ fix $K$ and send $y$ to $y+c$.
+Choose a uniformizer $\pi$ satisfying
+\[
+ w(\tau_c(\pi)-\pi)=m+1\qquad(c\in k,\ c\ne0).
+\]
+Let a $p$-group $G$ act on $L$ by automorphisms $\rho(g)$
+preserving $w$. Suppose $q:G\to J_p(t)$ is a homomorphism
+such that
+\[
+ \rho(g)(j(a))=j(\widetilde{q(g)}(a))
+ \qquad(g\in G,\ a\in K),
+\]
+where the tilde denotes Laurent extension.
+Let $\iota:G\to J_p(X)$ be the action in the coordinate $X\mapsto\pi$.
+For every $g\in G$ and natural number $d$ with $D_t(q(g))=d<m$,
+\[
+ D_X(\iota(g))=d.
+\]
+\end{lemma}
+
+\begin{proof}
+Let $T_\pi\in k[[X]]$ be the lower parameter, characterized by
+$E_\pi(T_\pi)=j(t)$. It has order $p$.
+The translation $\tau_1$ has order $p$ and preserves $w$;
+its action in the coordinate $X\mapsto\pi$ is therefore a
+Nottingham element $\tau$. The assumed displacement of $\pi$
+gives $D_X(\tau)=m$. The translation fixes $j(t)$, so the
+evaluation identity and injectivity of $E_\pi$ show that
+$\tau(T_\pi)=T_\pi$.
+
+Fix $g$ and $d$ as in the statement. The evaluation identity
+for the lifted action and the restriction hypothesis give
+\[
+ E_\pi(\iota(g)(T_\pi)-T_\pi)
+   =j(\widetilde{q(g)}(t)-t).
+\]
+The definition of finite depth gives
+$v_t(\widetilde{q(g)}(t)-t)=d+1$. Since $w\circ j=pv_t$,
+the evaluated displacement has weight $p(d+1)$.
+Evaluation preserves order, hence
+\[
+ v_X(\iota(g)(T_\pi)-T_\pi)=p(d+1).
+\]
+Apply Lemma~\ref{lem:nottingham-depth-fixed-parameter} to
+$\iota(g)$, $\tau$, and $T_\pi$, using $d<m$. It gives the
+required depth equality.
+\end{proof}
+
+\begin{theorem}[One central lift preserves all nontrivial quotient depths]
+\label{thm:witt-simultaneous-depth-preserving-central-lift}
+\uses{thm:witt-reduced-central-lift,lem:artin-schreier-semilinear-valuation,lem:artin-schreier-translation-depth,lem:artin-schreier-uniformizer-action,lem:artin-schreier-laurent-parameter,lem:artin-schreier-depth-of-restriction,lem:nottingham-depth-filtration,lem:nottingham-laurent-isometry}
+\source{camina1997:page-0009,camina1997:page-0010}
+\lean{Camina1997.Witt.exists_depth_preserving_centralLift}
+\leanok
+Put $k=\mathbf F_p$ and $K=k((t))$, with its order valuation $v$.
+Let $F$ be a field with an isomorphism $e_F:F\simeq K$, and
+let $\alpha:F\hookrightarrow K$ make $K/F$ finite Galois.
+Write $M=\operatorname{Gal}_{\alpha}(K/F)$.
+Let $H$ be a finite $p$-group and let
+\[
+ 1\longrightarrow(k,+)\xrightarrow{\eta}H
+   \xrightarrow{q}M\longrightarrow1
+\]
+be a central extension. Suppose a homomorphism
+$\psi:H\to J_p(t)$ satisfies
+\[
+ \widetilde{\psi(h)}(a)=q(h)(a)
+ \qquad(h\in H,\ a\in K).
+\]
+There is a field embedding $\beta:F\hookrightarrow K$ making
+$K/F$ finite Galois, an isomorphism
+$\rho:H\simeq\operatorname{Gal}_{\beta}(K/F)$, and an injective
+homomorphism $\varphi:H\to J_p$ such that
+\[
+ v(\rho(h)(a))=v(a),\qquad
+ \widetilde{\varphi(h)}(a)=\rho(h)(a)
+ \qquad(h\in H,\ a\in K),
+\]
+and, simultaneously for every $h\in H$,
+\[
+ \psi(h)\ne1\quad\Longrightarrow\quad
+ D(\varphi(h))=D(\psi(h)).
+\]
+The embeddings $\alpha$ and $\beta$ into the Laurent field may differ;
+the same base field $F$ and its specified isomorphism $e_F$ are retained.
+\end{theorem}
+
+\begin{proof}
+Every nonidentity element of Nottingham has a finite natural depth.
+Since $H$ is finite, choose a natural number $B$ bounding the depths
+of all $\psi(h)\ne1$; if there are none, take $B=0$.
+The reduced central-lift theorem, applied with this single bound,
+gives a parameter $r\in K$ of order $-m$, with $m>B$ and
+$p\nmid m$, a finite Galois field
+\[
+ A=K[y],\qquad y^p-y=r,
+\]
+and an isomorphism $\sigma:H\simeq\operatorname{Gal}(A/F)$
+whose restriction to $K$ is $q$. Let $j:K\hookrightarrow A$
+be the coefficient inclusion and let $w$ be the weighted valuation.
+
+The automorphism $q(h)$ is the Laurent extension of $\psi(h)$,
+so it preserves the order on $K$. The semilinear valuation lemma
+therefore gives $w(\sigma(h)(z))=w(z)$ for all $h\in H$ and
+$z\in A$. Choose a uniformizer $\pi$ for which every nonzero
+translation $y\mapsto y+c$ displaces $\pi$ by weight $m+1$,
+as supplied by the translation-depth lemma.
+The action in uniformizer coordinates gives a homomorphism
+$\varphi:H\to J_p$. It is injective because the full Galois
+action $\sigma$ is faithful and the coordinate action preserves
+faithfulness.
+
+If $\psi(h)\ne1$, write $D(\psi(h))=d$.
+The choice of $B$ gives $d\le B<m$. The restriction formula for
+$\sigma$ and the hypothesis on $\psi$ identify its restriction
+with $\widetilde{\psi(h)}$. Applying
+Lemma~\ref{lem:artin-schreier-depth-of-restriction} gives
+$D(\varphi(h))=d$. Both the extension and the uniformizer were
+chosen before $h$, so this proves the assertion for all such
+$h$ simultaneously.
+
+Finally let $U_\pi:K\simeq A$ be Laurent evaluation at $\pi$.
+Define
+\[
+ \beta=U_\pi^{-1}\circ j\circ\alpha,
+ \qquad
+ \rho(h)=U_\pi^{-1}\sigma(h)U_\pi.
+\]
+Then $U_\pi$ identifies the extension through $\beta$ with
+$A/F$. It follows that this is finite Galois and that $\rho$
+is an isomorphism with its full Galois group. Since $U_\pi$
+identifies Laurent order with $w$, the action $\rho$ preserves
+order. By the definition of the uniformizer action,
+$\widetilde{\varphi(h)}=\rho(h)$ on all of $K$.
+Thus the resulting Nottingham embedding and the full Laurent
+Galois realization agree, as required.
+
+Camina's Theorem~4 is stated for one nontrivial restricted element.
+Taking the maximum of the finitely many lower depths in its
+parameter-choice argument gives the simultaneous conclusion above.
+The reduced-pole adjustment also allows a central kernel of order
+$p$ without a Frattini condition.
+\end{proof}
+
+\begin{lemma}[A central prime-order subgroup inside a normal kernel]
+\label{lem:finite-p-group-central-prime-step-in-kernel}
+\uses{lem:finite-p-group-central-prime-step}
+\source{camina1997:page-0009,camina1997:page-0010}
+\lean{IsPGroup.exists_central_subgroup_card_prime_le_normal, IsPGroup.exists_central_prime_step_le_normal}
+\leanok
+Let $H$ be a finite $p$-group and let $K\ne1$ be a normal subgroup.
+There is a normal subgroup $N$ of $H$ such that
+\[
+ N\le K\cap Z(H),\qquad |N|=p.
+\]
+Moreover, $H/N$ is a $p$-group and $|H/N|<|H|$.
+\end{lemma}
+
+\begin{proof}
+The group $H$ is nilpotent. Indeed, start its upper central series
+with $Z_0=1$ and define $Z_{i+1}/Z_i=Z(H/Z_i)$.
+If $Z_i\ne H$, Lemma~\ref{lem:finite-p-group-central-prime-step}
+applied to the nontrivial $p$-group $H/Z_i$ shows that its center
+is nontrivial. Thus $Z_i<Z_{i+1}$. Finiteness implies that
+$Z_c=H$ for some $c$.
+
+Choose the least $i\ge1$ for which $K\cap Z_i\ne1$ and an element
+$1\ne x\in K\cap Z_i$. For every $h\in H$, the commutator
+$hxh^{-1}x^{-1}$ lies in $K$ by normality and in $Z_{i-1}$ by
+the definition of the upper central series. Minimality of $i$
+makes this intersection trivial. Consequently $x\in Z(H)$,
+so $K\cap Z(H)\ne1$. This intersection is a nontrivial finite
+$p$-group; the prime-power subgroup theorem supplies a subgroup
+$N$ of order $p$ in it. Since $N$ is central, it is normal in $H$.
+Finally, $|H/N|=|H|/p$ is a power of $p$ strictly smaller than
+$|H|$, as $p>1$.
+
+This is the group-theoretic refinement needed to iterate the
+central lifting step of \cite{Camina1997}, pp.~109--110,
+inside the kernel of a prescribed finite quotient.
+\end{proof}
+
+\begin{theorem}[Depth-preserving realization over a finite quotient]
+\label{thm:witt-depth-preserving-finite-quotient-lift}
+\uses{lem:finite-p-group-central-prime-step-in-kernel,thm:witt-simultaneous-depth-preserving-central-lift,lem:nottingham-laurent-isometry}
+\source{camina1997:page-0009,camina1997:page-0010,camina1997:page-0011}
+\lean{Camina1997.Witt.exists_depth_preserving_lift}
+\leanok
+Put $k=\mathbf F_p$ and $K=k((t))$, with order valuation $v$.
+Let $F$ be a field with a specified isomorphism $e_F:F\simeq K$,
+and let $\alpha:F\hookrightarrow K$ make $K/F$ finite Galois.
+Let $G$ be finite, and suppose that an isomorphism
+$\rho_G:G\simeq\operatorname{Gal}_{\alpha}(K/F)$ and a homomorphism
+$\psi_G:G\to J_p$ satisfy
+\[
+ \widetilde{\psi_G(g)}(a)=\rho_G(g)(a)
+ \qquad(g\in G,\ a\in K).
+\]
+For any finite $p$-group $H$ and surjective homomorphism $q:H\to G$,
+there are a field embedding $\beta:F\hookrightarrow K$ making
+$K/F$ finite Galois, an isomorphism
+$\rho:H\simeq\operatorname{Gal}_{\beta}(K/F)$, and an injective
+homomorphism $\varphi:H\to J_p$ such that
+\[
+ v(\rho(h)(a))=v(a),\qquad
+ \widetilde{\varphi(h)}(a)=\rho(h)(a)
+ \qquad(h\in H,\ a\in K),
+\]
+and, simultaneously for all $h\in H$,
+\[
+ \psi_G(q(h))\ne1\quad\Longrightarrow\quad
+ D(\varphi(h))=D(\psi_G(q(h))).
+\]
+The base field $F$ and its specified isomorphism $e_F$ are retained,
+while its embedding into $K$ may change.
+\end{theorem}
+
+\begin{proof}
+First, $\psi_G$ is injective: equality of two of its values gives
+equality of their Laurent extensions, hence of their images under
+$\rho_G$, and then equality in $G$.
+We use strong induction on $|H|$, keeping the initial realization
+of $G$ fixed. If $q$ is injective, it is an isomorphism.
+Take $\beta=\alpha$, $\rho=\rho_G\circ q$, and
+$\varphi=\psi_G\circ q$. These maps have the asserted
+faithfulness and agreement. Each $\rho(h)$ preserves order because
+it is the Laurent extension of a Nottingham element; the depth
+equalities are identities.
+
+Suppose that $q$ is not injective. Its kernel is a nontrivial
+normal subgroup. Choose $N\le\ker q\cap Z(H)$ of order $p$
+by Lemma~\ref{lem:finite-p-group-central-prime-step-in-kernel}.
+Let $r:H\to Q=H/N$ be the quotient map. Since $N\le\ker q$,
+there is a surjective homomorphism $\bar q:Q\to G$ satisfying
+$q=\bar q\circ r$. The group $Q$ is a $p$-group with $|Q|<|H|$.
+The induction hypothesis supplies an embedding
+$\alpha_Q:F\hookrightarrow K$, its full finite Galois
+realization $\rho_Q:Q\simeq\operatorname{Gal}_{\alpha_Q}(K/F)$,
+and an injective homomorphism $\varphi_Q:Q\to J_p$ agreeing
+with that action on $K$. They satisfy
+\[
+ \psi_G(\bar q(z))\ne1\quad\Longrightarrow\quad
+ D(\varphi_Q(z))=D(\psi_G(\bar q(z)))
+ \qquad(z\in Q).
+\]
+
+The surjection $s=\rho_Q\circ r$ has kernel $N$.
+A group of order $p$ is cyclic, so identify $N$ with $(k,+)$.
+This gives a central extension of
+$\operatorname{Gal}_{\alpha_Q}(K/F)$ by $(k,+)$.
+Set $\psi=\varphi_Q\circ r$. Its Laurent action is $s$,
+by the agreement assertion for $\varphi_Q$.
+Apply Theorem~\ref{thm:witt-simultaneous-depth-preserving-central-lift}
+to this central extension, using the same $F$ and $e_F$.
+It produces $\beta$, $\rho$, and $\varphi$ with the full
+Galois, valuation, faithfulness, and agreement assertions of
+the conclusion, and with $D(\varphi(h))=D(\psi(h))$
+whenever $\psi(h)\ne1$.
+
+If $\psi_G(q(h))\ne1$, then $r(h)\ne1$, since
+$q=\bar q\circ r$. Injectivity of $\varphi_Q$ therefore
+gives $\psi(h)\ne1$. The central-step equality and the induction
+hypothesis now give
+\[
+ D(\varphi(h))=D(\varphi_Q(r(h)))
+             =D(\psi_G(\bar q(r(h))))
+             =D(\psi_G(q(h))).
+\]
+Both hypotheses apply to the same constructed action, so these
+equalities hold for every indicated $h$ simultaneously.
+
+This extends the central step in Camina's Theorem~4 to an arbitrary
+finite $p$-group quotient by induction inside its kernel. It supplies
+the depth assertion needed between successive finite groups in
+the tower of Theorem~5. The assertion compares depths in Laurent
+coordinates and does not assert equality of coefficients between
+successive realizations.
+\end{proof}

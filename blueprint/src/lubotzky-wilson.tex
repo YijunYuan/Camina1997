@@ -11,27 +11,31 @@ $[a,b]=aba^{-1}b^{-1}$ throughout this section.
 \begin{lemma}[Embedding a finite group in a derived subgroup]
 \label{lem:finite-p-derived-embedding}
 \source{lubotzky-wilson1984:page-0002}
-\notready
+\lean{Camina1997.constantWreath_mem_commutator, Camina1997.finiteDerivedEmbedding, Camina1997.finiteDerivedEmbedding_injective, Camina1997.exists_finite_pGroup_derived_embedding}
+\leanok
 Every finite $p$-group $A$ embeds in $F'$ for some finite $p$-group $F$.
 \end{lemma}
 
 \begin{proof}
-Put $n=|A|$ and let $C_n=\langle t\rangle$ be cyclic of order $n$.
+Put $n=|A|$ and let $C_n=\mathbf Z/n\mathbf Z$, written additively.
 Let $B$ be the group of functions $C_n\to A$ with pointwise
-multiplication. Let $t$ act on $B$ by
-$(tft^{-1})(t^k)=f(t^{k+1})$, and put $F=B\rtimes C_n$.
+multiplication. Let $C_n$ act on $B$ by
+$(q\cdot f)(x)=f(x-q)$, and put $F=B\rtimes C_n$.
 Its order is $n^n n$, a power of $p$; this also covers $n=1$.
 For $a\in A$, let $d(a)\in B$ be the constant function with value $a$.
-The map $d$ is an injective homomorphism. Define $f_a(t^k)=a^k$.
+The map $d$ is an injective homomorphism. Define $f_a(\bar k)=a^k$.
 This is well-defined because $a^n=1$ by Lagrange's theorem.
-For every $k$,
+Let $t$ denote the element $-1\in C_n$ in the acting subgroup
+of $F$. Conjugation by $t$ sends $f(x)$ to $f(x+1)$, so for every $k$,
 \[
- [t,f_a](t^k)=f_a(t^{k+1})f_a(t^k)^{-1}
+ [t,f_a](\bar k)=f_a(\overline{k+1})f_a(\bar k)^{-1}
              =a^{k+1}a^{-k}=a.
 \]
 Thus $d(a)=[t,f_a]\in F'$, as required. The functions $f_a$
 need not depend homomorphically on $a$; the embedding is the
 constant-function map $d$.
+This gives directly the finite $p$-group case of the
+derived-subgroup embedding invoked in \cite{LubotzkyWilson1984}, p.~398.
 \end{proof}
 
 \begin{lemma}[Separation of sparse powers]

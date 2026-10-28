@@ -16,7 +16,8 @@ $N$ for which $[P:N]$ is a finite power of $p$.
 
 \begin{definition}[Countable base]
 \label{def:countably-based}
-\notready
+\lean{Filter.IsCountablyGenerated}
+\mathlibok
 A topological group is countably based if its identity has a countable
 neighbourhood basis. Thus there are open identity neighbourhoods
 $U_1,U_2,\ldots$ such that every identity neighbourhood contains some
@@ -25,14 +26,16 @@ $U_n$.
 
 \begin{definition}[Finite generation]
 \label{def:topologically-finitely-generated}
-\notready
+\lean{Camina1997.TopologicallyFG}
+\leanok
 A topological group $P$ is topologically finitely generated when some
 finite subset $S\subseteq P$ generates a dense subgroup of $P$.
 \end{definition}
 
 \begin{definition}[Closed group embedding]
 \label{def:closed-group-embedding}
-\notready
+\lean{Topology.IsClosedEmbedding}
+\mathlibok
 A closed group embedding $f:P\longrightarrow G$ is a group homomorphism
 which is a homeomorphism from $P$ onto its image with the subspace
 topology, and whose image is closed in $G$.
@@ -42,7 +45,8 @@ topology, and whose image is closed in $G$.
 \label{lem:compact-injection-closed-embedding}
 \uses{def:closed-group-embedding}
 \source{camina1997:page-0012}
-\notready
+\lean{Continuous.isClosedEmbedding}
+\mathlibok
 Let $P$ be a compact topological group and $G$ a Hausdorff topological
 group. Every continuous injective homomorphism
 $f:P\longrightarrow G$ is a closed group embedding.
@@ -783,14 +787,13 @@ $j\circ i$ a closed group embedding. As $P$ was arbitrary, this is
 $\mathcal U_p(G)$.
 \end{proof}
 
-For $G=J_p$, the first hypothesis is supplied by Camina's Theorem~5.
+For $G=J_p$, the first hypothesis is supplied by
+Theorem~\ref{thm:nottingham-finitely-generated-pro-p}, Camina's Theorem~5.
 Her Theorem~6, attributed to Lubotzky and Wilson, supplies a single
 two-generator pro-$p$ group containing all countably based pro-$p$
 groups, and hence is stronger than the second hypothesis above.
 The theorem just proved isolates the composition and closed-image
-argument in Corollary~2; it does not prove either of those two input
-theorems. In particular, the finite-group realization and depth-control
-arguments used to establish Theorem~5 are separate mathematical
-obligations. Continuity is an explicit hypothesis of both maps in the
+argument in Corollary~2; its two inputs are distinct mathematical
+assertions. Continuity is an explicit hypothesis of both maps in the
 reduction; no assertion about automatic continuity of abstract
 homomorphisms is used here.
