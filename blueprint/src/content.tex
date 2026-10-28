@@ -295,7 +295,7 @@ congruence condition is preserved.
 \label{lem:aut-congruence-parameter}
 \uses{lem:power-series-aut-continuity}
 \source{camina1997:page-0002}
-\lean{PowerSeries.X_pow_dvd_algEquiv, PowerSeries.X_pow_dvd_algEquiv_sub}
+\lean{PowerSeries.X_pow_dvd_algEquiv_iff, PowerSeries.X_pow_dvd_algEquiv_sub_iff}
 \leanok
 Let $\sigma,\tau\in A$ and $r\ge0$. Then
 $\sigma(t)-\tau(t)\in t^rR$ if and only if
@@ -523,7 +523,8 @@ including infinite depths.
 \label{lem:nottingham-pro-p}
 \uses{def:pro-p-group,lem:nottingham-hausdorff-group,lem:nottingham-compact,lem:nottingham-quotient-card}
 \source{camina1997:page-0002}
-\notready
+\lean{Camina1997.Nottingham.instIsProPGroup, Camina1997.Nottingham.instFirstCountableTopology, Camina1997.Nottingham.isPGroup_quotient_openNormalSubgroup}
+\leanok
 The Nottingham group $J_p$ is a countably based pro-$p$ group.
 Every open normal subgroup $U$ of $J_p$ has a finite $p$-group quotient.
 \end{lemma}

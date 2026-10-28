@@ -46,6 +46,18 @@ theorem X_pow_dvd_algEquiv_sub (e d : k⟦X⟧ ≃ₐ[k] k⟦X⟧) (n : ℕ)
     rw [hu, pow_succ', mul_assoc]
     exact mul_dvd_mul_left X (dvd_mul_of_dvd_right (ih hn v) u)
 
+/-- Every power of the maximal ideal is invariant under algebra automorphisms. -/
+theorem X_pow_dvd_algEquiv_iff (e : k⟦X⟧ ≃ₐ[k] k⟦X⟧) (n : ℕ) (f : k⟦X⟧) :
+    X ^ n ∣ e f ↔ X ^ n ∣ f := by
+  constructor
+  · intro h
+    simpa using X_pow_dvd_algEquiv e.symm h
+  · exact X_pow_dvd_algEquiv e
+
+theorem X_pow_dvd_algEquiv_sub_iff (e d : k⟦X⟧ ≃ₐ[k] k⟦X⟧) (n : ℕ) :
+    X ^ n ∣ e X - d X ↔ ∀ f, X ^ n ∣ e f - d f :=
+  ⟨fun h ↦ X_pow_dvd_algEquiv_sub e d n h, fun h ↦ h X⟩
+
 end PowerSeries
 
 namespace Camina1997.Nottingham
