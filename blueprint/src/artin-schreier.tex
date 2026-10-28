@@ -4,15 +4,18 @@ Throughout this section, $p$ is prime, $k=\mathbf F_p$, and
 $K=k((t))$. Write $v$ for the additive order valuation, normalized by
 $v(t)=1$ and $v(0)=+\infty$, and write $\wp(x)=x^p-x$.
 The following construction supplies the cyclic case of the
-Artin--Schreier correspondence used in \cite{Camina1997}, Theorem~1,
-and makes explicit the ramification assertion for reduced parameters
-in her Lemma~3. The valuation is constructed on a polynomial basis;
-existence of an extension of $v$ is not assumed.
+Artin--Schreier correspondence used in \cite{Camina1997}, Theorem~1.
+It proves the converse of the ramification note following her Lemma~3:
+a reduced parameter with a negative pole gives a totally ramified extension.
+The weighted valuation, completeness, and Laurent expansion proofs below
+supply details beyond the cited text. The valuation is constructed on a
+polynomial basis; existence of an extension of $v$ is not assumed.
 
 \begin{lemma}[A pole prime to the characteristic is not an Artin--Schreier image]
 \label{lem:artin-schreier-no-root-from-pole}
 \source{camina1997:page-0005}
-\notready
+\lean{LaurentSeries.pow_sub_ne_of_orderTop}
+\leanok
 If $\gamma\in K$, $m>0$, $p\nmid m$, and $v(\gamma)=-m$, then
 $\gamma\notin\wp(K)$.
 \end{lemma}
