@@ -202,7 +202,8 @@ Hence $u>p$.
 \label{lem:degree-p-parameter-displacement}
 \uses{lem:degree-p-parameter-frobenius-decomposition,lem:frobenius-split-displacement}
 \source{camina1997:page-0006,camina1997:page-0007}
-\notready
+\lean{PowerSeries.le_order_displacement_of_first_nondivisible, PowerSeries.order_displacement_of_first_nondivisible}
+\leanok
 Let $k=\mathbf F_p$ and let
 \[
  T=\sum_{i\ge p}a_iX^i,\qquad a_p\ne0.
@@ -227,7 +228,8 @@ to obtain both assertions.
 \label{lem:camina-four-depth-equation}
 \uses{lem:degree-p-parameter-frobenius-decomposition,lem:frobenius-split-fixed-break}
 \source{camina1997:page-0006}
-\notready
+\lean{PowerSeries.first_exponent_eq_of_fixed_parameter}
+\leanok
 Under the preceding hypotheses, if $g(T)=T$, then
 \[
  u=n(p-1)+p.
@@ -246,24 +248,151 @@ its fixed-point hypothesis. That lemma gives the formula.
 \label{lem:camina-five-depth-preservation}
 \uses{lem:degree-p-parameter-frobenius-decomposition,lem:frobenius-split-depth-equality}
 \source{camina1997:page-0007}
-\notready
-Under the degree-p parameter hypotheses, suppose that for a natural number $d$
+\lean{PowerSeries.depth_eq_of_first_nondivisible}
+\leanok
+Under the degree-$p$ parameter hypotheses, let $d,r$ be natural
+numbers with $d<r$, and suppose
 \[
- g(T)=T+\sum_{j\ge d+1}\beta_jT^j,\qquad \beta_{d+1}\ne0,
+ u=r(p-1)+p,\qquad v(g(T)-T)=p(d+1).
 \]
-and $u=r(p-1)+p$ for a natural number $r>d$.
 If $v(g(X)-X)=n+1<\infty$, then $n=d$.
 \end{lemma}
 
 \begin{proof}
-Since $v(T)=p$, write the given displacement as
-$T^{d+1}V(T)$ with $V(Z)=\beta_{d+1}+\beta_{d+2}Z+\cdots$.
-The substitution converges because $v(T)>0$, and $V(T)$
-has constant coefficient $\beta_{d+1}\ne0$, hence order zero.
-Thus $v(g(T)-T)=p(d+1)$.
 Take the decomposition $T=A^p+B$ of
 Lemma~\ref{lem:degree-p-parameter-frobenius-decomposition}.
-Lemma~\ref{lem:frobenius-split-depth-equality} applies:
-its remaining hypotheses are $u=r(p-1)+p$ and $d<r$.
-It gives $n=d$ as required.
+Lemma~\ref{lem:frobenius-split-depth-equality} applies with the
+given displacement order and gives $n=d$.
+
+The valuation hypothesis is the form of Camina's Lemma~5 used here.
+Her displayed expansion
+$g(T)-T=\sum_{j\ge d+1}\beta_jT^j$, with $\beta_{d+1}\ne0$,
+has this order because it factors as $T^{d+1}V(T)$, where
+$V(Z)=\beta_{d+1}+\beta_{d+2}Z+\cdots$. As $v(T)=p>0$,
+substitution converges, $V(T)$ has nonzero constant coefficient,
+and the product has order $p(d+1)$. In a field tower, the same
+order is obtained directly by evaluating the displacement of the
+lower parameter, as in the coordinate lemmas below.
+\end{proof}
+
+
+\begin{lemma}[A fixing automorphism detects depth through a degree-$p$ parameter]
+\label{lem:nottingham-depth-fixed-parameter}
+\uses{lem:normalized-leading-displacement,lem:degree-p-parameter-frobenius-decomposition,lem:camina-four-depth-equation,lem:camina-five-depth-preservation,lem:nottingham-depth-filtration}
+\source{camina1997:page-0006,camina1997:page-0007}
+\lean{PowerSeries.not_pow_prime_of_fixed_parameter, PowerSeries.depth_eq_of_fixed_parameter, Camina1997.Nottingham.order_sub_eq_of_depth_eq, Camina1997.Nottingham.depth_eq_of_fixed_degree_prime_parameter}
+\leanok
+Let $g,\tau\in J_p$, let $T\in k[[X]]$ have order $p$, and
+let $r,d$ be natural numbers. Suppose
+\[
+ D(\tau)=r,\qquad \tau(T)=T,\qquad d<r,\qquad
+ v(g(T)-T)=p(d+1).
+\]
+Then $D(g)=d$. No hypothesis that $T$ is not a $p$th power
+is needed.
+\end{lemma}
+
+\begin{proof}
+First $T$ cannot be a $p$th power. Otherwise its canonical
+Frobenius remainder vanishes, so $T=A^p$ with $v(A)=1$.
+Since $\tau$ fixes $T$, additivity of Frobenius gives
+$(\tau(A)-A)^p=0$, hence $\tau(A)-A=0$ because the
+power-series ring is a domain. But $D(\tau)=r<\infty$
+means $v(\tau(X)-X)=r+1$. The leading-displacement lemma,
+applied to $A$ of order one, gives
+$v(\tau(A)-A)=r+1<\infty$, a contradiction.
+The decomposition lemma therefore supplies the first nonzero
+coefficient $a_u$ whose exponent is not divisible by $p$.
+Applying Lemma~\ref{lem:camina-four-depth-equation} to $\tau$
+gives $u=r(p-1)+p$.
+The finite order of $g(T)-T$ implies $g\ne1$, so its depth
+is a finite natural number $n$ and $v(g(X)-X)=n+1$.
+Lemma~\ref{lem:camina-five-depth-preservation} now gives $n=d$.
+
+This argument replaces the separability argument for the existence
+of $u$ on Camina's p.~106 by the given nontrivial fixing automorphism.
+\end{proof}
+
+\begin{lemma}[The lower parameter in uniformizer coordinates]
+\label{lem:artin-schreier-base-parameter}
+\uses{lem:artin-schreier-weighted-valuation,lem:artin-schreier-laurent-parameter}
+\source{camina1997:page-0006}
+\lean{Camina1997.ArtinSchreier.baseParameter, Camina1997.ArtinSchreier.powerSeriesEval_baseParameter, Camina1997.ArtinSchreier.order_baseParameter, Camina1997.ArtinSchreier.order_eq_of_weightedOrder_eval}
+\leanok
+Let $k=\mathbf F_p$, let $K=k((t))$, and let $\gamma\in K$
+have order $-m$ with $m>0$ and $p\nmid m$.
+Put $L=K[Y]/(Y^p-Y-\gamma)$, write $j:K\hookrightarrow L$
+for the coefficient inclusion, and let $w$ be the weighted valuation.
+For a uniformizer $\pi\in L$, let
+$E_\pi:k[[X]]\simeq\mathcal O_L$ be evaluation at $\pi$.
+There is a unique power series $T_\pi$ such that
+\[
+ E_\pi(T_\pi)=j(t),\qquad v(T_\pi)=p.
+\]
+Moreover if $w(E_\pi(f))=n$ is a finite natural number, then
+$v(f)=n$.
+\end{lemma}
+
+\begin{proof}
+The weighted valuation satisfies $w(j(t))=pv_t(t)=p\ge0$,
+so $j(t)$ belongs to $\mathcal O_L$. Evaluation is a bijection
+onto that ring, and its inverse defines $T_\pi$ uniquely.
+Evaluation preserves order, so
+$v(T_\pi)=w(E_\pi(T_\pi))=w(j(t))=p$.
+The same equality $v(f)=w(E_\pi(f))$ proves the last assertion.
+If its right-hand side is finite, $E_\pi(f)$ and hence $f$ are
+nonzero, so this equality has the ordinary finite-value meaning.
+\end{proof}
+
+\begin{lemma}[Actions in uniformizer coordinates]
+\label{lem:artin-schreier-uniformizer-action}
+\uses{lem:artin-schreier-laurent-parameter,lem:laurent-action-nottingham-restriction,lem:pgroup-power-series-normalization,def:nottingham-depth}
+\source{camina1997:page-0005,camina1997:page-0008}
+\lean{Camina1997.ArtinSchreier.parameterAction, Camina1997.ArtinSchreier.orderTop_parameterAction, Camina1997.ArtinSchreier.parameterAction_injective_iff, Camina1997.ArtinSchreier.powerSeriesAction, Camina1997.ArtinSchreier.powerSeriesEval_powerSeriesAction, Camina1997.ArtinSchreier.powerSeriesAction_injective_iff, Camina1997.ArtinSchreier.order_powerSeriesAction_sub, Camina1997.ArtinSchreier.nottinghamAction, Camina1997.ArtinSchreier.powerSeriesEval_nottinghamAction, Camina1997.ArtinSchreier.nottinghamAction_injective_iff, Camina1997.ArtinSchreier.depth_nottinghamAction, Camina1997.ArtinSchreier.isClosedEmbedding_nottinghamAction}
+\leanok
+For $L,w,\pi,E_\pi$ as in the preceding lemma, suppose a group $G$
+acts on $L$ by ring automorphisms $\rho(g)$ preserving $w$.
+There is an action $\widehat\rho$ on $k[[X]]$ by $k$-algebra
+automorphisms such that
+\[
+ E_\pi(\widehat\rho(g)(f))=\rho(g)(E_\pi(f))
+ \qquad(g\in G,\ f\in k[[X]]).
+\]
+The action $\widehat\rho$ is faithful exactly when $\rho$ is faithful.
+If $G$ is a $p$-group, it gives an action $\iota:G\to J_p$ with
+the same evaluation identity and faithfulness property. For every
+natural number $n$,
+\[
+ w(\rho(g)(\pi)-\pi)=n+1\quad\Longrightarrow\quad D(\iota(g))=n.
+\]
+In this $p$-group case, if $G$ is finite and discrete and $\rho$
+is faithful, then $\iota$ is a closed topological embedding.
+\end{lemma}
+
+\begin{proof}
+Let $U_\pi:k((X))\simeq L$ be Laurent evaluation at $\pi$.
+Conjugating the field action gives
+$\sigma(g)=U_\pi^{-1}\rho(g)U_\pi$ on $k((X))$.
+Every ring automorphism fixes $k=\mathbf F_p$, so these are
+$k$-algebra automorphisms. The valuation identity for $U_\pi$
+and the hypothesis on $\rho$ show that each $\sigma(g)$ preserves
+order. Restricting to the power-series ring gives $\widehat\rho$.
+Conjugation is a group isomorphism on automorphism groups, and
+restriction preserves and reflects faithfulness by
+Lemma~\ref{lem:laurent-action-nottingham-restriction}.
+This proves the assertion about faithfulness. The definition of
+conjugation and the equality of Laurent and power-series evaluation
+on $k[[X]]$ give the displayed evaluation identity.
+
+If $G$ is a $p$-group, the power-series action is normalized,
+so it factors through $J_p$ without changing any automorphisms
+or faithfulness. Since $E_\pi(X)=\pi$, the evaluation identity
+and additivity give
+\[
+ E_\pi(\iota(g)(X)-X)=\rho(g)(\pi)-\pi.
+\]
+Preservation of order therefore identifies the finite displacement
+order on the two sides. Subtracting one gives the depth assertion.
+Finally the faithful finite discrete action gives a closed
+embedding by Lemma~\ref{lem:pgroup-power-series-normalization}.
 \end{proof}
