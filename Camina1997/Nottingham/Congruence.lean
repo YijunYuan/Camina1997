@@ -126,4 +126,28 @@ theorem ext_X {g h : Nottingham p} (heq : g X = h X) : g = h := by
   have hf := X_pow_dvd_algEquiv_sub g.toAlgEquiv h.toAlgEquiv (n + 1) hd f
   simpa using X_pow_dvd_iff.mp hf n (Nat.lt_succ_self n)
 
+/-- Two automorphisms lie in the same congruence coset exactly when their parameters agree
+to the corresponding order. -/
+theorem inv_mul_mem_congruenceSubgroup_iff (g h : Nottingham p) (n : ℕ) :
+    g⁻¹ * h ∈ congruenceSubgroup n ↔ X ^ (n + 1) ∣ h X - g X := by
+  rw [mem_congruenceSubgroup_iff]
+  constructor
+  · intro hd
+    simpa [mul_apply, inv_apply, map_sub] using X_pow_dvd_algEquiv g.toAlgEquiv hd
+  · intro hd
+    simpa [mul_apply, inv_apply, map_sub] using X_pow_dvd_algEquiv g.toAlgEquiv.symm hd
+
+theorem inv_mul_mem_congruenceSubgroup_iff_coeff (g h : Nottingham p) (n : ℕ) :
+    g⁻¹ * h ∈ congruenceSubgroup n ↔
+      ∀ i < n - 1, coeff (i + 2) (h X) = coeff (i + 2) (g X) := by
+  rw [inv_mul_mem_congruenceSubgroup_iff, X_pow_dvd_iff]
+  constructor
+  · intro hd i hi
+    simpa only [map_sub, sub_eq_zero] using hd (i + 2) (by omega)
+  · intro hd m hm
+    match m with
+    | 0 => simp [coeff_zero_eq_constantCoeff]
+    | 1 => simp
+    | i + 2 => simp only [map_sub, sub_eq_zero]; exact hd i (by omega)
+
 end Camina1997.Nottingham

@@ -287,6 +287,44 @@ factor in the second term in $t^rR$. Since $\tau(t)\in tR$, that
 term also lies in $t^{r+1}R$. The reverse implication takes $f=t$.
 \end{proof}
 
+\begin{lemma}[Realization of normalized parameters]
+\label{lem:nottingham-parameters}
+\uses{def:nottingham-group,lem:aut-congruence-parameter}
+\source{camina1997:page-0002}
+\lean{Camina1997.Nottingham.coefficientEquiv, Camina1997.Nottingham.coeff_ofCoefficients_X}
+\leanok
+For every sequence $(a_i)_{i\ge0}$ in $\mathbf F_p$, there is a unique
+$\sigma\in J_p$ such that
+$\sigma(t)=t+\sum_{i\ge0}a_i t^{i+2}$.
+Thus the map $\sigma\mapsto([t^{i+2}]\sigma(t))_{i\ge0}$ is a bijection
+from $J_p$ to $\mathbf F_p^{\mathbf N}$.
+\end{lemma}
+
+\begin{proof}
+Put $P=t+\sum_{j\ge2}b_jt^j$, with $b_j=a_{j-2}$.
+Substitution $f\mapsto f(P)$ is well-defined since $P$ has zero constant
+coefficient: each coefficient of the substituted series involves only
+finitely many terms. The same finiteness proves preservation of addition,
+multiplication, constants, and associativity of substitution.
+Construct $Q=t+\sum_{n\ge2}c_nt^n$ recursively, choosing
+\[
+ c_n=-\sum_{j=2}^{n}b_j[t^n]
+       \left(t+\sum_{i=2}^{n-1}c_it^i\right)^j.
+\]
+For $j\ge2$, the coefficient in this expression depends only on the
+coefficients of $Q$ of degree less than $n$. Hence the coefficient of
+$t^n$ in $P(Q)$ is zero, while the constant and linear coefficients
+are $0$ and $1$. This proves $P(Q)=t$.
+Apply the same construction to $Q$ to get $S$ with $Q(S)=t$.
+Associativity gives $P=P(Q(S))=(P(Q))(S)=S$, so also $Q(P)=t$.
+Substitution by $P$ and $Q$ are therefore mutually inverse algebra
+homomorphisms, and substitution by $P$ is normalized.
+If two automorphisms have the same parameter, the preceding congruence
+lemma makes their values on every series congruent modulo every power
+of $t$, hence equal coefficient by coefficient. This proves uniqueness
+and the asserted bijection.
+\end{proof}
+
 \begin{lemma}[The congruence filtration]
 \label{lem:nottingham-congruence-filtration}
 \uses{def:nottingham-group,lem:aut-congruence-parameter}
@@ -322,59 +360,64 @@ $f$, so $\sigma=1$.
 
 \begin{definition}[Congruence neighbourhoods]
 \label{def:nottingham-congruence}
-\uses{def:nottingham-group}
+\uses{lem:nottingham-congruence-filtration}
 \source{camina1997:page-0002}
-\notready
-For $n\ge1$, put
-\[
- J_{p,n}=\{\sigma\in J_p:\sigma(t)-t\in\mathfrak m^{n+1}\}.
-\]
+\lean{Camina1997.Nottingham.instTopologicalSpace, Camina1997.Nottingham.nhds_hasBasis}
+\leanok
 The congruence topology on $J_p$ has neighbourhood basis
 $\{\sigma J_{p,n}:n\ge1\}$ at $\sigma\in J_p$.
+Including the redundant subgroup $J_{p,0}=J_p$ gives the same basis.
 \end{definition}
 
 \begin{lemma}[The congruence topology is Hausdorff]
 \label{lem:nottingham-hausdorff-group}
-\uses{def:nottingham-group,def:nottingham-congruence}
-\notready
-The set $J_p$ is a subgroup of $A$. Each $J_{p,n}$ is a normal subgroup
-of $J_p$, these subgroups decrease with $n$, and their cosets define a
-Hausdorff topological group structure on $J_p$.
+\uses{def:nottingham-congruence,lem:nottingham-congruence-filtration}
+\source{camina1997:page-0002}
+\lean{Camina1997.Nottingham.instIsTopologicalGroup, Camina1997.Nottingham.instT2Space, Camina1997.Nottingham.instFirstCountableTopology, Camina1997.Nottingham.isOpen_congruenceSubgroup}
+\leanok
+The congruence topology makes $J_p$ a Hausdorff topological group
+with a countable neighbourhood basis. Every $J_{p,n}$ is open.
 \end{lemma}
 
 \begin{proof}
-Every element of $A$ preserves $\mathfrak m$, so $A$ acts linearly on
-$\mathfrak m/\mathfrak m^2$. This vector space has basis the class of
-$t$. The kernel of this action is therefore exactly $J_p$, proving
-that $J_p$ is a subgroup.
-
-For each $n$, reduction modulo $\mathfrak m^{n+1}$ gives an action of
-$J_p$ on $R/\mathfrak m^{n+1}$. Every element of this quotient is
-represented by a polynomial in $t$ of degree at most $n$, and the
-automorphisms fix $\mathbf F_p$. Thus an automorphism induces the
-identity on this quotient if and only if it fixes the class of $t$.
-The kernel of the action is exactly $J_{p,n}$, which proves normality.
-The inclusion $\mathfrak m^{n+2}\subseteq\mathfrak m^{n+1}$ proves
-$J_{p,n+1}\subseteq J_{p,n}$.
-
 The nested cosets form a basis: if two such cosets contain $\sigma$,
-then the coset $\sigma J_{p,k}$ with $k$ the larger of their indices
+then $\sigma J_{p,k}$, with $k$ the larger of their indices,
 lies in their intersection. Normality implies
 \[
  (\sigma J_{p,n})(\tau J_{p,n})=\sigma\tau J_{p,n},
  \qquad (\sigma J_{p,n})^{-1}=\sigma^{-1}J_{p,n}.
 \]
-These formulas prove continuity of multiplication and inversion for
-the resulting topology.
+These identities prove continuity of multiplication and inversion.
+At any $\sigma\in J_{p,n}$ the coset $\sigma J_{p,n}$ is precisely
+$J_{p,n}$, proving its openness. The displayed basis is countable.
 
-If $\sigma$ belongs to every $J_{p,n}$, the quotient actions show that
-$\sigma(f)-f$ belongs to every $\mathfrak m^{n+1}$ for every $f\in R$.
-A series divisible by every power of $t$ has every coefficient zero,
-so $\sigma(f)=f$ for every $f$ and $\sigma$ is the identity.
-For distinct $\sigma,\tau$, choose $n$ such that
-$\sigma^{-1}\tau\notin J_{p,n}$. The two cosets
-$\sigma J_{p,n}$ and $\tau J_{p,n}$ are disjoint open neighbourhoods,
-which proves the Hausdorff property.
+For distinct $\sigma,\tau$, separation by the filtration supplies
+$n$ such that $\sigma^{-1}\tau\notin J_{p,n}$.
+Their cosets of $J_{p,n}$ are disjoint: membership of a point in both
+would give $\sigma^{-1}\tau\in J_{p,n}$ by the subgroup laws.
+They are open neighbourhoods, proving the Hausdorff property.
+\end{proof}
+
+\begin{lemma}[Order of the congruence quotients]
+\label{lem:nottingham-quotient-card}
+\uses{lem:nottingham-parameters,lem:nottingham-congruence-filtration}
+\source{camina1997:page-0002}
+\notready
+For every $n\ge1$ the quotient $J_p/J_{p,n}$ has $p^{n-1}$ elements.
+\end{lemma}
+
+\begin{proof}
+Two automorphisms $\sigma,\tau$ have the same coset exactly when
+$\sigma^{-1}\tau$ fixes $t$ modulo $t^{n+1}$.
+Apply $\sigma$, which preserves $t^{n+1}R$, to see that this is
+necessary and sufficient for $\tau(t)-\sigma(t)\in t^{n+1}R$.
+Both parameters have constant coefficient zero and linear coefficient
+one. Thus the condition is equality of their coefficients of degrees
+$2,\ldots,n$. The map taking those $n-1$ coefficients consequently
+induces an injection from the quotient into $\mathbf F_p^{n-1}$.
+It is onto: extend any finite coefficient tuple by zeros and realize
+the resulting sequence by the parameter lemma. This is a bijection,
+and there are $p$ independent choices for each of the $n-1$ entries.
 \end{proof}
 
 \begin{definition}[Closed universality property]

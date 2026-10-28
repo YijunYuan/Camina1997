@@ -1,3 +1,4 @@
 module
 
-public import Camina1997.Nottingham.Congruence
+public import Camina1997.Nottingham.Parameters
+public import Camina1997.Nottingham.Topology
