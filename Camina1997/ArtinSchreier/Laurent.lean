@@ -6,15 +6,17 @@ Authors: Archon Horizon contributors
 module
 
 public import Mathlib.RingTheory.LaurentSeries
-public import Camina1997.ArtinSchreier.Polynomial
+public import Camina1997.ArtinSchreier.Extension
 public import Mathlib.Algebra.CharP.Algebra
 
 /-!
 # Artin–Schreier equations with a pole
 
 A Laurent series whose pole has order prime to the characteristic cannot be
-an Artin–Schreier image. This is the first input to the cyclic totally ramified
-extensions used in Camina (1997), Lemma 3, p. 105.
+an Artin–Schreier image. Its Artin–Schreier quotient is therefore a cyclic
+Galois extension of degree `p`. Ramification is a separate result.
+
+Reference: Camina (1997), Theorem 1 and Lemma 3, pp. 103 and 105.
 -/
 
 @[expose] public section
@@ -22,6 +24,9 @@ extensions used in Camina (1997), Lemma 3, p. 105.
 namespace LaurentSeries
 
 variable {k : Type*} [Field k]
+
+instance instCharP {p : ℕ} [CharP k p] : CharP (LaurentSeries k) p :=
+  charP_of_injective_algebraMap (algebraMap k (LaurentSeries k)).injective p
 
 /-- The order of a power is the corresponding multiple of the order. -/
 theorem orderTop_pow (x : LaurentSeries k) (n : ℕ) :
@@ -75,10 +80,34 @@ theorem irreducible_X_pow_sub_X_sub_C_of_orderTop {p m : ℕ} [Fact p.Prime] [Ch
     (hm : 0 < m) (hpm : ¬p ∣ m) (γ : LaurentSeries k)
     (hγ : γ.orderTop = ((-(m : ℤ) : ℤ) : WithTop ℤ)) :
     Irreducible ((Polynomial.X : Polynomial (LaurentSeries k)) ^ p -
-      Polynomial.X - Polynomial.C γ) := by
-  let : CharP (LaurentSeries k) p :=
-    charP_of_injective_algebraMap (algebraMap k (LaurentSeries k)).injective p
-  exact Polynomial.irreducible_X_pow_sub_X_sub_C (p := p) γ
+      Polynomial.X - Polynomial.C γ) :=
+  Polynomial.irreducible_X_pow_sub_X_sub_C (p := p) γ
     (pow_sub_ne_of_orderTop (Fact.out : p.Prime).one_lt hm hpm γ hγ)
+
+open Polynomial Camina1997.ArtinSchreier
+
+/-- The reduced-pole criterion supplies a field structure on the concrete quotient. -/
+theorem isField_adjoinRoot_of_orderTop {p m : ℕ} [Fact p.Prime] [CharP k p]
+    (hm : 0 < m) (hpm : ¬p ∣ m) (γ : LaurentSeries k)
+    (hγ : γ.orderTop = ((-(m : ℤ) : ℤ) : WithTop ℤ)) :
+    IsField (AdjoinRoot (X ^ p - X - C γ)) :=
+  isField_adjoinRoot γ (pow_sub_ne_of_orderTop (Fact.out : p.Prime).one_lt hm hpm γ hγ)
+
+/-- The full automorphism group of a reduced-pole extension is the additive prime field. -/
+noncomputable def automorphismEquivOfPole {p m : ℕ} [Fact p.Prime] [CharP k p]
+    (hm : 0 < m) (hpm : ¬p ∣ m) (γ : LaurentSeries k)
+    (hγ : γ.orderTop = ((-(m : ℤ) : ℤ) : WithTop ℤ)) :
+    Multiplicative (ZMod p) ≃*
+      (AdjoinRoot (X ^ p - X - C γ) ≃ₐ[LaurentSeries k] AdjoinRoot (X ^ p - X - C γ)) :=
+  automorphismEquiv γ (pow_sub_ne_of_orderTop (Fact.out : p.Prime).one_lt hm hpm γ hγ)
+
+/-- The concrete reduced-pole extension is Galois for its canonical quotient field structure. -/
+theorem isGalois_adjoinRoot_of_orderTop {p m : ℕ} [Fact p.Prime] [CharP k p]
+    (hm : 0 < m) (hpm : ¬p ∣ m) (γ : LaurentSeries k)
+    (hγ : γ.orderTop = ((-(m : ℤ) : ℤ) : WithTop ℤ)) :
+    letI : Fact (Irreducible (X ^ p - X - C γ)) :=
+      ⟨irreducible_X_pow_sub_X_sub_C_of_orderTop hm hpm γ hγ⟩
+    IsGalois (LaurentSeries k) (AdjoinRoot (X ^ p - X - C γ)) :=
+  isGalois_adjoinRoot γ (pow_sub_ne_of_orderTop (Fact.out : p.Prime).one_lt hm hpm γ hγ)
 
 end LaurentSeries

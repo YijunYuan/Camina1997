@@ -65,7 +65,8 @@ than $p$, contrary to what was just proved. Hence $f$ is irreducible.
 \label{lem:artin-schreier-cyclic-extension}
 \uses{lem:artin-schreier-no-root-from-pole,lem:artin-schreier-irreducible}
 \source{camina1997:page-0003,camina1997:page-0005}
-\notready
+\lean{LaurentSeries.isField_adjoinRoot_of_orderTop, Camina1997.ArtinSchreier.rootBasis, Camina1997.ArtinSchreier.sum_rootBasis_repr, Camina1997.ArtinSchreier.finrank_adjoinRoot, Camina1997.ArtinSchreier.translationAction, Camina1997.ArtinSchreier.translation_root, LaurentSeries.automorphismEquivOfPole, LaurentSeries.isGalois_adjoinRoot_of_orderTop}
+\leanok
 Suppose $v(\gamma)=-m<0$ and $p\nmid m$. The quotient
 \[
  L=K[Y]/(Y^p-Y-\gamma)
@@ -88,11 +89,19 @@ Substitution $y\mapsto y+c$ respects the defining relation,
 because $c^p=c$, and substitution by $-c$ is its inverse.
 These automorphisms satisfy
 $\sigma_c\sigma_d=\sigma_{c+d}$ and are distinct by their
-values on $y$. Every $K$-automorphism sends $y$ to a root of
-$Y^p-Y-\gamma$, whose roots are exactly these $y+c$.
-Thus they are all the automorphisms. The polynomial splits in
-$L$ and has derivative $-1$, so the extension is normal and
-separable, as required for the stated Galois group.
+values on $y$, giving an injective homomorphism from the additive
+prime field to the automorphism group. There are at most $[L:K]=p$
+$K$-algebra maps from $L$ to itself: each is determined by the
+image of $y$, which must be a root of its degree-$p$ minimal
+polynomial. Thus the $p$ translations exhaust the automorphism
+group and give the claimed group isomorphism.
+The equality between the number of automorphisms and the degree
+also implies that the extension is Galois. Here is that criterion
+in this simple-extension setting: the images of $y$ under the $p$
+distinct automorphisms are distinct and exhaust the roots of its
+minimal polynomial. That polynomial therefore splits with distinct
+roots in $L$. Since $L=K(y)$, it is a splitting field of a separable
+polynomial and hence is normal and separable.
 \end{proof}
 
 \begin{lemma}[The valuation on the cyclic extension]
