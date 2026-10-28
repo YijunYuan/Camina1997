@@ -1,0 +1,297 @@
+\section{Cyclic Artin--Schreier extensions of the Laurent field}
+
+Throughout this section, $p$ is prime, $k=\mathbf F_p$, and
+$K=k((t))$. Write $v$ for the additive order valuation, normalized by
+$v(t)=1$ and $v(0)=+\infty$, and write $\wp(x)=x^p-x$.
+The following construction supplies the cyclic case of the
+Artin--Schreier correspondence used in \cite{Camina1997}, Theorem~1,
+and makes explicit the ramification assertion for reduced parameters
+in her Lemma~3. The valuation is constructed on a polynomial basis;
+existence of an extension of $v$ is not assumed.
+
+\begin{lemma}[A pole prime to the characteristic is not an Artin--Schreier image]
+\label{lem:artin-schreier-no-root-from-pole}
+\source{camina1997:page-0005}
+\notready
+If $\gamma\in K$, $m>0$, $p\nmid m$, and $v(\gamma)=-m$, then
+$\gamma\notin\wp(K)$.
+\end{lemma}
+
+\begin{proof}
+Suppose $\gamma=x^p-x$. If $v(x)\ge0$, then
+$v(x^p-x)\ge\min\{p v(x),v(x)\}\ge0$, a contradiction.
+Thus $v(x)<0$. Since $p\ge2$, we have $p v(x)<v(x)$, so the
+two summands have different valuations and
+$v(x^p-x)=p v(x)$. This gives $-m=p v(x)$, contradicting
+$p\nmid m$.
+\end{proof}
+
+\begin{lemma}[Irreducibility of an Artin--Schreier polynomial]
+\label{lem:artin-schreier-irreducible}
+\source{camina1997:page-0003}
+\notready
+Let $F$ be any field of characteristic $p$ and $a\in F$.
+If $a\notin\wp(F)$, then $Y^p-Y-a$ is irreducible in $F[Y]$.
+\end{lemma}
+
+\begin{proof}
+Choose a root $y$ in an algebraic closure of $F$. The $p$ distinct
+elements $y+c$, for $c\in\mathbf F_p$, are roots, because
+$(y+c)^p-(y+c)=y^p-y$. They are all the roots, since the
+polynomial has degree $p$; they are simple, since its derivative
+is $-1$.
+Let $q$ be the monic minimal polynomial of $y$ and $d=\deg q$.
+It divides $Y^p-Y-a$, so $1\le d\le p$ and it has distinct roots
+$y+c_1,\ldots,y+c_d$ for some $c_i\in\mathbf F_p$.
+Its coefficient of $Y^{d-1}$ is therefore
+$-d y-\sum_i c_i$. This coefficient and $\sum_i c_i$ belong
+to $F$. If $d<p$, the element $d\cdot1$ is nonzero in $F$,
+so this coefficient identity gives $y\in F$, contrary to
+$a\notin\wp(F)$. Hence $d=p$. The two monic polynomials
+$q$ and $Y^p-Y-a$ have equal degree and one divides the other;
+they are equal. This proves irreducibility.
+\end{proof}
+
+\begin{lemma}[The cyclic extension defined by a reduced pole]
+\label{lem:artin-schreier-cyclic-extension}
+\uses{lem:artin-schreier-no-root-from-pole,lem:artin-schreier-irreducible}
+\source{camina1997:page-0003,camina1997:page-0005}
+\notready
+Suppose $v(\gamma)=-m<0$ and $p\nmid m$. The quotient
+\[
+ L=K[Y]/(Y^p-Y-\gamma)
+\]
+is a field of degree $p$ over $K$. Writing $y$ for the class of
+$Y$, every element of $L$ has a unique expression
+$\sum_{i=0}^{p-1}a_i y^i$ with $a_i\in K$.
+The maps $\sigma_c(y)=y+c$, fixing $K$, identify
+$(\mathbf F_p,+)$ with $\operatorname{Gal}(L/K)$.
+\end{lemma}
+
+\begin{proof}
+The first two lemmas give irreducibility. Division by the monic
+polynomial gives a unique remainder of degree less than $p$,
+and hence the displayed basis and degree. The quotient is a
+field: for a nonzero remainder $h$, irreducibility gives
+$\gcd(h,Y^p-Y-\gamma)=1$, and a Bezout identity gives an inverse
+to its class.
+Substitution $y\mapsto y+c$ respects the defining relation,
+because $c^p=c$, and substitution by $-c$ is its inverse.
+These automorphisms satisfy
+$\sigma_c\sigma_d=\sigma_{c+d}$ and are distinct by their
+values on $y$. Every $K$-automorphism sends $y$ to a root of
+$Y^p-Y-\gamma$, whose roots are exactly these $y+c$.
+Thus they are all the automorphisms. The polynomial splits in
+$L$ and has derivative $-1$, so the extension is normal and
+separable, as required for the stated Galois group.
+\end{proof}
+
+\begin{lemma}[The valuation on the cyclic extension]
+\label{lem:artin-schreier-weighted-valuation}
+\uses{lem:artin-schreier-cyclic-extension}
+\source{camina1997:page-0005,camina1997:page-0006}
+\notready
+For $L$, $y$, $m$ as above, the formula
+\[
+ w\left(\sum_{i=0}^{p-1}a_i y^i\right)
+   =\min_{a_i\ne0}\{p v(a_i)-mi\},\qquad w(0)=+\infty,
+\]
+defines a surjective additive discrete valuation on $L$.
+It satisfies $w|_K=p v$ and $w(y)=-m$.
+\end{lemma}
+
+\begin{proof}
+The formula is well-defined by uniqueness of the polynomial
+expression. Distinct nonzero terms have distinct weights: an
+equality $p v(a_i)-mi=p v(a_j)-mj$ implies $p\mid m(i-j)$,
+hence $p\mid i-j$ and then $i=j$, since $0\le i,j<p$.
+In particular every nonzero expression has a unique least-weight
+term. The inequalities for $v$ on each coefficient give
+$w(x+x')\ge\min\{w(x),w(x')\}$, and clearly $w(1)=0$.
+
+We prove multiplicativity. Let the least-weight terms of nonzero
+$x=\sum a_i y^i$ and $z=\sum b_j y^j$ have indices $i_0,j_0$.
+Among the nonzero terms $a_i b_j y^{i+j}$ in the unreduced
+product, exactly $(i_0,j_0)$ has least weight
+$w(x)+w(z)$. If $i+j<p$, this term is already in basis form.
+If $p\le i+j\le2p-2$, the relation $y^p=y+\gamma$ gives
+\[
+ a_i b_j y^{i+j}
+   =a_i b_j y^{i+j-p+1}
+      +a_i b_j\gamma y^{i+j-p}.
+\]
+Both exponents on the right lie between $0$ and $p-1$.
+The second term has the original weight
+$p v(a_i)+p v(b_j)-m(i+j)$, because $v(\gamma)=-m$;
+the first has that weight plus $m(p-1)>0$.
+Thus reduction leaves exactly one contribution of globally least
+weight, namely the lower-weight contribution of $(i_0,j_0)$.
+Contributions to the same basis coefficient with larger weight
+have larger coefficient valuation, so they cannot cancel its
+leading coefficient. Consequently
+$w(xz)=w(x)+w(z)$. The assertion also holds when a factor is zero.
+Applying it to $xx^{-1}=1$ gives $w(x^{-1})=-w(x)$.
+
+The formula gives $w(t)=p$ and $w(y)=-m$. Since $p\nmid m$,
+there are integers $a,b$ with $ap-bm=1$; the nonzero element
+$t^a y^b$ has valuation one. Its integral powers realize every
+integer, proving surjectivity. The formula on constant basis
+expressions gives $w|_K=p v$.
+\end{proof}
+
+\begin{lemma}[Completeness and residue field]
+\label{lem:artin-schreier-complete-residue}
+\uses{lem:artin-schreier-weighted-valuation}
+\source{camina1997:page-0005,camina1997:page-0006}
+\notready
+The valued field $(L,w)$ is complete. Its residue field is
+canonically $k$, and the ramification index of $L/K$ is $p$.
+In particular $L/K$ is totally ramified.
+\end{lemma}
+
+\begin{proof}
+The formula for $w$ shows that a sequence
+$x_n=\sum_{i<p}a_{n,i}y^i$ is Cauchy precisely when each of its
+$p$ coefficient sequences is Cauchy in $K$: a lower bound on
+$w(x_n-x_r)$ is exactly the corresponding lower bound on all
+$p v(a_{n,i}-a_{r,i})-mi$.
+Each coefficient sequence converges, since $k((t))$ is complete.
+Indeed, for a Cauchy sequence of Laurent series the coefficients
+in each bounded range eventually stabilize; their stabilized
+values have a common lower support bound, obtained by comparing
+the tail of the sequence with one fixed term. They therefore
+define a Laurent series, and the Cauchy condition gives
+convergence to it. Taking these limits for all $i<p$ and applying
+the formula for $w$ proves convergence of $x_n$ in $L$.
+The valuations define metrics by $d(x,z)=2^{-w(x-z)}$ and
+$2^{-v(x-z)}$, with distance zero for equal arguments, so this
+sequential completeness is completeness of the valuation
+uniformity.
+
+Let $x=\sum_{i<p}a_i y^i$ satisfy $w(x)\ge0$.
+Each nonzero basis term has nonnegative weight. For $i>0$
+that weight cannot be zero, since $p\nmid mi$; all such terms
+lie in the maximal ideal $\{z:w(z)>0\}$. The constant basis
+coefficient $a_0$ has $v(a_0)\ge0$. If $c\in k$ is its
+constant coefficient as a power series in $t$, then
+$v(a_0-c)>0$, so $w(x-c)>0$.
+The class of every valuation-ring element is therefore represented
+by a constant in $k$. A nonzero constant has valuation zero,
+so distinct constants give distinct residue classes. Reduction
+on constants is a field homomorphism, proving the claimed
+residue-field identification. Finally
+$w(L^\times)=\mathbf Z$ and $w(K^\times)=p\mathbf Z$;
+their index is $p=[L:K]$. Together with the trivial residue
+extension, this is total ramification.
+\end{proof}
+
+\begin{lemma}[A Laurent-series parameter for the extension]
+\label{lem:artin-schreier-laurent-parameter}
+\uses{lem:artin-schreier-complete-residue}
+\source{camina1997:page-0005}
+\notready
+For every $\pi\in L$ with $w(\pi)=1$, the map
+\[
+ k((T))\longrightarrow L,\qquad
+ \sum_{n\ge n_0}c_n T^n\longmapsto\sum_{n\ge n_0}c_n\pi^n
+\]
+is an isomorphism of topological $k$-algebras. It identifies
+the order in $T$ with $w$.
+\end{lemma}
+
+\begin{proof}
+The sum converges by completeness, since
+$w(c_n\pi^n)\ge n$ and the negative-exponent part is finite.
+If the first nonzero coefficient has index $r$, the term
+$c_r\pi^r$ has valuation $r$ and the remaining tail has
+valuation at least $r+1$. The latter bound holds for the limit:
+if a convergent sequence has valuations at least $r+1$,
+then sufficiently small differences from its limit give the
+same bound on the limit. The valuation of the sum is thus $r$.
+This proves injectivity and the asserted preservation of order.
+Finite sums preserve addition and multiplication. Their tails
+tend to zero; for products of two Laurent series the omitted
+terms also tend to zero, since both series have lower support
+bounds. Passing to the limits proves that the map preserves
+addition and multiplication, and it plainly fixes $k$.
+
+To prove surjectivity, first take $x$ with $w(x)\ge0$.
+Put $x_0=x$. The residue-field assertion supplies a unique
+$c_n\in k$ with $w(x_n-c_n)>0$; set
+$x_{n+1}=(x_n-c_n)/\pi$. Then $w(x_{n+1})\ge0$ and induction gives
+\[
+ x=\sum_{j=0}^{N-1}c_j\pi^j+\pi^N x_N.
+\]
+The remainder has valuation at least $N$, so the partial sums
+converge to $x$. An arbitrary element of $L$ becomes integral
+after multiplication by a sufficiently large power of $\pi$,
+giving its Laurent expansion as well. Finally preservation of
+order makes both this map and its inverse continuous for the
+valuation topologies.
+\end{proof}
+
+\begin{lemma}[Depth of an Artin--Schreier translation]
+\label{lem:artin-schreier-translation-depth}
+\uses{lem:artin-schreier-cyclic-extension,lem:artin-schreier-weighted-valuation,lem:artin-schreier-laurent-parameter}
+\source{camina1997:page-0009}
+\notready
+Choose $1\le b<p$ and an integer $a$ with $ap-bm=1$, and put
+$\pi=t^a y^b$. Then $w(\pi)=1$, every $\sigma_c$ is a
+valuation-preserving continuous automorphism of $L$, and for
+$c\in\mathbf F_p^\times$,
+\[
+ w(\sigma_c(\pi)-\pi)=m+1.
+\]
+\end{lemma}
+
+\begin{proof}
+Multiplication by $m$ permutes the nonzero residue classes modulo
+$p$, so $b$ exists with $bm\equiv-1\pmod p$; taking
+$a=(bm+1)/p$ gives the desired identity and $w(\pi)=1$.
+For each basis term, expand
+$\sigma_c(a_i y^i)=a_i(y+c)^i$.
+Its degree-$i$ term is $a_i y^i$. Every other nonzero term has
+degree $j<i$ and a nonzero constant binomial coefficient, so its
+weight exceeds that of $a_i y^i$ by $m(i-j)>0$.
+The unique least-weight term of an arbitrary nonzero basis
+expression therefore remains unchanged by $\sigma_c$.
+Thus $w(\sigma_c(x))=w(x)$ for every $x$, and the same equality
+applied to differences proves continuity, including continuity
+of the inverse $\sigma_{-c}$.
+
+For $c\ne0$, put $u=c/y$, so $w(u)=m>0$. Since $\sigma_c$
+fixes $t$,
+\[
+ \sigma_c(\pi)-\pi
+   =\pi\bigl((1+u)^b-1\bigr).
+\]
+In the binomial expansion the linear term $bu$ has valuation
+$m$, because $1\le b<p$. Every nonzero term of degree at least
+two has valuation at least $2m>m$. The expression in parentheses
+therefore has valuation $m$, proving the formula.
+\end{proof}
+
+\begin{theorem}[Cyclic subgroups with prescribed prime-to-$p$ depth]
+\label{thm:nottingham-cyclic-prescribed-depth}
+\uses{lem:artin-schreier-translation-depth,lem:nottingham-laurent-equivalence,def:nottingham-depth,lem:nottingham-depth-filtration}
+\source{camina1997:page-0005,camina1997:page-0009}
+\notready
+For every positive $m$ with $p\nmid m$, the Nottingham group
+$J_p$ contains a cyclic subgroup of order $p$ whose nonidentity
+elements all have depth $m$.
+\end{theorem}
+
+\begin{proof}
+Take $\gamma=t^{-m}$ and the field and parameter constructed
+above. Transport the automorphisms $\sigma_c$ to $k((T))$
+through the parameter isomorphism. They are continuous
+$k$-algebra automorphisms, and their parameter differences have
+order $m+1\ge2$ when $c\ne0$; for $c=0$ the difference is zero.
+A Laurent series of order at least two is $T^2$ times a power
+series. The Laurent--Nottingham equivalence therefore identifies
+each transported automorphism with an element of $J_p$ and
+respects their composition. The translations are distinct and
+compose according to addition in $\mathbf F_p$, so their image
+is cyclic of order $p$. The order formula for every nonzero $c$
+gives exactly depth $m$.
+\end{proof}
