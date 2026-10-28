@@ -11,19 +11,25 @@ which is a homeomorphism onto a closed subgroup.
 
 ## Current status
 
-Workspace setup is complete. Lean sources are still the starter skeleton;
-the main theorem and its mathematical prerequisites are **not formalized**.
-The initial [blueprint](blueprint/src/content.tex) contains foundational
-mathematics and a conditional reduction. Its embedding hypotheses remain
-separate proof obligations; the reduction is not the unconditional theorem.
+Workspace setup and the first Horizon task are complete. Run `0001` proved
+the algebraic Nottingham group, its normalization API, coefficient formulas,
+and automatic continuity for the `t`-adic topology. The configured build and
+the axiom audit of all 24 named declarations passed at commit `13e2fe9`;
+the audit found only Lean's standard axioms, with no `sorryAx` or added axioms.
+An independent honesty review approved the bounded task's completion.
+
+The [blueprint](blueprint/src/content.tex) has six verified nodes. The
+unconditional universality theorem remains **unproved**. The topology and
+finite quotients of the Nottingham group, the Laurent-series model bridge,
+and the embedding theorems are separate outstanding obligations.
 
 - Source library: [manifest](../references/manifest.yaml) and
   [verified paper](../references/camina1997/camina1997.pdf).
 - Vision transcriptions: PDF pages 1–2 and 9–12. Printed page = PDF page + 100.
 - Lean: `leanprover/lean4:v4.35.0`.
 - Mathlib: `1e75e9dd53d483fa01eff9ac7d4ea0472ce9d1fa`, pinned in Lake and Horizon.
-- First queued task: `CAM-001`, defining the Nottingham group and proving its
-  normalization API. The complete roadmap is under `CAMINA`.
+- Completed task: `CAM-001`; next milestone: `CAMINA.1.2` (congruence subgroups,
+  topology and finite quotients). The complete roadmap is under `CAMINA`.
 
 ## Proof route
 
@@ -56,11 +62,11 @@ Run the kernel build from this project directory:
 horizon --root .. check --json
 ```
 
-When ready to start the queued task, run this command in the foreground from
-the workspace root:
+To work on the next mathematical milestone, run this command in the foreground
+from the workspace root (Horizon creates a task from the roadmap item):
 
 ```sh
-horizon run CAM-001 --no-dashboard
+horizon run CAMINA.1.2 --no-dashboard
 ```
 
 The pilot uses Codex `gpt-6-astra` with explicit `xhigh` effort, one round,
