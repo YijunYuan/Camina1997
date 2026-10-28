@@ -128,6 +128,31 @@ theorem topologicallyFG_twoGeneratorHull : TopologicallyFG (twoGeneratorHull F q
   apply topologicallyFG_topologicalClosure
   simp
 
+/-- The hull has an actual dense generating pair. -/
+theorem twoGenerated_twoGeneratorHull :
+    ∃ t θ : twoGeneratorHull F q,
+      Dense (Subgroup.closure ({t, θ} : Set (twoGeneratorHull F q)) :
+        Set (twoGeneratorHull F q)) := by
+  let t : twoGeneratorHull F q :=
+    ⟨shiftVector F q, (Subgroup.closure _).le_topologicalClosure
+      (Subgroup.subset_closure (by simp))⟩
+  let θ : twoGeneratorHull F q :=
+    ⟨sparseVector F q, (Subgroup.closure _).le_topologicalClosure
+      (Subgroup.subset_closure (by simp))⟩
+  have he : (Subtype.val : twoGeneratorHull F q → ∀ n, WreathFactor F q n) ⁻¹'
+      {shiftVector F q, sparseVector F q} = {t, θ} := by
+    ext x
+    simp only [Set.mem_preimage, Set.mem_insert_iff, Set.mem_singleton_iff]
+    change (x.val = t.val ∨ x.val = θ.val) ↔ (x = t ∨ x = θ)
+    simp only [Subtype.ext_iff]
+  refine ⟨t, θ, ?_⟩
+  have hd := dense_generators_topologicalClosure ({shiftVector F q, sparseVector F q} :
+    Set (∀ n, WreathFactor F q n))
+  change Dense (Subgroup.closure
+    ((Subtype.val : twoGeneratorHull F q → ∀ n, WreathFactor F q n) ⁻¹'
+      {shiftVector F q, sparseVector F q}) : Set (twoGeneratorHull F q)) at hd
+  rwa [he] at hd
+
 /-- The closed two-generator hull is pro-p when the cyclic sizes are p-powers. -/
 theorem isProP_twoGeneratorHull {p : ℕ} [Fact p.Prime]
     (hF : ∀ n, IsPGroup p (F n)) (hq : 2 < q) (hqp : ∃ e : ℕ, q = p ^ e) :
