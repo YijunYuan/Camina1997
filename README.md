@@ -28,8 +28,9 @@ and the embedding theorems are separate outstanding obligations.
 - Vision transcriptions: PDF pages 1–2 and 9–12. Printed page = PDF page + 100.
 - Lean: `leanprover/lean4:v4.35.0`.
 - Mathlib: `1e75e9dd53d483fa01eff9ac7d4ea0472ce9d1fa`, pinned in Lake and Horizon.
-- Completed task: `CAM-001`; next milestone: `CAMINA.1.2` (congruence subgroups,
-  topology and finite quotients). The complete roadmap is under `CAMINA`.
+- Completed task: `CAM-001`; continuing task: `CAM-MAIN`, covering the entire
+  theorem. Its next milestone is `CAMINA.1.2` (congruence subgroups, topology
+  and finite quotients). The complete roadmap is under `CAMINA`.
 
 ## Proof route
 
@@ -52,7 +53,7 @@ Run these commands from the workspace root, one directory above this file:
 
 ```sh
 horizon roadmap list --focus CAMINA
-horizon task show CAM-001 --json
+horizon task show CAM-MAIN --json
 horizon graph -p Camina1997 frontier
 ```
 
@@ -62,17 +63,31 @@ Run the kernel build from this project directory:
 horizon --root .. check --json
 ```
 
-To work on the next mathematical milestone, run this command in the foreground
-from the workspace root (Horizon creates a task from the roadmap item):
+The ongoing theorem task is managed by the user service
+`camina-horizon-prover.service`. Check its status or stop it with:
 
 ```sh
-horizon run CAMINA.1.2 --no-dashboard
+systemctl --user status camina-horizon-prover
+systemctl --user stop camina-horizon-prover
+journalctl --user -u camina-horizon-prover
 ```
 
-The pilot uses Codex `gpt-6-astra` with explicit `xhigh` effort, one round,
-one concurrent session, and session/run ceilings of 100,000 output tokens.
+After that service has stopped, the task can also be run in the foreground
+from the workspace root:
+
+```sh
+horizon run CAM-MAIN --no-dashboard
+```
+
+The continuing run uses Codex `gpt-6-astra` with explicit `xhigh` effort,
+up to 50 rounds, one concurrent session, and the unchanged session/run
+ceilings of 100,000 output tokens. Completing a sub-milestone does not complete
+`CAM-MAIN`; its objective is the full, unconditional theorem.
 These are Horizon stop thresholds, not guaranteed exact token or monetary
-caps. Agent-launched tasks/runs and GitHub issue synchronization are disabled.
+caps. Budget or account limits pause the run; the service does not blindly
+restart it or bypass those limits. The service is independent of this chat
+but does not start automatically after a reboot. Agent-launched extra
+tasks/runs and GitHub issue synchronization are disabled.
 The configured GitHub repository is `YijunYuan/Camina1997`.
 The existing ChatGPT login supplies Codex authentication; `.env` has no active
 keys and remains excluded from version control.
