@@ -282,9 +282,35 @@ $\sigma^{-1}$ and satisfies the same argument. The two inverse
 continuous maps give the stated homeomorphism.
 \end{proof}
 
+The next argument supplies the density and continuity details behind
+Camina's observation that an automorphism is determined by its action on $t$.
+
+\begin{lemma}[Continuous Laurent automorphisms are determined by the parameter]
+\label{lem:laurent-aut-ext}
+\source{camina1997:page-0001,camina1997:page-0002}
+\notready
+Two continuous $\mathbf F_p$-algebra automorphisms of
+$K=\mathbf F_p((t))$ that agree on $t$ are equal.
+\end{lemma}
+
+\begin{proof}
+They agree on coefficients and on $t$, hence on polynomials by
+preservation of sums and products, and on rational functions by
+preservation of inverses of nonzero elements. Rational functions
+are dense in $K$: a Laurent series has support bounded below by some
+integer $m$, and its truncation from degree $m$ through degree $N$
+is a Laurent polynomial, hence a rational function. The difference
+has order at least $N+1$, which tends to infinity. These truncations
+therefore converge to the given Laurent series in the valuation
+topology. Applying both continuous maps to these truncations gives
+two convergent sequences with identical terms. Their limits agree
+because the valuation topology is Hausdorff. This proves equality
+on every Laurent series.
+\end{proof}
+
 \begin{lemma}[Extension and restriction to Laurent series]
 \label{lem:nottingham-laurent-equivalence}
-\uses{lem:nottingham-laurent-isometry}
+\uses{lem:nottingham-laurent-isometry,lem:laurent-aut-ext,lem:nottingham-parameters}
 \source{camina1997:page-0001,camina1997:page-0002}
 \notready
 Put $K=\mathbf F_p((t))$, with its valuation topology, and identify
@@ -292,41 +318,37 @@ $R=\mathbf F_p[[t]]$ with its valuation ring. Extension to fractions
 is a group isomorphism from $J_p$ to the group of continuous
 $\mathbf F_p$-algebra automorphisms $\gamma$ of $K$ with
 $\gamma(t)-t\in t^2R$. Its inverse is restriction to $R$.
+Equivalently, an algebra automorphism $\gamma$ lies in the image
+of extension exactly when it is continuous and its parameter
+$\gamma(t)$ is a power series with constant coefficient zero and
+linear coefficient one.
 For every $n\ge1$ this isomorphism preserves the condition
 $\sigma(t)-t\in t^{n+1}R$.
 \end{lemma}
 
 \begin{proof}
-Each nonzero series has the form $t^r u$ with $r\ge0$ and $u$ a
-unit, by taking its first nonzero coefficient. Consequently every
-Laurent series is a fraction of power series, and an automorphism
-$\sigma$ of $R$ has a unique extension
-$\widetilde\sigma(a/b)=\sigma(a)/\sigma(b)$ to $K$.
-The fraction formula is independent of the representation because
-$a/b=c/d$ implies $ad=bc$, and applying $\sigma$ preserves this
-equality. The extension of $\sigma^{-1}$ is its inverse.
-For normalized $\sigma$, write $\sigma(t)=tv$ with $v\in1+tR$ a
-unit. The image of $t^r u$, for $r\in\mathbf Z$ and $u\in R^\times$,
-has valuation $r$. Thus the extension preserves valuation and is
-continuous, and has the asserted normalization.
-
-Conversely, suppose $\gamma$ is such a continuous automorphism of
-$K$. Put $z=\gamma(t)$, which has valuation one by normalization.
-For $f=\sum_{i\ge0}a_it^i\in R$, its polynomial partial sums
-converge to $f$. Continuity and fixation of the coefficients imply
-$\gamma(f)=\sum_{i\ge0}a_i z^i$. This sum belongs to $R$: each term
-has nonnegative valuation, and the tails have valuations tending
-to infinity. If $a_0\ne0$, the image also has nonzero constant
-coefficient $a_0$. Writing a nonzero Laurent series as $t^r u$
-therefore shows that $\gamma$ preserves valuation. Surjectivity on
-$K$ now gives surjectivity on $R$, since a preimage of an element
-of nonnegative valuation also has nonnegative valuation.
-Hence restriction gives an automorphism of $R$, which is normalized.
-The two constructions are inverse by the fraction formula. The same
-formula proves compatibility with composition. Finally the image of
-$t$ is unchanged by extension or restriction, so every stated
-congruence condition is preserved.
+Extension is already an injective group homomorphism and preserves
+valuation, continuity, and all the stated congruences. Its image
+therefore consists of continuous normalized automorphisms.
+Conversely, let $\gamma$ be a continuous normalized automorphism of
+$K$. Its parameter is a power series $f=t+t^2a$ for some $a\in R$,
+so its constant coefficient is zero and its linear coefficient is
+one. The parameter realization lemma gives $\sigma\in J_p$ with
+$\sigma(t)=f$. Its Laurent extension is continuous and agrees with
+$\gamma$ on $t$. The preceding density lemma identifies these two
+maps on all of $K$. Thus $\gamma$ is in the image of extension.
+The parameter condition is equivalent to the two coefficient
+conditions, since their difference from $t$ has zero coefficients
+in degrees zero and one. The formula for extension on $R$ shows that
+restriction recovers $\sigma$; in particular, every $\gamma$ in the
+stated group preserves $R$ bijectively. Injectivity and surjectivity
+now give the group isomorphism, with inverse restriction. Congruences
+are preserved by the extension lemma.
 \end{proof}
+
+The density and parameter-realization arguments supply the elementary
+identification between the power-series and Laurent-series formulations
+used in \cite{Camina1997}.
 
 \begin{lemma}[Congruence determined by the parameter]
 \label{lem:aut-congruence-parameter}
