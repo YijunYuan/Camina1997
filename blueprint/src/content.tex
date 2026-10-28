@@ -7,7 +7,8 @@ make explicit the topological conventions used in
 
 \begin{definition}[Pro-$p$ group]
 \label{def:pro-p-group}
-\notready
+\lean{Camina1997.IsProPGroup}
+\leanok
 A pro-$p$ group is a compact Hausdorff topological group $P$ with a
 neighbourhood basis at the identity consisting of open normal subgroups
 $N$ for which $[P:N]$ is a finite power of $p$.
@@ -212,9 +213,41 @@ $\mathbf F_p$-algebra automorphisms with continuous inverses satisfying
 $\sigma(t)-t\in t^2\mathbf F_p[[t]]$.
 \end{definition}
 
+\begin{lemma}[Extension of automorphisms to Laurent series]
+\label{lem:nottingham-laurent-extension}
+\uses{def:nottingham-group,lem:nottingham-congruence-filtration}
+\source{camina1997:page-0001,camina1997:page-0002}
+\notready
+Every element $\sigma\in J_p$ extends uniquely to a
+$\mathbf F_p$-algebra automorphism of $K=\mathbf F_p((t))$.
+Extension is an injective group homomorphism and, for every $n\ge0$,
+\[
+ \sigma(t)-t\in t^{n+1}\mathbf F_p[[t]]\quad\Longleftrightarrow\quad
+ \widetilde\sigma(t)-t\in t^{n+1}\mathbf F_p[[t]],
+\]
+where the right side uses the standard inclusion of power series
+in Laurent series.
+\end{lemma}
+
+\begin{proof}
+Every Laurent series is a fraction of power series: multiplication
+by a sufficiently large power of $t$ removes its negative exponents.
+The map $a/b\mapsto\sigma(a)/\sigma(b)$ is well-defined, since equality
+of two fractions is equality of their cross-products and $\sigma$
+preserves multiplication and nonzero denominators. The fraction
+formulas for sum and product prove that it is an algebra homomorphism.
+Extension of $\sigma^{-1}$ is a two-sided inverse. Any extension must
+have this fraction formula, proving uniqueness. Applying the same
+formula to a composite proves multiplicativity of extension.
+An equality of extensions restricts to an equality on power series,
+proving injectivity. Finally the inclusion of power series is injective
+and extension agrees with $\sigma$ on $t$, so divisibility by $t^{n+1}$
+in the power-series ring is precisely the displayed condition.
+\end{proof}
+
 \begin{lemma}[Extension and restriction to Laurent series]
 \label{lem:nottingham-laurent-equivalence}
-\uses{def:nottingham-group}
+\uses{lem:nottingham-laurent-extension}
 \source{camina1997:page-0001,camina1997:page-0002}
 \notready
 Put $K=\mathbf F_p((t))$, with its valuation topology, and identify
@@ -450,16 +483,18 @@ preserves compactness, proving the final assertion.
 \label{def:nottingham-depth}
 \uses{def:nottingham-group}
 \source{camina1997:page-0002}
-\notready
+\lean{Camina1997.Nottingham.depth}
+\leanok
 For $g\in J_p$, define $D(g)=\operatorname{ord}_t(g(t)-t)-1$
 in $\mathbf N\cup\{\infty\}$, with $\infty-1=\infty$.
 \end{definition}
 
 \begin{lemma}[Depth and the congruence filtration]
 \label{lem:nottingham-depth-filtration}
-\uses{def:nottingham-depth,lem:nottingham-congruence-filtration}
+\uses{def:nottingham-depth,lem:nottingham-congruence-filtration,lem:aut-congruence-parameter}
 \source{camina1997:page-0002}
-\notready
+\lean{Camina1997.Nottingham.one_le_depth, Camina1997.Nottingham.depth_eq_top_iff, Camina1997.Nottingham.mem_congruenceSubgroup_iff_le_depth, Camina1997.Nottingham.depth_eq_nat_iff, Camina1997.Nottingham.depth_inv, Camina1997.Nottingham.min_depth_le_depth_mul}
+\leanok
 Every $g\in J_p$ has $D(g)\ge1$, and $D(g)=\infty$ if and only if
 $g=1$. Moreover, for $n\ge0$, $g\in J_{p,n}$ if and only if
 $n\le D(g)$. Thus $D(g)=n$ if and only if
@@ -473,7 +508,7 @@ Normalization makes the parameter difference divisible by $t^2$.
 For a nonzero difference, its order is the least index of a nonzero
 coefficient, so it is at least two, and subtracting one gives a
 positive integer. The difference is zero exactly when $g(t)=t$,
-which determines the identity automorphism by the parameter lemma.
+which determines the identity automorphism by congruence on the parameter.
 Divisibility by $t^{n+1}$ is exactly the inequality
 $n+1\le\operatorname{ord}_t(g(t)-t)$, hence the stated filtration
 criterion and the characterization of equality. Subgroup closure
@@ -482,6 +517,66 @@ $J_{p,n}$, proving equality of their depths. Subgroup closure under
 products shows that every integer bounded by both $D(g)$ and $D(h)$
 is bounded by $D(gh)$; this is the stated minimum inequality,
 including infinite depths.
+\end{proof}
+
+\begin{lemma}[The Nottingham group is pro-$p$]
+\label{lem:nottingham-pro-p}
+\uses{def:pro-p-group,lem:nottingham-hausdorff-group,lem:nottingham-compact,lem:nottingham-quotient-card}
+\source{camina1997:page-0002}
+\notready
+The Nottingham group $J_p$ is a countably based pro-$p$ group.
+Every open normal subgroup $U$ of $J_p$ has a finite $p$-group quotient.
+\end{lemma}
+
+\begin{proof}
+The congruence topology is a compact Hausdorff group topology, and
+its countable identity basis consists of open normal subgroups
+$J_{p,n}$ of index $p^{n-1}$ for $n\ge1$. This is the definition
+of a countably based pro-$p$ group. For any open normal subgroup $U$,
+choose $n\ge1$ with $J_{p,n}\subseteq U$ using the identity basis.
+The natural map $J_p/J_{p,n}\longrightarrow J_p/U$ is onto.
+Its source is a finite group of $p$-power order; its target is a
+quotient of that group and therefore also a finite $p$-group.
+\end{proof}
+
+\begin{lemma}[The congruence inverse limit]
+\label{lem:nottingham-inverse-limit}
+\uses{lem:nottingham-congruence-filtration,lem:nottingham-compact,lem:nottingham-quotient-card,lem:nottingham-hausdorff-group}
+\source{camina1997:page-0002}
+\notready
+For $m\ge n$, let
+\[\pi_{m,n}:J_p/J_{p,m}\longrightarrow J_p/J_{p,n}\]
+be the natural quotient map. The map
+\[
+ J_p\longrightarrow
+ \left\{(x_n)\in\prod_{n\ge0}J_p/J_{p,n}:
+       \pi_{m,n}(x_m)=x_n\text{ for all }m\ge n\right\},
+ \qquad g\longmapsto(gJ_{p,n})_n,
+\]
+is an isomorphism of topological groups, where each finite quotient
+has the discrete topology and the right side has the subspace
+topology of the product.
+\end{lemma}
+
+\begin{proof}
+The map is a homomorphism because its coordinates are quotient
+homomorphisms. It is continuous: the inverse image of a singleton in
+each coordinate is an open congruence coset, and product continuity
+is tested on coordinates. Its values are compatible by construction.
+Its kernel is the intersection of the congruence subgroups, which is
+trivial, so it is injective.
+
+For a compatible tuple $(x_n)$, let $C_n$ be its coset in $J_p$.
+These sets are nonempty, and compatibility gives $C_m\subseteq C_n$
+when $m\ge n$. Each $C_n$ is closed: its complement is the union
+of the other open cosets of $J_{p,n}$. Every finite intersection
+contains the coset with largest index, hence is nonempty.
+Compactness gives a point in the intersection of all $C_n$.
+That point maps to $(x_n)$, proving surjectivity. The target is
+Hausdorff as a subspace of a product of finite discrete spaces.
+A continuous bijection from a compact space to a Hausdorff space is
+a homeomorphism: images of closed sets are compact and hence closed.
+This proves continuity of the inverse and the assertion.
 \end{proof}
 
 \begin{definition}[Closed universality property]
