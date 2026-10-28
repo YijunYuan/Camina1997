@@ -74,6 +74,22 @@ variable {p : ℕ} [Fact p.Prime]
 local notation "K" => LaurentSeries (ZMod p)
 local notation "R" => PowerSeries (ZMod p)
 
+/-- Extending a Nottingham automorphism preserves Laurent order exactly. -/
+theorem orderTop_toLaurent (g : Nottingham p) (x : K) :
+    (toLaurent g x).orderTop = x.orderTop := by
+  have hbound (n : ℤ) : (n : WithTop ℤ) ≤ (toLaurent g x).orderTop ↔
+      (n : WithTop ℤ) ≤ x.orderTop := by
+    rw [← LaurentSeries.valuation_le_exp_iff_orderTop,
+      valuation_toLaurent, LaurentSeries.valuation_le_exp_iff_orderTop]
+  by_cases hx : x = 0
+  · simp [hx]
+  have hy : toLaurent g x ≠ 0 := by simpa using hx
+  apply le_antisymm
+  · rw [← HahnSeries.order_eq_orderTop_of_ne_zero hy]
+    exact (hbound _).mp (by rw [HahnSeries.order_eq_orderTop_of_ne_zero hy])
+  · rw [← HahnSeries.order_eq_orderTop_of_ne_zero hx]
+    exact (hbound _).mpr (by rw [HahnSeries.order_eq_orderTop_of_ne_zero hx])
+
 /-- Every order-preserving prime-field Laurent automorphism restricts as an algebra automorphism. -/
 noncomputable def restrictPowerSeries (e : K ≃ₐ[ZMod p] K)
     (he : ∀ x, (e x).orderTop = x.orderTop) : R ≃ₐ[ZMod p] R :=

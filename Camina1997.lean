@@ -6,6 +6,7 @@ public import Camina1997.ArtinSchreier.Cyclic
 public import Camina1997.ArtinSchreier.LaurentParameter
 public import Camina1997.ArtinSchreier.Restriction
 public import Camina1997.Witt.PrimeKernel
+public import Camina1997.Witt.Depth
 public import Camina1997.Nottingham.Depth
 public import Camina1997.Nottingham.FiniteAction
 public import Camina1997.Nottingham.Finite

@@ -8,6 +8,7 @@ module
 public import Camina1997.Nottingham.Frobenius
 public import Camina1997.Nottingham.Ramification
 public import Camina1997.Nottingham.Depth
+public import Mathlib.Data.Fintype.Order
 
 /-!
 # Comparing depth through a degree-p parameter
@@ -117,6 +118,16 @@ open PowerSeries
 
 variable {p : ℕ} [Fact p.Prime]
 local notation "R" => PowerSeries (ZMod p)
+
+/-- The nonidentity elements in a finite Nottingham action have a common finite depth bound. -/
+theorem exists_depth_bound_of_finite {G : Type*} [Group G] [Finite G]
+    (ρ : G →* Nottingham p) :
+    ∃ B : ℕ, ∀ g : G, ρ g ≠ 1 → depth (ρ g) ≤ (B : ℕ∞) := by
+  obtain ⟨B, hB⟩ := Finite.exists_le (fun g : G => (depth (ρ g)).toNat)
+  refine ⟨B, fun g hg => ?_⟩
+  have hnat := ENat.natCast_toNat_eq_self.mpr ((depth_eq_top_iff (ρ g)).not.mpr hg)
+  rw [← hnat]
+  exact_mod_cast hB g
 
 /-- A finite Nottingham depth is the parameter displacement order minus one. -/
 theorem order_sub_eq_of_depth_eq (g : Nottingham p) {n : ℕ}
