@@ -7,6 +7,8 @@ module
 
 public import Camina1997.Nottingham.Diagonal
 public import Camina1997.ProP.QuotientTower
+public import Camina1997.ProP.CountableBasis
+public import Camina1997.Witt.DepthSequence
 
 /-!
 # Closed embeddings from depth-preserving finite quotients
@@ -64,5 +66,20 @@ theorem exists_closedEmbedding_of_quotient_depths
   intro m hm
   rw [mem_congruenceSubgroup_iff_le_depth, hstable m hm, ← hd]
   exact_mod_cast Nat.not_succ_le_self d
+
+/-- Camina's Theorem 5: every topologically finitely generated pro-p group admits
+a continuous closed embedding in the Nottingham group. -/
+theorem exists_closedEmbedding_of_topologicallyFG (hG : TopologicallyFG G) :
+    ∃ f : ContinuousMonoidHom G (Nottingham p), IsClosedEmbedding f := by
+  let := hG.isCountablyGenerated_nhds_one (p := p)
+  obtain ⟨N, _, hN⟩ := IsProPGroup.exists_antitone_openNormalBasis (p := p) (G := G)
+  let (n : ℕ) : Finite (G ⧸ (N n).toSubgroup) := IsProPGroup.finite_quotient (p := p) (N n)
+  let q (n : ℕ) :=
+    ((N (n + 1)).quotientTransition (N n) (hN.antitone (Nat.le_succ n))).toMonoidHom
+  have hq (n : ℕ) : Function.Surjective (q n) :=
+    (N (n + 1)).quotientTransition_surjective (N n) (hN.antitone (Nat.le_succ n))
+  obtain ⟨φ, hinj, hdepth⟩ := Witt.exists_depth_compatible_sequence
+    (fun n => G ⧸ (N n).toSubgroup) (fun n => IsProPGroup.isPGroup_quotient (p := p) (N n)) q hq
+  exact exists_closedEmbedding_of_quotient_depths hG N hN φ hinj hdepth
 
 end Camina1997.Nottingham
