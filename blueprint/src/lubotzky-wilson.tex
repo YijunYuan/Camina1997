@@ -1,0 +1,264 @@
+\section{The Lubotzky--Wilson embedding}
+
+Fix a prime $p$. This section proves the pro-$p$ specialization of
+\cite{LubotzkyWilson1984}. The argument follows its wreath-product
+construction, supplies the elementary arithmetic proof omitted there,
+and makes continuity and closedness explicit. For finite $p$-groups,
+the first lemma supplies directly the derived-subgroup embedding for
+which that paper cites Neumann and Neumann. We use
+$[a,b]=aba^{-1}b^{-1}$ throughout this section.
+
+\begin{lemma}[Embedding a finite group in a derived subgroup]
+\label{lem:finite-p-derived-embedding}
+\source{lubotzky-wilson1984:page-0002}
+\notready
+Every finite $p$-group $A$ embeds in $F'$ for some finite $p$-group $F$.
+\end{lemma}
+
+\begin{proof}
+Put $n=|A|$ and let $C_n=\langle t\rangle$ be cyclic of order $n$.
+Let $B$ be the group of functions $C_n\to A$ with pointwise
+multiplication. Let $t$ act on $B$ by
+$(tft^{-1})(t^k)=f(t^{k+1})$, and put $F=B\rtimes C_n$.
+Its order is $n^n n$, a power of $p$; this also covers $n=1$.
+For $a\in A$, let $d(a)\in B$ be the constant function with value $a$.
+The map $d$ is an injective homomorphism. Define $f_a(t^k)=a^k$.
+This is well-defined because $a^n=1$ by Lagrange's theorem.
+For every $k$,
+\[
+ [t,f_a](t^k)=f_a(t^{k+1})f_a(t^k)^{-1}
+             =a^{k+1}a^{-k}=a.
+\]
+Thus $d(a)=[t,f_a]\in F'$, as required. The functions $f_a$
+need not depend homomorphically on $a$; the embedding is the
+constant-function map $d$.
+\end{proof}
+
+\begin{lemma}[Separation of sparse powers]
+\label{lem:sparse-powers-separation}
+\source{lubotzky-wilson1984:page-0002}
+\notready
+Let $q>2$ and $0\le r<s$ be integers. Let $i,j>0$ and $k\in\mathbf Z$.
+Suppose that $k+q^i$ and $k+q^j$ are distinct modulo $q^{s+1}$,
+and each is congruent to a member of
+$\{q^{r+1},\ldots,q^s\}$. Then $r<i,j\le s$ and
+$k\equiv0\pmod{q^{s+1}}$.
+\end{lemma}
+
+\begin{proof}
+Choose $a,b\in\{r+1,\ldots,s\}$ with
+$k+q^i\equiv q^a$ and $k+q^j\equiv q^b$.
+The distinctness assumption implies $a\ne b$, $i\ne j$, and
+$\min(i,j)\le s$. Interchange the two pairs if necessary so that
+$i<j$. Subtraction gives
+\[
+ q^i-q^j\equiv q^a-q^b\pmod{q^{s+1}}.
+\]
+Put $h=\min(a,b)$. The left side is divisible by $q^i$ but not
+by $q^{i+1}$, since $q\nmid 1-q^{j-i}$. The right side is
+divisible by $q^h$ but not by $q^{h+1}$. As $i,h\le s$,
+the congruence forces $i=h$: if one exponent were smaller,
+division by its power of $q$ and reduction modulo $q$ would
+give $1\equiv0$ or $-1\equiv0$.
+After division by $q^i$ and reduction modulo $q$, the left side
+is $1$, whereas the right side is $1$ if $a<b$ and $-1$ if $b<a$.
+Since $q>2$, these residues are distinct; therefore $a=i<b$.
+Cancel $q^i=q^a$ in the original congruence to obtain
+$q^j\equiv q^b\pmod{q^{s+1}}$.
+If $j>s$, reduction would imply $q^{s+1}\mid q^b$, impossible.
+If $j\le s$ but $j\ne b$, the smaller power of $q$ divides
+$q^j-q^b$ exactly, again contradicting this congruence.
+Hence $j=b$. Finally $k+q^i\equiv q^a=q^i$ implies $k\equiv0$.
+The bounds on $a,b$ give the asserted bounds on $i,j$.
+\end{proof}
+
+The printed arithmetic lemma assumes $r>0$. The proof above also
+allows $r=0$, the case needed for the first block of the construction.
+It requires only $q>2$, so it applies to $q=4$ when $p=2$.
+
+\begin{lemma}[Closed subgroups of products of finite $p$-groups]
+\label{lem:closed-subgroup-finite-p-product}
+\uses{def:pro-p-group}
+\notready
+If each $W_n$ is a finite discrete $p$-group, every closed subgroup
+$H$ of $W=\prod_{n\ge1}W_n$ is a pro-$p$ group.
+\end{lemma}
+
+\begin{proof}
+Each factor is compact Hausdorff, so their product is compact
+Hausdorff by the product compactness theorem. Coordinatewise
+multiplication and inversion are continuous, since their
+composites with every coordinate projection are continuous.
+A closed subgroup is compact Hausdorff with continuous group
+operations inherited from $W$.
+For a finite set of indices $S$, the subgroup
+\[
+ U_S=H\cap\bigcap_{n\in S}\ker(W\longrightarrow W_n)
+\]
+is open and normal in $H$. These subgroups form an identity
+neighbourhood basis: a basic product neighbourhood restricts
+finitely many coordinates, and each restricted neighbourhood
+of the identity contains its singleton.
+Projection identifies $H/U_S$ with a subgroup of
+$\prod_{n\in S}W_n$. This product has $p$-power order; its
+subgroups do too by Lagrange's theorem. Thus every $U_S$ has
+finite $p$-power index, which is the definition of pro-$p$.
+\end{proof}
+
+\begin{lemma}[Countably many finite quotients separate points]
+\label{lem:countable-pro-p-quotient-embedding}
+\uses{def:pro-p-group,def:countably-based,lem:compact-injection-closed-embedding}
+\source{lubotzky-wilson1984:page-0001,lubotzky-wilson1984:page-0002}
+\notready
+Every countably based pro-$p$ group $P$ has a continuous injective
+homomorphism into a countable product of finite discrete $p$-groups.
+This map is a homeomorphism onto a closed subgroup.
+\end{lemma}
+
+\begin{proof}
+Choose a countable identity neighbourhood basis $(V_n)$ in $P$.
+The pro-$p$ basis supplies an open normal subgroup $N_n\subseteq V_n$
+of finite $p$-power index. Put $A_n=P/N_n$, with its discrete topology.
+The diagonal quotient map $e:P\to\prod_n A_n$ is a homomorphism.
+Each coordinate is continuous because the inverse image of each
+singleton is an open coset of $N_n$. Hence $e$ is continuous by
+the definition of the product topology.
+If $x\in\ker e$, then $x\in N_n\subseteq V_n$ for every $n$.
+If $x\ne1$, the Hausdorff property supplies an identity
+neighbourhood avoiding $x$, and some $V_n$ lies in it, a contradiction.
+Thus the kernel is trivial. The compact-source lemma applies,
+since $P$ is compact and the product is Hausdorff.
+\end{proof}
+
+\begin{lemma}[Isolating commutators in the wreath products]
+\label{lem:wreath-isolated-commutators}
+\uses{lem:sparse-powers-separation}
+\source{lubotzky-wilson1984:page-0002,lubotzky-wilson1984:page-0003}
+\notready
+Let $(F_n)_{n\ge1}$ be finite $p$-groups. Put $r_0=0$ and
+$r_n=\sum_{h=1}^n|F_h|$, and list each $F_n$ as
+$\{g_i:r_{n-1}<i\le r_n\}$ without repetitions.
+Take $q=p$ for odd $p$ and $q=4$ for $p=2$. Let
+$C_n=\langle t_n\rangle$ have order $q^{r_n+1}$, and let
+$W_n=F_n^{C_n}\rtimes C_n$, where
+$(t_nft_n^{-1})(t_n^k)=f(t_n^{k+1})$.
+Define
+\[
+ \theta_n(t_n^k)=
+ \begin{cases}
+ g_i& k\equiv q^i\pmod{q^{r_n+1}},\ r_{n-1}<i\le r_n,\\
+ 1&\text{otherwise}.
+ \end{cases}
+\]
+In $W=\prod_nW_n$, put $t=(t_n)_n$ and $\theta=(\theta_n)_n$.
+Let $\widetilde F_n$ denote the copy of $F_n$ supported at
+the identity coordinate of $C_n$ and at the $n$th factor of $W$.
+The subgroup $\langle t,\theta\rangle$ contains $\widetilde F_n'$
+for every $n$.
+\end{lemma}
+
+\begin{proof}
+The powers $q^i$ in any specified block are distinct modulo
+$q^{r_n+1}$, so $\theta_n$ is well-defined. For $i<j$ put
+\[
+ c_{ij}=[t^{q^i}\theta t^{-q^i},t^{q^j}\theta t^{-q^j}].
+\]
+In the $n$th factor, both entries in this commutator belong to
+the base group of the wreath product. Its value at $t_n^k$ is
+\[
+ [\theta_n(t_n^{k+q^i}),\theta_n(t_n^{k+q^j})].
+\]
+If either value is $1$, the commutator is $1$. If the two
+arguments are equal in $C_n$, the two values are equal and
+their commutator is also $1$. In every other possibly nontrivial
+case, both arguments must be in the sparse support of $\theta_n$.
+The separation lemma then gives
+$r_{n-1}<i<j\le r_n$ and $k\equiv0\pmod{q^{r_n+1}}$.
+At this sole coordinate the displayed value is $[g_i,g_j]$.
+For fixed $i<j$ in the $n$th block, no other block contains both,
+so all other factors of $c_{ij}$ are trivial. Consequently $c_{ij}$
+is exactly $[g_i,g_j]$ in $\widetilde F_n$.
+All elements of $F_n$ occur in the list. The commutators with
+$i<j$ generate $F_n'$: those with $i=j$ are trivial and those
+with $i>j$ are inverses of ones with $i<j$. Their corresponding
+$c_{ij}$ lie in $\langle t,\theta\rangle$, proving the claim.
+\end{proof}
+
+\begin{lemma}[The product of derived groups in a two-generator group]
+\label{lem:derived-product-two-generator}
+\uses{lem:wreath-isolated-commutators,lem:closed-subgroup-finite-p-product,lem:compact-injection-closed-embedding,def:topologically-finitely-generated}
+\source{lubotzky-wilson1984:page-0002,lubotzky-wilson1984:page-0003}
+\notready
+For every sequence of finite $p$-groups $(F_n)$, there is a pro-$p$
+group $H$ topologically generated by two elements and a closed
+group embedding $\prod_nF_n'\longrightarrow H$.
+\end{lemma}
+
+\begin{proof}
+Use $W,t,\theta$ from the preceding lemma and put
+$H=\overline{\langle t,\theta\rangle}$ in $W$.
+The closure of a subgroup of a topological group is a subgroup:
+if $x,y$ are in the closure and $U$ is a neighbourhood of $xy^{-1}$,
+continuity supplies neighbourhoods $V$ of $x$ and $Z$ of $y$
+with $VZ^{-1}\subseteq U$; choose subgroup elements in $V$ and $Z$
+to see that $U$ meets the subgroup. Thus $H$ is closed and is
+topologically generated by $t,\theta$.
+Each $W_n$ has $p$-power order: its base has order
+$|F_n|^{q^{r_n+1}}$, and its cyclic quotient has $p$-power order.
+The closed-subgroup lemma therefore makes $H$ pro-$p$.
+
+Map $D=\prod_nF_n'$ into $W$ by placing each entry at the
+identity coordinate of its corresponding base group and putting
+$1$ at all other coordinates. This is a continuous injective
+homomorphism, since it is one on each finite coordinate.
+It is a closed embedding by compactness of $D$ and Hausdorffness
+of $W$. Every finite-support element of its image is a finite
+product of elements of the groups $\widetilde F_n'$, and hence
+belongs to $H$ by the previous lemma.
+These finite-support elements are dense in its image: every
+product neighbourhood specifies only finitely many factors,
+and setting all other factors to $1$ gives such an element
+in that neighbourhood. Since $H$ is closed, it contains the
+whole image of $D$. Restricting the codomain to $H$ preserves
+continuity and injectivity, and the compact-source lemma again
+gives the required closed embedding.
+\end{proof}
+
+\begin{theorem}[Lubotzky--Wilson for pro-$p$ groups]
+\label{thm:lubotzky-wilson-pro-p}
+\uses{lem:finite-p-derived-embedding,lem:countable-pro-p-quotient-embedding,lem:derived-product-two-generator,lem:compact-injection-closed-embedding}
+\source{lubotzky-wilson1984:page-0001,lubotzky-wilson1984:page-0002,lubotzky-wilson1984:page-0003,camina1997:page-0012}
+\notready
+There is a pro-$p$ group $H$, topologically generated by two
+elements, such that every countably based pro-$p$ group admits
+a closed group embedding into $H$.
+\end{theorem}
+
+\begin{proof}
+There are countably many finite groups up to isomorphism:
+for each positive integer $d$, a group law on
+$\{1,\ldots,d\}$ is one of finitely many multiplication tables,
+and the union over $d$ is countable. Choose a sequence $(F_n)$
+of finite $p$-groups containing infinitely many representatives
+of each isomorphism class. The preceding lemma produces a single
+two-generator pro-$p$ group $H$ containing $D=\prod_nF_n'$
+as a closed subgroup.
+
+Let $P$ be any countably based pro-$p$ group. Choose its continuous
+injection $P\to\prod_hA_h$ into finite $p$-group quotients.
+For each $h$, the first lemma gives a finite $p$-group $E_h$
+and an embedding $A_h\to E_h'$. Recursively select distinct
+indices $n_h$ with $F_{n_h}\cong E_h$: infinitely many choices
+exist at each stage and only finitely many have already been used.
+Transport the embeddings along these isomorphisms. The resulting
+map $\prod_hA_h\to D$ puts the $h$th entry in factor $n_h$
+and puts $1$ at unused factors. It is a homomorphism and is
+injective because each chosen coordinate embedding is injective.
+It is continuous: every coordinate is either a finite-coordinate
+homomorphism between discrete groups or a constant map.
+Compose it with $P\to\prod_hA_h$ and $D\to H$.
+The composite is a continuous injective homomorphism.
+Since $P$ is compact and $H$ is Hausdorff, it is a homeomorphism
+onto a closed subgroup. The construction of $H$ did not depend
+on $P$, proving the asserted universal statement.
+\end{proof}
