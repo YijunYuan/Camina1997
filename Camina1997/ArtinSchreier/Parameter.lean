@@ -236,6 +236,67 @@ theorem coeff_uniformizerSeries (π : O)
       uniformizerCoefficient γ m hm hpm hγ π hπ x n :=
   PowerSeries.coeff_mk _ _
 
+/-- The finite residue-digit expansions converge to the original integer. -/
+theorem tendsto_uniformizer_partial_expansion (π : O)
+    (hπ : weightedOrder γ m (π : L) = 1) (x : O) :
+    letI := weightedValued γ m hm hpm hγ
+    Tendsto (fun n : ℕ => ∑ i ∈ Finset.range n,
+      constantIntegerHom γ m hm hpm hγ (uniformizerCoefficient γ m hm hpm hγ π hπ x i) *
+        π ^ i) atTop (𝓝 x) := by
+  let := weightedValued γ m hm hpm hγ
+  rw [tendsto_subtype_rng]
+  have hb := nhds_basis_uniformity
+    (weightedOrder_hasBasis_uniformity γ m hm hpm hγ) (x := (x : L))
+  rw [hb.tendsto_right_iff]
+  intro n _
+  filter_upwards [eventually_ge_atTop (n.natAbs + 1)] with j hj
+  have he := congrArg (fun a : O => (a : L))
+    (uniformizer_partial_expansion γ m hm hpm hγ π hπ x j)
+  change (x : L) = (↑(∑ i ∈ Finset.range j,
+      constantIntegerHom γ m hm hpm hγ (uniformizerCoefficient γ m hm hpm hγ π hπ x i) *
+        π ^ i) : L) + (π : L) ^ j *
+          (uniformizerRemainder γ m hm hpm hγ π hπ x j : L) at he
+  change (n : WithTop ℤ) < weightedOrder γ m ((x : L) - _)
+  rw [(sub_eq_iff_eq_add).mpr (he.trans (add_comm _ _)), weightedOrder_mul γ m hm hpm hγ]
+  have hp := (weightedValuation γ m hm hpm hγ).map_pow (π : L) j
+  change weightedOrder γ m ((π : L) ^ j) = j • weightedOrder γ m (π : L) at hp
+  rw [hp, hπ, nsmul_one]
+  have hn : n < (j : ℤ) := by omega
+  have hr : (0 : WithTop ℤ) ≤ weightedOrder γ m
+      (uniformizerRemainder γ m hm hpm hγ π hπ x j : L) :=
+    (uniformizerRemainder γ m hm hpm hγ π hπ x j).property
+  exact (show (n : WithTop ℤ) < (j : WithTop ℤ) by exact_mod_cast hn).trans_le
+    (by simpa only [zero_add, add_zero, add_comm] using add_le_add_left hr (j : WithTop ℤ))
+
+/-- Evaluating the successive residue digits recovers the given integer. -/
+theorem powerSeriesEval_uniformizerSeries (π : O)
+    (hπ : weightedOrder γ m (π : L) = 1) (x : O) :
+    powerSeriesEval γ m hm hpm hγ π hπ (uniformizerSeries γ m hm hpm hγ π hπ x) = x := by
+  let := weightedValued γ m hm hpm hγ
+  let := weightedInteger_t2Space γ m hm hpm hγ
+  have hs := (hasSum_powerSeriesEval γ m hm hpm hγ π hπ
+    (uniformizerSeries γ m hm hpm hγ π hπ x)).tendsto_sum_nat
+  apply tendsto_nhds_unique hs
+  simpa only [coeff_uniformizerSeries] using
+    tendsto_uniformizer_partial_expansion γ m hm hpm hγ π hπ x
+
+theorem powerSeriesEval_surjective (π : O) (hπ : weightedOrder γ m (π : L) = 1) :
+    Function.Surjective (powerSeriesEval γ m hm hpm hγ π hπ) := fun x =>
+  ⟨uniformizerSeries γ m hm hpm hγ π hπ x,
+    powerSeriesEval_uniformizerSeries γ m hm hpm hγ π hπ x⟩
+
+/-- Expansion at any uniformizer identifies the valuation ring with power series over `k`. -/
+noncomputable def powerSeriesEquiv (π : O)
+    (hπ : weightedOrder γ m (π : L) = 1) : PowerSeries k ≃+* O :=
+  RingEquiv.ofBijective (powerSeriesEval γ m hm hpm hγ π hπ)
+    ⟨powerSeriesEval_injective γ m hm hpm hγ π hπ,
+      powerSeriesEval_surjective γ m hm hpm hγ π hπ⟩
+
+@[simp]
+theorem powerSeriesEquiv_apply (π : O)
+    (hπ : weightedOrder γ m (π : L) = 1) (f : PowerSeries k) :
+    powerSeriesEquiv γ m hm hpm hγ π hπ f = powerSeriesEval γ m hm hpm hγ π hπ f := rfl
+
 end Digits
 
 end Camina1997.ArtinSchreier
