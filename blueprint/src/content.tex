@@ -217,7 +217,8 @@ $\sigma(t)-t\in t^2\mathbf F_p[[t]]$.
 \label{lem:nottingham-laurent-extension}
 \uses{def:nottingham-group,lem:nottingham-congruence-filtration}
 \source{camina1997:page-0001,camina1997:page-0002}
-\notready
+\lean{Camina1997.Nottingham.toLaurent, Camina1997.Nottingham.toLaurent_algebraMap, Camina1997.Nottingham.toLaurent_injective, Camina1997.Nottingham.toLaurent_unique, Camina1997.Nottingham.toLaurent_congruence_iff}
+\leanok
 Every element $\sigma\in J_p$ extends uniquely to a
 $\mathbf F_p$-algebra automorphism of $K=\mathbf F_p((t))$.
 Extension is an injective group homomorphism and, for every $n\ge0$,
@@ -245,9 +246,45 @@ and extension agrees with $\sigma$ on $t$, so divisibility by $t^{n+1}$
 in the power-series ring is precisely the displayed condition.
 \end{proof}
 
+\begin{lemma}[The Laurent extension preserves the valuation]
+\label{lem:nottingham-laurent-isometry}
+\uses{lem:nottingham-laurent-extension,lem:aut-congruence-parameter}
+\source{camina1997:page-0001,camina1997:page-0002}
+\notready
+Let $v$ be the multiplicative $t$-adic valuation on
+$K=\mathbf F_p((t))$, with $v(t)<1$ and $v(0)=0$.
+For every $\sigma\in J_p$ and $x\in K$,
+$v(\widetilde\sigma(x))=v(x)$.
+Consequently $\widetilde\sigma$ and its inverse are uniformly
+continuous for the valuation uniformity, and form a homeomorphism of $K$.
+\end{lemma}
+
+\begin{proof}
+For $f\in R=\mathbf F_p[[t]]$ and every integer $n\ge0$,
+$t^n\mid f$ if and only if $t^n\mid\sigma(f)$: forward divisibility
+follows because $\sigma(t)$ has order one, and the reverse implication
+follows by applying $\sigma^{-1}$.
+For nonzero $f$ its order is the largest $n$ with $t^n\mid f$,
+so $\sigma(f)$ has the same order and the same valuation. Zero is
+preserved as well. Write any $x\in K$ as $a/b$ with $a,b\in R$
+and $b\ne0$. The extension formula and multiplicativity of the valuation
+give
+\[
+ v(\widetilde\sigma(x))
+ =v(\sigma(a))/v(\sigma(b))=v(a)/v(b)=v(x).
+\]
+Because the extension preserves subtraction, it also preserves
+$v(x-y)$. A basis of entourages for the valuation uniformity consists
+of the sets of pairs with $v(x-y)<\gamma$, for nonzero valuation
+radii $\gamma$. The inverse image of each such entourage is itself,
+which proves uniform continuity. The inverse is the extension of
+$\sigma^{-1}$ and satisfies the same argument. The two inverse
+continuous maps give the stated homeomorphism.
+\end{proof}
+
 \begin{lemma}[Extension and restriction to Laurent series]
 \label{lem:nottingham-laurent-equivalence}
-\uses{lem:nottingham-laurent-extension}
+\uses{lem:nottingham-laurent-isometry}
 \source{camina1997:page-0001,camina1997:page-0002}
 \notready
 Put $K=\mathbf F_p((t))$, with its valuation topology, and identify
