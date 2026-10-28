@@ -6,6 +6,8 @@ Authors: Archon Horizon contributors
 module
 
 public import Mathlib.RingTheory.LaurentSeries
+public import Camina1997.ArtinSchreier.Polynomial
+public import Mathlib.Algebra.CharP.Algebra
 
 /-!
 # Artin–Schreier equations with a pole
@@ -66,5 +68,17 @@ theorem pow_sub_ne_of_orderTop {p m : ℕ} (hp : 1 < p) (hm : 0 < m)
     rw [hval] at hnonneg
     have : (0 : ℤ) ≤ -(m : ℤ) := by exact_mod_cast hnonneg
     omega
+
+/-- A negative pole of order prime to the characteristic produces an irreducible
+Artin–Schreier polynomial over the Laurent field. -/
+theorem irreducible_X_pow_sub_X_sub_C_of_orderTop {p m : ℕ} [Fact p.Prime] [CharP k p]
+    (hm : 0 < m) (hpm : ¬p ∣ m) (γ : LaurentSeries k)
+    (hγ : γ.orderTop = ((-(m : ℤ) : ℤ) : WithTop ℤ)) :
+    Irreducible ((Polynomial.X : Polynomial (LaurentSeries k)) ^ p -
+      Polynomial.X - Polynomial.C γ) := by
+  let : CharP (LaurentSeries k) p :=
+    charP_of_injective_algebraMap (algebraMap k (LaurentSeries k)).injective p
+  exact Polynomial.irreducible_X_pow_sub_X_sub_C (p := p) γ
+    (pow_sub_ne_of_orderTop (Fact.out : p.Prime).one_lt hm hpm γ hγ)
 
 end LaurentSeries

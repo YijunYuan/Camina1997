@@ -32,27 +32,33 @@ $p\nmid m$.
 \begin{lemma}[Irreducibility of an Artin--Schreier polynomial]
 \label{lem:artin-schreier-irreducible}
 \source{camina1997:page-0003}
-\notready
+\lean{Polynomial.irreducible_X_pow_sub_X_sub_C}
+\leanok
 Let $F$ be any field of characteristic $p$ and $a\in F$.
 If $a\notin\wp(F)$, then $Y^p-Y-a$ is irreducible in $F[Y]$.
 \end{lemma}
 
 \begin{proof}
-Choose a root $y$ in an algebraic closure of $F$. The $p$ distinct
-elements $y+c$, for $c\in\mathbf F_p$, are roots, because
-$(y+c)^p-(y+c)=y^p-y$. They are all the roots, since the
-polynomial has degree $p$; they are simple, since its derivative
-is $-1$.
-Let $q$ be the monic minimal polynomial of $y$ and $d=\deg q$.
-It divides $Y^p-Y-a$, so $1\le d\le p$ and it has distinct roots
-$y+c_1,\ldots,y+c_d$ for some $c_i\in\mathbf F_p$.
-Its coefficient of $Y^{d-1}$ is therefore
-$-d y-\sum_i c_i$. This coefficient and $\sum_i c_i$ belong
-to $F$. If $d<p$, the element $d\cdot1$ is nonzero in $F$,
-so this coefficient identity gives $y\in F$, contrary to
-$a\notin\wp(F)$. Hence $d=p$. The two monic polynomials
-$q$ and $Y^p-Y-a$ have equal degree and one divides the other;
-they are equal. This proves irreducibility.
+Put $f=Y^p-Y-a$. It is monic of degree $p$.
+Suppose $q$ is a monic divisor of $f$ of degree $d$ with
+$0<d<p$. In a splitting field of $q$, list its roots with
+multiplicity as $r_1,\ldots,r_d$ and put $s=\sum_i r_i$.
+Each $r_i$ is a root of $f$, so $r_i^p-r_i=a$.
+The coefficient formula gives $s=-[Y^{d-1}]q\in F$.
+Additivity of Frobenius in characteristic $p$ now gives
+\[
+ s^p-s=\sum_i(r_i^p-r_i)=d a.
+\]
+The element $d\cdot1$ of $F$ is nonzero because $0<d<p$,
+and satisfies $d^p=d$. Consequently
+\[
+ (s/d)^p-s/d=(s^p-s)/d=a,
+\]
+contradicting $a\notin\wp(F)$.
+Thus no proper monic divisor has positive degree. Every factorization
+of a monic polynomial over a field can be rescaled to monic factors;
+if neither factor is a unit, each has positive degree strictly less
+than $p$, contrary to what was just proved. Hence $f$ is irreducible.
 \end{proof}
 
 \begin{lemma}[The cyclic extension defined by a reduced pole]
