@@ -678,22 +678,6 @@ a homeomorphism: images of closed sets are compact and hence closed.
 This proves continuity of the inverse and the assertion.
 \end{proof}
 
-\begin{definition}[Closed universality property]
-\label{def:closed-universality}
-\uses{def:pro-p-group,def:countably-based,def:closed-group-embedding,def:nottingham-group,lem:nottingham-hausdorff-group}
-\source{camina1997:page-0001,camina1997:page-0012}
-\notready
-For a topological group $G$, let $\mathcal U_p(G)$ denote the following
-property: for every countably based pro-$p$ group $P$, there exists a
-closed group embedding $P\longrightarrow G$.
-The universality assertion of Camina's Corollary~2 is
-$\mathcal U_p(J_p)$, for each prime $p$.
-\end{definition}
-
-This definition specifies the full countably based assertion. It does
-not assert that the property holds, and topological finite generation
-is not part of its hypothesis on $P$.
-
 \input{artin-schreier}
 \input{witt}
 \input{witt-extension}
@@ -733,15 +717,16 @@ compact and $J_p$ is Hausdorff.
 \input{finite-generation}
 \input{lubotzky-wilson}
 
-\section{The unconditional universality target}
+\section{Countably based universality}
 
 \begin{theorem}[Camina's universality theorem]
 \label{thm:camina-universality}
-\uses{def:pro-p-group,def:countably-based,def:closed-group-embedding,def:nottingham-group,lem:nottingham-hausdorff-group}
+\uses{thm:lubotzky-wilson-pro-p,thm:nottingham-finitely-generated-pro-p}
 \source{camina1997:page-0001,camina1997:page-0012}
-\notready
+\lean{Camina1997.Nottingham.exists_closedEmbedding}
+\leanok
 For every prime $p$ and every countably based pro-$p$ group $P$,
-there exists a group homomorphism
+there exists a continuous injective group homomorphism
 \[
  \iota:P\longrightarrow J_p
 \]
@@ -749,51 +734,26 @@ that is a homeomorphism onto its image and has closed image, where
 $J_p$ has the congruence topology.
 \end{theorem}
 
-\section{The conditional reduction}
-
-\begin{theorem}[Reduction through finitely generated pro-$p$ groups]
-\label{thm:countable-reduction}
-\uses{def:pro-p-group,def:countably-based,def:topologically-finitely-generated,def:closed-universality,lem:compact-injection-closed-embedding}
-\source{camina1997:page-0012}
-\notready
-Let $G$ be a Hausdorff topological group. Suppose that both of the
-following hypotheses hold:
-\begin{enumerate}
-\item Every topologically finitely generated pro-$p$ group $Q$ admits
-a continuous injective homomorphism $Q\longrightarrow G$.
-\item For every countably based pro-$p$ group $P$, there exist a
-topologically finitely generated pro-$p$ group $Q$ and a continuous
-injective homomorphism $P\longrightarrow Q$.
-\end{enumerate}
-Then $\mathcal U_p(G)$ holds.
-\end{theorem}
-
 \begin{proof}
-Let $P$ be a countably based pro-$p$ group. The second hypothesis
-provides a topologically finitely generated pro-$p$ group $Q$ and a
-continuous injective homomorphism $i:P\longrightarrow Q$. The first
-hypothesis then provides a continuous injective homomorphism
-$j:Q\longrightarrow G$. The composite $j\circ i$ is a homomorphism:
+Let $P$ be a countably based pro-$p$ group.
+Theorem~\ref{thm:lubotzky-wilson-pro-p} gives a topologically
+finitely generated pro-$p$ group $H$ and a continuous closed
+group embedding $i:P\to H$.
+Theorem~\ref{thm:nottingham-finitely-generated-pro-p} gives a
+continuous closed group embedding $j:H\to J_p$.
+Set $\iota=j\circ i$. This is a homomorphism:
 for $x,y\in P$,
 \[
  j(i(xy))=j(i(x)i(y))=j(i(x))j(i(y)).
 \]
-It is continuous as a composite of continuous maps, and injective
-because equality of its values first implies equality under $i$ by
-injectivity of $j$, and then equality in $P$ by injectivity of $i$.
-The group $P$ is compact by the definition of a pro-$p$ group, and $G$
-is Hausdorff by assumption. The compact-source lemma therefore makes
-$j\circ i$ a closed group embedding. As $P$ was arbitrary, this is
-$\mathcal U_p(G)$.
+It is continuous as a composite of continuous maps and injective
+as a composite of injective maps. The homeomorphism $j:H\to j(H)$
+restricts to a homeomorphism $i(P)\to j(i(P))$; composing this
+with the homeomorphism $i:P\to i(P)$ proves that $\iota$ is a
+homeomorphism onto its image.
+The subgroup $i(P)$ is closed in $H$, so its image under that
+homeomorphism is closed in $j(H)$. Since $j(H)$ is closed in $J_p$,
+the image $j(i(P))$ is closed in $J_p$. This proves every assertion
+for the given $P$, and the construction applies to every countably
+based pro-$p$ group.
 \end{proof}
-
-For $G=J_p$, the first hypothesis is supplied by
-Theorem~\ref{thm:nottingham-finitely-generated-pro-p}, Camina's Theorem~5.
-Her Theorem~6, attributed to Lubotzky and Wilson, supplies a single
-two-generator pro-$p$ group containing all countably based pro-$p$
-groups, and hence is stronger than the second hypothesis above.
-The theorem just proved isolates the composition and closed-image
-argument in Corollary~2; its two inputs are distinct mathematical
-assertions. Continuity is an explicit hypothesis of both maps in the
-reduction; no assertion about automatic continuity of abstract
-homomorphisms is used here.
