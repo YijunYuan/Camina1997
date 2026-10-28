@@ -208,11 +208,40 @@ given by its coordinate functions. Hence the kernel is
 finite-dimensional.
 \end{proof}
 
+\begin{lemma}[The restriction kernel is finite]
+\label{lem:artin-schreier-restriction-finite-kernel}
+\source{camina1997:page-0009}
+\lean{Camina1997.ArtinSchreier.restriction, Camina1997.ArtinSchreier.exists_root_of_mem_ker_restriction, Camina1997.ArtinSchreier.finite_wpKernel, Camina1997.ArtinSchreier.finite_ker_restriction, Camina1997.ArtinSchreier.moduleFinite_ker_restriction}
+\leanok
+If $K/F$ is finite Galois, the kernel of
+$F/\wp(F)\to K/\wp(K)$ is a finite set, hence a finite-dimensional
+$\mathbf F_p$-vector space.
+\end{lemma}
+
+\begin{proof}
+For every kernel class $q$, choose a representative $a_q\in F$
+and a root $\theta_q\in K$ with $\wp(\theta_q)=a_q$.
+For $g\in G=\operatorname{Gal}(K/F)$, additivity of $\wp$
+and the fact that $g$ fixes $a_q$ imply
+$\wp(g(\theta_q)-\theta_q)=0$.
+The root set $W=\{x\in K:x^p-x=0\}$ is finite because the
+nonzero polynomial $X^p-X$ has at most $p$ roots.
+Thus $q\mapsto(g\mapsto g(\theta_q)-\theta_q)$ takes values
+in the finite function set $W^G$.
+If two classes give the same function, $\theta_q-\theta_r$
+is fixed by every element of $G$, and hence equals some $b\in F$
+by the Galois fixed-field theorem. Then
+$a_q-a_r=\wp(\theta_q-\theta_r)=\wp(b)$, so $q=r$.
+The displayed map is injective. Consequently its domain is finite;
+its finitely many elements span it as a vector space.
+\end{proof}
+
 \begin{lemma}[Restriction from a Laurent field has infinite-dimensional image]
 \label{lem:artin-schreier-restriction-infinite-image}
-\uses{lem:artin-schreier-quotient-basis,lem:artin-schreier-restriction-kernel}
+\uses{lem:artin-schreier-quotient-basis,lem:artin-schreier-restriction-finite-kernel}
 \source{camina1997:page-0009}
-\notready
+\lean{Camina1997.ArtinSchreier.not_moduleFinite_range_restriction}
+\leanok
 Let $F=k((t))$ and let $K/F$ be any finite Galois extension.
 The image of
 $\operatorname{res}:F/\wp(F)\to K/\wp(K)$ has infinite
@@ -234,27 +263,56 @@ That would make the domain finite-dimensional, a contradiction.
 \label{lem:artin-schreier-unbounded-reduced-poles}
 \uses{lem:artin-schreier-reduced-representative,lem:artin-schreier-quotient-basis}
 \source{camina1997:page-0009}
-\notready
+\lean{Camina1997.ArtinSchreier.finite_set_reduced_orderTop_ge, Camina1997.ArtinSchreier.exists_reduced_pole_lt_of_not_moduleFinite, Camina1997.ArtinSchreier.exists_reduced_pole_lt_in_coset}
+\leanok
 Let $K=k((T))$ and let $U$ be an infinite-dimensional
 $k$-subspace of $K/\wp(K)$.
-For every integer $B\ge0$, there is a class in $U$ whose
-reduced representative $r$ satisfies $v_T(r)<-B$.
+For every integer $B\ge0$ and every class $q$, there is a class
+in $q+U$ whose reduced representative $r$ satisfies $v_T(r)<-B$.
 \end{lemma}
 
 \begin{proof}
-Reduced representatives of valuation at least $-B$ are exactly
-the reduced expressions involving only $1$ and the monomials
-$T^{-m}$ with $1\le m\le B$ and $p\nmid m$.
-Their classes form the span of this finite list of basis
-vectors. If every element of $U$ had such a representative,
-$U$ would be a subspace of a finite-dimensional space and
-would itself be finite-dimensional. This contradicts the
-hypothesis.
+A reduced representative of valuation at least $-B$ has no
+nonzero coefficients outside degrees $-B,\ldots,0$.
+Its coefficient tuple in these degrees determines it, and
+there are finitely many such tuples because $k=\mathbf F_p$
+is finite. Thus bounded reduced representatives form a finite set.
+If every class of $q+U$ had a bounded reduced representative,
+the unique reduced representative of $q+u$ would give an injection
+from $U$ into this finite set. Then $U$ would be finite and its
+finitely many elements would span it, contradicting infinite dimension.
+\end{proof}
+
+\begin{lemma}[A reduced parameter below any pole bound]
+\label{lem:artin-schreier-deep-parameter-adjustment}
+\uses{lem:artin-schreier-restriction-infinite-image,lem:artin-schreier-unbounded-reduced-poles,lem:artin-schreier-reduced-representative}
+\source{camina1997:page-0009}
+\lean{Camina1997.ArtinSchreier.exists_reduced_pole_adjustment, Camina1997.ArtinSchreier.exists_reduced_pole_adjustment_order}
+\leanok
+Suppose $F\subseteq K=k((T))$ is finite Galois and $F/\wp(F)$
+is infinite-dimensional over $k$; in particular this holds when
+$F$ is a Laurent-series field over $k$. For every $\gamma\in K$
+and integer $B\ge0$, there exist $b\in F$, $\mu\in K$ and a reduced
+$r\in K$ with
+\[
+ r=\gamma+b-\wp(\mu),\qquad v_T(r)=-m,
+ \qquad m>B,\quad p\nmid m.
+\]
+\end{lemma}
+
+\begin{proof}
+The restriction image $U$ is infinite-dimensional. Apply the
+preceding lemma to the affine coset $[\gamma]+U$ to obtain a
+reduced $r$ with $v_T(r)<-B$. Choose $b\in F$ whose restricted
+class is $[r]-[\gamma]$. Then $[\gamma+b-r]=0$ in $K/\wp(K)$,
+so $\gamma+b-r=\wp(\mu)$ for some $\mu\in K$.
+The negative leading order of a reduced representative is $-m$
+with $p\nmid m$, and the bound on its order gives $m>B$.
 \end{proof}
 
 \begin{theorem}[One reduced parameter below a prescribed pole bound]
 \label{thm:witt-simultaneous-pole-adjustment}
-\uses{lem:artin-schreier-reduced-representative,lem:artin-schreier-restriction-infinite-image,lem:artin-schreier-unbounded-reduced-poles}
+\uses{lem:artin-schreier-deep-parameter-adjustment}
 \source{camina1997:page-0005,camina1997:page-0009,witt1936:page-0004}
 \notready
 Suppose $F=k((t))\subseteq K=k((T))$ is finite Galois,

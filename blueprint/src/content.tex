@@ -213,6 +213,37 @@ $\mathbf F_p$-algebra automorphisms with continuous inverses satisfying
 $\sigma(t)-t\in t^2\mathbf F_p[[t]]$.
 \end{definition}
 
+\begin{lemma}[$p$-group actions are normalized]
+\label{lem:pgroup-power-series-normalization}
+\uses{lem:power-series-aut-linear-coeff,def:normalized-aut,def:nottingham-group}
+\source{camina1997:page-0002,camina1997:page-0005}
+\lean{PowerSeries.linearCoeffHom, PowerSeries.isNormalized_of_pow_prime_pow_eq_one, PowerSeries.isNormalized_of_isPGroup_action, Camina1997.Nottingham.ofPGroupAction, Camina1997.Nottingham.ofPGroupAction_injective_iff, Camina1997.Nottingham.isClosedEmbedding_ofPGroupAction}
+\leanok
+Let $k$ be a field of characteristic $p$. Every algebra automorphism
+of $k[[t]]$ of $p$-power order is normalized. Thus an action of a
+$p$-group on $k[[t]]$ by $k$-algebra automorphisms consists of
+normalized automorphisms. When $k=\mathbf F_p$, it factors canonically
+through $J_p$, and faithfulness is preserved. If the group is finite
+with its discrete topology and the action is faithful, this factor
+is a closed topological embedding into $J_p$.
+\end{lemma}
+
+\begin{proof}
+The linear-coefficient formula shows that
+$\lambda(\sigma)=[t]\sigma(t)$ is multiplicative and
+$\lambda(1)=1$. If $\sigma^{p^n}=1$, then
+$\lambda(\sigma)^{p^n}=1$.
+The $n$-fold Frobenius map on a field is injective, so
+$\lambda(\sigma)=1$. Every element of a $p$-group has
+$p$-power order, proving normalization of the whole action.
+Its factor into the subgroup of normalized automorphisms has
+the same underlying automorphisms, so it is faithful exactly
+when the original action is faithful. For a finite discrete
+domain the factor is continuous and its domain compact.
+A continuous injection from a compact space into the Hausdorff
+space $J_p$ is a homeomorphism onto a closed image, as asserted.
+\end{proof}
+
 \begin{lemma}[Extension of automorphisms to Laurent series]
 \label{lem:nottingham-laurent-extension}
 \uses{def:nottingham-group,lem:nottingham-congruence-filtration}

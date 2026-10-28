@@ -10,7 +10,8 @@ equations are supplied by the explicit constructions above.
 
 \begin{lemma}[A Frattini subgroup has no proper supplement]
 \label{lem:frattini-no-proper-supplement}
-\notready
+\lean{frattini_nongenerating}
+\leanok
 Let $E$ be a finite group. Write $\Phi(E)$ for the intersection
 of its maximal proper subgroups. If $N\le\Phi(E)$ and $H\le E$
 satisfy $NH=E$, then $H=E$.
@@ -83,7 +84,8 @@ and the section formula gives the asserted multiplication.
 \label{lem:witt-frattini-parameter-not-image}
 \uses{lem:frattini-no-proper-supplement,lem:central-extension-factor-set}
 \source{witt1936:page-0004,camina1997:page-0004}
-\notready
+\lean{Camina1997.Witt.no_splitting_of_le_frattini, Camina1997.Witt.nonempty_splitting_of_parameter_image, Camina1997.Witt.parameter_not_image_of_le_frattini}
+\leanok
 Suppose $\delta_s\in K$ and $\gamma\in K$ satisfy
 \[
  \delta_1=0,\qquad
@@ -224,7 +226,8 @@ both the restriction identity and the assertion about $F$.
 \label{lem:witt-lifted-automorphisms}
 \uses{lem:central-extension-factor-set,lem:witt-frattini-parameter-not-image,lem:artin-schreier-irreducible,lem:witt-semilinear-quotient-lifts}
 \source{witt1936:page-0004,camina1997:page-0004}
-\notready
+\lean{Camina1997.Witt.exists_field_centralLift, Camina1997.Witt.centralLiftAlgHom, Camina1997.Witt.centralLiftAlgHom_injective, Camina1997.Witt.centralLiftAlgHom_algebraMap}
+\leanok
 For $\delta$ and $\gamma$ satisfying the equations of
 Lemma~\ref{lem:witt-frattini-parameter-not-image}, set
 \[
@@ -288,7 +291,8 @@ and is injective.
 \label{lem:witt-lift-full-galois-group}
 \uses{lem:witt-lifted-automorphisms}
 \source{witt1936:page-0004,camina1997:page-0004}
-\notready
+\lean{Camina1997.Witt.card_centralExtension, Camina1997.Witt.full_galois_of_card_eq_finrank, Camina1997.Witt.exists_galois_centralLift}
+\leanok
 The field $L$ above is a finite Galois extension of $F$.
 The map $\rho$ is an isomorphism
 $E\simeq\operatorname{Gal}(L/F)$, and restriction to $K$
@@ -296,49 +300,36 @@ under this isomorphism is exactly $q$.
 \end{lemma}
 
 \begin{proof}
-The extension $L/F$ is finite, since
-$[L:F]=[L:K][K:F]=p[K:F]$.
-It is separable: $K/F$ is separable, and the minimal polynomial
-$Y^p-Y-\gamma$ of $\theta$ over $K$ has derivative $-1$;
-separability is transitive in a finite tower.
+The field tower has degree
+$[L:F]=[L:K][K:F]=p[K:F]$. The central-coordinate bijection
+$E\simeq G\times\mathbf F_p$ gives $|E|=p|G|$.
+Since $K/F$ is finite Galois, $|G|=[K:F]$, and therefore
+$|E|=[L:F]$. The injective homomorphism $\rho$ already constructed
+supplies this many distinct $F$-automorphisms of $L$.
+A finite extension has at most its degree many embeddings into a
+field: adjoining algebraic generators bounds the choices at each
+step by the corresponding minimal-polynomial degree, and these
+degrees multiply to the extension degree. Consequently
+$|\operatorname{Aut}_F(L)|\le[L:F]=|E|$, so $\rho$ is bijective.
 
-Choose an algebraic closure containing $L$ and let
-$j:L\to\overline F$ be any $F$-embedding.
-Normality of $K/F$ implies $j(K)=K$, so its restriction is
-some $s\in G$. The element $j(\theta)$ is a root of
-$Y^p-Y-s(\gamma)$. That polynomial has the $p$ distinct roots
-\[
- \theta+\delta_s+a\qquad(a\in\mathbf F_p),
-\]
-because $\wp(\theta+\delta_s)=s(\gamma)$; these are all its
-roots by its degree. Hence $j(\theta)\in L$, and the
-polynomial basis shows $j(L)\subseteq L$.
-This proves normality of $L/F$. Explicitly, for $z\in L$
-and any root $z'$ of its minimal polynomial over $F$, the
-embedding $F(z)\to\overline F$ sending $z$ to $z'$ extends
-to $L$: adjoin a finite list of algebraic generators and at
-each step send the next generator to a root of its transported
-minimal polynomial in the algebraic closure. The resulting
-$F$-embedding sends $L$ into $L$ by the argument just given,
-so $z'\in L$. Thus every such minimal polynomial splits in
-$L$, the defining normality condition.
-
-Finally let $\tau\in\operatorname{Gal}(L/F)$. Its restriction
-to $K$ is some $s\in G$, and the same root calculation gives
-$\tau(\theta)=\theta+\delta_s+a$ for a unique
-$a\in\mathbf F_p$.
-Therefore $\tau$ and $\rho(\iota(a)u_s)$ agree on $K$
-and $\theta$, hence on all of $L$. This proves surjectivity;
-injectivity was proved in the preceding lemma.
-The displayed action on $K$ says
-$\rho(e)|_K=q(e)$ for every $e\in E$, as asserted.
+For completeness, equality in this bound implies the extension is
+Galois. In an algebraic closure the number of embeddings is the
+separable degree, which is at most $[L:F]$. Having $[L:F]$
+automorphisms forces the separable degree to equal the full degree,
+so the extension is separable; it also exhausts all embeddings into
+the algebraic closure, so every such embedding preserves $L$.
+Thus every conjugate of every element lies in $L$, proving normality.
+This is the automorphism-count criterion for a finite Galois extension.
+Finally the already proved coefficient formula for $\rho$ gives
+$\rho(e)|_K=q(e)$ for every $e\in E$.
 \end{proof}
 
 \begin{theorem}[Proper lifting across a central Frattini kernel of order $p$]
 \label{thm:witt-central-frattini-lift}
 \uses{lem:central-extension-factor-set,thm:witt-additive-equations,lem:witt-frattini-parameter-not-image,lem:witt-lifted-automorphisms,lem:witt-lift-full-galois-group}
 \source{witt1936:page-0003,witt1936:page-0004,camina1997:page-0003,camina1997:page-0004}
-\notready
+\lean{GroupExtension.ofPrimeKernel, Camina1997.Witt.exists_galois_lift_of_prime_kernel}
+\leanok
 Let $F$ have characteristic $p$, let $K/F$ be finite Galois,
 and let $E$ be a finite $p$-group. Suppose
 \[

@@ -1,0 +1,151 @@
+\section{Displacement orders and preservation of depth}
+
+Write $v$ for the order on $k[[X]]$, with $v(0)=+\infty$.
+A normalized $k$-algebra automorphism $g$ sends
+$X$ to $X+\delta$, where $v(\delta)\ge2$.
+The following coefficient arguments supply the cancellation details in
+\cite{Camina1997}, Lemmas~4--5. Automorphisms act on the left here;
+this changes no displacement orders from the paper's right-action convention.
+
+\begin{lemma}[Displacement of a monomial]
+\label{lem:normalized-monomial-displacement}
+\source{camina1997:page-0006,camina1997:page-0007}
+\lean{PowerSeries.order_pow_sub_pow_of_linear_coeff_one}
+\notready
+Let $k$ be a field, let $y\in k[[X]]$ have constant coefficient zero
+and coefficient of $X$ equal to one, and suppose
+$v(y-X)=n+1<\infty$. If $m$ is a natural number whose image in $k$
+is nonzero, then
+\[
+ v(y^m-X^m)=m+n.
+\]
+\end{lemma}
+
+\begin{proof}
+The hypothesis on $m$ implies $m\ge1$. Write $y=Xu$, where
+$u(0)=1$. The finite geometric identity gives
+\[
+ y^m-X^m=X^{m-1}(y-X)(1+u+\cdots+u^{m-1}).
+\]
+The last factor has constant coefficient $m\ne0$, hence has order zero.
+The order of a product of nonzero power series is the sum of their orders.
+Consequently the displayed product has order
+$(m-1)+(n+1)+0=m+n$.
+\end{proof}
+
+\begin{lemma}[Displacement at a leading exponent]
+\label{lem:normalized-leading-displacement}
+\uses{lem:normalized-monomial-displacement}
+\source{camina1997:page-0006,camina1997:page-0007}
+\lean{PowerSeries.order_algEquiv_sub_of_order}
+\notready
+Let $g$ be a normalized automorphism of $k[[X]]$ with
+$v(g(X)-X)=n+1<\infty$. If $v(f)=m<\infty$ and the image
+of $m$ in $k$ is nonzero, then
+\[
+ v(g(f)-f)=m+n.
+\]
+\end{lemma}
+
+\begin{proof}
+Write $f=X^m u$, where $u(0)\ne0$. Every power-series automorphism
+preserves constant coefficients, so $g(u)$ has order zero.
+Congruence on $X$ modulo $X^{n+1}$ implies the same congruence on
+all power series. To see this, it holds for each monomial by
+factoring $g(X)^j-X^j$ by $g(X)-X$, and therefore for polynomials;
+for a power series, truncate after degree $n$, since both the original
+series and its image differ from these polynomials by multiples of
+$X^{n+1}$. Thus $v(g(u)-u)\ge n+1$.
+Now
+\[
+ g(f)-f=(g(X)^m-X^m)g(u)+X^m(g(u)-u).
+\]
+The first summand has order $m+n$ by the preceding lemma, while the
+second has order at least $m+n+1$. Their leading terms cannot cancel,
+which proves the assertion.
+\end{proof}
+
+\begin{lemma}[The two possible leading displacement orders]
+\label{lem:degree-p-parameter-displacement}
+\uses{lem:normalized-leading-displacement}
+\source{camina1997:page-0006,camina1997:page-0007}
+\notready
+Let $k=\mathbf F_p$ and let
+\[
+ T=\sum_{i\ge p}a_iX^i,\qquad a_p\ne0.
+\]
+Suppose $u$ is the least index not divisible by $p$ for which $a_u\ne0$.
+Let $g$ be normalized with $v(g(X)-X)=n+1<\infty$.
+Then
+\[
+ v(g(T)-T)\ge\min\{p(n+1),u+n\}.
+\]
+If $p(n+1)\ne u+n$, equality holds.
+\end{lemma}
+
+\begin{proof}
+Separate the terms with exponent divisible by $p$ from the other terms:
+\[
+ T=A^p+B,\qquad
+ A=\sum_{j\ge1}a_{pj}X^j,\qquad
+ B=\sum_{\substack{i\ge p\\p\nmid i}}a_iX^i.
+\]
+Frobenius fixes $k$ and is continuous for the order topology, so this
+identity holds coefficient by coefficient. We have $v(A)=1$ and
+$v(B)=u$. The leading-displacement lemma gives
+$v(g(A)-A)=n+1$ and $v(g(B)-B)=u+n$.
+Since $g$ commutes with powers and Frobenius is additive,
+\[
+ g(T)-T=(g(A)-A)^p+(g(B)-B).
+\]
+The two summands have orders $p(n+1)$ and $u+n$ respectively.
+The order of a sum is at least their minimum, and is exactly that
+minimum when their orders differ.
+\end{proof}
+
+\begin{lemma}[The first exponent detects the degree-p ramification break]
+\label{lem:camina-four-depth-equation}
+\uses{lem:degree-p-parameter-displacement}
+\source{camina1997:page-0006}
+\notready
+Under the preceding hypotheses, if $g(T)=T$, then
+\[
+ u=n(p-1)+p.
+\]
+\end{lemma}
+
+\begin{proof}
+If $p(n+1)$ and $u+n$ differed, the displacement lemma would give
+$g(T)-T$ finite order, whereas it is zero. Therefore
+$p(n+1)=u+n$. Subtracting $n$ proves the formula.
+\end{proof}
+
+\begin{lemma}[Depth below a new ramification break is unchanged]
+\label{lem:camina-five-depth-preservation}
+\uses{lem:degree-p-parameter-displacement}
+\source{camina1997:page-0007}
+\notready
+Under the degree-p parameter hypotheses, suppose
+\[
+ g(T)=T+\sum_{j\ge k+1}\beta_jT^j,\qquad \beta_{k+1}\ne0,
+\]
+and $u=r(p-1)+p$ for a natural number $r>k$.
+If $v(g(X)-X)=n+1<\infty$, then $n=k$.
+\end{lemma}
+
+\begin{proof}
+Since $v(T)=p$, the displayed displacement has order $p(k+1)$:
+its first summand has that order and every later summand has strictly
+larger order. If $n\ge r$, then
+\[
+ p(n+1)\ge p(r+1)>p(k+1),\qquad
+ u+n=r(p-1)+p+n\ge p(r+1)>p(k+1).
+\]
+The lower bound in the displacement lemma contradicts the known order.
+Thus $n<r$. Since $p>1$, this gives
+\[
+ p(n+1)<r(p-1)+p+n=u+n.
+\]
+The exact-order clause of the displacement lemma now gives
+$p(k+1)=p(n+1)$. As $p>0$, cancellation gives $k=n$.
+\end{proof}
