@@ -1,0 +1,135 @@
+\section{Compactness of continuous homomorphisms}
+
+The compactness step in \cite{Camina1997}, Theorem~5, can be expressed
+entirely in finite quotients. The argument below replaces the paper's
+evaluation of infinite pro-$p$ words and its appeal to automatic
+continuity by a diagonal subsequence of continuous quotient maps.
+The required depth control on the finite embeddings remains an
+explicit hypothesis of the final lemma in this section.
+
+\begin{lemma}[Finite targets and finitely many generators]
+\label{lem:finite-continuous-hom-set}
+\uses{def:topologically-finitely-generated}
+\source{camina1997:page-0011}
+\notready
+Let $P$ be a topological group with a finite tuple
+$(s_1,\ldots,s_r)$ generating a dense subgroup. If $A$ is a finite
+discrete group, there are at most $|A|^r$ continuous homomorphisms
+$P\to A$.
+\end{lemma}
+
+\begin{proof}
+Two homomorphisms with the same values on the tuple agree on the
+subgroup it generates, by preservation of products and inverses.
+If both are continuous, their equalizer is closed: it is the
+inverse image of the diagonal under their product map, and the
+diagonal in $A\times A$ is closed because $A$ is Hausdorff.
+The equalizer contains a dense subgroup and hence all of $P$.
+Thus evaluation at the tuple injects the continuous homomorphism
+set into $A^r$, which has $|A|^r$ elements.
+\end{proof}
+
+\begin{lemma}[Countability of the finite quotient basis]
+\label{lem:finitely-generated-pro-p-countable-base}
+\uses{def:pro-p-group,def:countably-based,lem:finite-continuous-hom-set}
+\notready
+Every topologically finitely generated pro-$p$ group is countably based.
+\end{lemma}
+
+\begin{proof}
+For each integer $d>0$, there are only finitely many group laws
+on a fixed set of size $d$. By the preceding lemma there are only
+finitely many continuous homomorphisms from $P$ to each such group.
+Consequently the kernels of continuous homomorphisms to finite
+discrete groups form a countable family, by taking the union over $d$.
+Every open normal subgroup of finite index is such a kernel:
+the quotient map is continuous because its fibres are open cosets,
+and one may identify the quotient with a group on a finite labelled set.
+The pro-$p$ definition supplies an identity neighbourhood basis
+of open normal subgroups of finite index. That basis is contained
+in the countable family just described, whose members are themselves
+open identity neighbourhoods. Thus this family is a countable basis.
+\end{proof}
+
+\begin{lemma}[A diagonal limit of continuous Nottingham homomorphisms]
+\label{lem:nottingham-hom-diagonal-limit}
+\uses{lem:finite-continuous-hom-set,lem:nottingham-quotient-card,lem:nottingham-inverse-limit}
+\source{camina1997:page-0011,camina1997:page-0012}
+\notready
+Let $P$ be a topologically finitely generated topological group and
+let $f_i:P\to J_p$, for $i\in\mathbf N$, be continuous homomorphisms.
+There are a strictly increasing sequence $(i_j)$ and a continuous
+homomorphism $f:P\to J_p$ such that, for every $n\ge0$, the maps
+\[
+ P\xrightarrow{f_{i_j}}J_p\longrightarrow J_p/J_{p,n}
+\]
+are equal to the quotient of $f$ for all sufficiently large $j$.
+The threshold may be chosen independently of the element of $P$.
+\end{lemma}
+
+\begin{proof}
+Write $Q_n=J_p/J_{p,n}$ and let $\pi_n:J_p\to Q_n$ be the
+continuous quotient map. The set of continuous homomorphisms
+$P\to Q_n$ is finite by the first lemma and finiteness of $Q_n$.
+Starting with all indices, apply the infinite pigeonhole principle
+at level $0$ to choose an infinite set $S_0$ on which
+$\pi_0f_i$ is constant, with value $h_0$. Inductively, partition
+the infinite set $S_n$ by the finitely many values of
+$\pi_{n+1}f_i$ and choose an infinite part $S_{n+1}\subseteq S_n$,
+with constant value $h_{n+1}$.
+Choose $i_0\in S_0$ and, recursively, choose
+$i_{j+1}\in S_{j+1}$ larger than $i_j$. Such a choice exists
+because an infinite subset of $\mathbf N$ is unbounded.
+For $j\ge n$, nesting gives $i_j\in S_n$, so
+$\pi_nf_{i_j}=h_n$ as maps on all of $P$.
+
+The maps $h_n$ are compatible. Indeed, for $m\ge n$, choose
+$j\ge m$. Both $h_m$ and $h_n$ are quotients of the same map
+$f_{i_j}$, so $\pi_{m,n}h_m=h_n$, where $\pi_{m,n}:Q_m\to Q_n$
+is the natural quotient homomorphism.
+For each $x\in P$, the tuple $(h_n(x))_n$ therefore lies in
+the congruence inverse limit. It depends homomorphically on $x$,
+since every coordinate does. It also depends continuously on $x$:
+all coordinates are continuous, and product continuity followed
+by restriction to the inverse-limit subspace gives continuity.
+Compose this map with the inverse of the topological group
+isomorphism $J_p\cong\varprojlim Q_n$. This gives the required
+continuous homomorphism $f$. By construction $\pi_nf=h_n$, and
+the equality for all $j\ge n$ gives the claimed uniform threshold.
+\end{proof}
+
+\begin{lemma}[Depth control prevents collapse in the limit]
+\label{lem:nottingham-depth-controlled-limit-embedding}
+\uses{lem:nottingham-hom-diagonal-limit,lem:compact-injection-closed-embedding}
+\source{camina1997:page-0012}
+\notready
+Let $P$ be a compact, topologically finitely generated topological
+group. Suppose that $(f_i:P\to J_p)_{i\in\mathbf N}$ is a sequence
+of continuous homomorphisms such that for every $x\ne1$ there
+exist $n,N\in\mathbf N$ with
+\[
+ f_i(x)\notin J_{p,n}\qquad\text{for every }i\ge N.
+\]
+Then $P$ admits a closed group embedding in $J_p$.
+\end{lemma}
+
+\begin{proof}
+Take $f$ and the strictly increasing subsequence $(i_j)$ from
+the preceding lemma. Suppose $x\ne1$, and choose $n,N$ as in
+the hypothesis. For all sufficiently large $j$, we have
+$i_j\ge N$ and $\pi_nf_{i_j}=\pi_nf$. The first assertion holds
+because a strictly increasing sequence of natural numbers is
+unbounded; the second is the diagonal-limit conclusion.
+The hypothesis gives $\pi_nf_{i_j}(x)\ne1$, and hence
+$\pi_nf(x)\ne1$. Thus $f(x)\ne1$. Its kernel is trivial, so
+$f$ is injective. It is continuous by its construction, $P$ is
+compact by hypothesis, and $J_p$ is Hausdorff. The compact-source
+lemma therefore makes $f$ a homeomorphism onto a closed subgroup.
+\end{proof}
+
+In Camina's tower, each $f_i$ is a finite-quotient map followed by
+an embedding of that finite quotient in $J_p$. Her depth comparison
+makes the depths of $f_i(x)$ eventually constant for each $x\ne1$;
+this implies the avoidance hypothesis above by choosing a deeper
+congruence subgroup. Constructing those finite embeddings with
+simultaneous depth control is the separate ramification step.
