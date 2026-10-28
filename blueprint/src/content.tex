@@ -402,7 +402,8 @@ They are open neighbourhoods, proving the Hausdorff property.
 \label{lem:nottingham-quotient-card}
 \uses{lem:nottingham-parameters,lem:nottingham-congruence-filtration}
 \source{camina1997:page-0002}
-\notready
+\lean{Camina1997.Nottingham.card_quotient}
+\leanok
 For every $n\ge1$ the quotient $J_p/J_{p,n}$ has $p^{n-1}$ elements.
 \end{lemma}
 
@@ -418,6 +419,69 @@ induces an injection from the quotient into $\mathbf F_p^{n-1}$.
 It is onto: extend any finite coefficient tuple by zeros and realize
 the resulting sequence by the parameter lemma. This is a bijection,
 and there are $p$ independent choices for each of the $n-1$ entries.
+\end{proof}
+
+\begin{lemma}[Compactness of the Nottingham group]
+\label{lem:nottingham-compact}
+\uses{lem:nottingham-parameters,lem:nottingham-hausdorff-group}
+\source{camina1997:page-0002}
+\lean{Camina1997.Nottingham.coefficientHomeomorph, Camina1997.Nottingham.instCompactSpace}
+\leanok
+The coefficient bijection $J_p\longrightarrow\mathbf F_p^{\mathbf N}$
+is a homeomorphism for the congruence topology and the product of
+discrete topologies. In particular, $J_p$ is compact.
+\end{lemma}
+
+\begin{proof}
+A coset $\sigma J_{p,n}$ consists exactly of the automorphisms whose
+parameters have the same coefficients of degrees $2,\ldots,n$ as
+$\sigma(t)$: apply $\sigma$ to the defining congruence for
+$\sigma^{-1}\tau$. Under the coefficient bijection this is the cylinder
+fixing the first $n-1$ coordinates. Such cylinders form a basis of the
+product topology, since every finite set of coordinate indices is
+contained in an initial segment. Both the bijection and its inverse
+therefore take neighbourhood bases to neighbourhood bases, proving the
+homeomorphism. Each finite discrete factor is compact, so the product
+is compact by the product theorem for compact spaces. A homeomorphism
+preserves compactness, proving the final assertion.
+\end{proof}
+
+\begin{definition}[Depth]
+\label{def:nottingham-depth}
+\uses{def:nottingham-group}
+\source{camina1997:page-0002}
+\notready
+For $g\in J_p$, define $D(g)=\operatorname{ord}_t(g(t)-t)-1$
+in $\mathbf N\cup\{\infty\}$, with $\infty-1=\infty$.
+\end{definition}
+
+\begin{lemma}[Depth and the congruence filtration]
+\label{lem:nottingham-depth-filtration}
+\uses{def:nottingham-depth,lem:nottingham-congruence-filtration}
+\source{camina1997:page-0002}
+\notready
+Every $g\in J_p$ has $D(g)\ge1$, and $D(g)=\infty$ if and only if
+$g=1$. Moreover, for $n\ge0$, $g\in J_{p,n}$ if and only if
+$n\le D(g)$. Thus $D(g)=n$ if and only if
+$g\in J_{p,n}\setminus J_{p,n+1}$.
+Depth satisfies $D(g^{-1})=D(g)$ and
+$D(gh)\ge\min\{D(g),D(h)\}$.
+\end{lemma}
+
+\begin{proof}
+Normalization makes the parameter difference divisible by $t^2$.
+For a nonzero difference, its order is the least index of a nonzero
+coefficient, so it is at least two, and subtracting one gives a
+positive integer. The difference is zero exactly when $g(t)=t$,
+which determines the identity automorphism by the parameter lemma.
+Divisibility by $t^{n+1}$ is exactly the inequality
+$n+1\le\operatorname{ord}_t(g(t)-t)$, hence the stated filtration
+criterion and the characterization of equality. Subgroup closure
+under inverse gives equal membership of $g$ and $g^{-1}$ in every
+$J_{p,n}$, proving equality of their depths. Subgroup closure under
+products shows that every integer bounded by both $D(g)$ and $D(h)$
+is bounded by $D(gh)$; this is the stated minimum inequality,
+including infinite depths.
 \end{proof}
 
 \begin{definition}[Closed universality property]
