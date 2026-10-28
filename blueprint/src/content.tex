@@ -258,6 +258,68 @@ $t$ is unchanged by extension or restriction, so every stated
 congruence condition is preserved.
 \end{proof}
 
+\begin{lemma}[Congruence determined by the parameter]
+\label{lem:aut-congruence-parameter}
+\uses{lem:power-series-aut-continuity}
+\source{camina1997:page-0002}
+\lean{PowerSeries.X_pow_dvd_algEquiv, PowerSeries.X_pow_dvd_algEquiv_sub}
+\leanok
+Let $\sigma,\tau\in A$ and $r\ge0$. Then
+$\sigma(t)-\tau(t)\in t^rR$ if and only if
+$\sigma(f)-\tau(f)\in t^rR$ for every $f\in R$.
+Every automorphism of $R$ preserves each ideal $t^rR$.
+\end{lemma}
+
+\begin{proof}
+Preservation follows because $\sigma(t)\in tR$, hence
+$\sigma(t^r h)=\sigma(t)^r\sigma(h)\in t^rR$; applying the same
+argument to the inverse gives equality of ideals.
+For the forward implication use induction on $r$. The case $r=0$
+is immediate. Suppose the parameter difference is in $t^{r+1}R$.
+Write $f=th+a$ with $a\in k$. Then
+\[
+\sigma(f)-\tau(f)=(\sigma(t)-\tau(t))\sigma(h)
+                   +\tau(t)(\sigma(h)-\tau(h)).
+\]
+The first term lies in $t^{r+1}R$. The induction hypothesis, applied
+to the weaker parameter congruence modulo $t^r$, places the second
+factor in the second term in $t^rR$. Since $\tau(t)\in tR$, that
+term also lies in $t^{r+1}R$. The reverse implication takes $f=t$.
+\end{proof}
+
+\begin{lemma}[The congruence filtration]
+\label{lem:nottingham-congruence-filtration}
+\uses{def:nottingham-group,lem:aut-congruence-parameter}
+\source{camina1997:page-0002}
+\lean{Camina1997.Nottingham.congruenceSubgroup, Camina1997.Nottingham.mem_congruenceSubgroup_iff, Camina1997.Nottingham.congruenceSubgroup_normal, Camina1997.Nottingham.congruenceSubgroup_antitone, Camina1997.Nottingham.congruenceSubgroup_zero, Camina1997.Nottingham.congruenceSubgroup_one, Camina1997.Nottingham.iInf_congruenceSubgroup}
+\leanok
+For $n\ge0$ the sets
+$J_{p,n}=\{\sigma\in J_p:\sigma(t)-t\in t^{n+1}R\}$
+are normal subgroups. They decrease with $n$, satisfy
+$J_{p,0}=J_{p,1}=J_p$, and have intersection $\{1\}$.
+\end{lemma}
+
+\begin{proof}
+By the preceding lemma membership means that $\sigma$ fixes every
+series modulo $t^{n+1}R$. The identity has this property, and
+\[
+ (\sigma\tau)(f)-f=(\sigma(\tau(f))-\tau(f))+(\tau(f)-f)
+\]
+proves closure under products. Setting $h=\sigma^{-1}(f)$ in
+$\sigma(h)-h\in t^{n+1}R$ and negating proves closure under inverses.
+For $\gamma\in J_p$, the difference
+$(\gamma\sigma\gamma^{-1})(f)-f$
+is $\gamma(\sigma(h)-h)$, where $h=\gamma^{-1}(f)$, and hence lies
+in the same ideal. This proves normality. Inclusion of the powers
+of $t$ gives the decreasing property. Constant-coefficient
+preservation gives $J_{p,0}=J_p$ and normalization gives
+$J_{p,1}=J_p$.
+Finally, if $\sigma$ belongs to every subgroup, then for every $f$
+and every $i$ the coefficient of degree $i$ in $\sigma(f)-f$
+vanishes, by divisibility by $t^{i+1}$. Thus $\sigma(f)=f$ for all
+$f$, so $\sigma=1$.
+\end{proof}
+
 \begin{definition}[Congruence neighbourhoods]
 \label{def:nottingham-congruence}
 \uses{def:nottingham-group}

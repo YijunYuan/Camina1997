@@ -1,3 +1,3 @@
 module
 
-public import Camina1997.Nottingham.Basic
+public import Camina1997.Nottingham.Congruence
