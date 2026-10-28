@@ -72,22 +72,27 @@ systemctl --user stop camina-horizon-prover
 journalctl --user -u camina-horizon-prover
 ```
 
-After that service has stopped, the task can also be run in the foreground
-from the workspace root:
+After that service has stopped, the same continuation can be run in the
+foreground from the workspace root:
 
 ```sh
-horizon run CAM-MAIN --no-dashboard
+python3 scripts/continue_camina.py --run 0002
 ```
 
-The continuing run uses Codex `gpt-6-astra` with explicit `xhigh` effort,
-up to 50 rounds, one concurrent session, and the unchanged session/run
-ceilings of 100,000 output tokens. Completing a sub-milestone does not complete
-`CAM-MAIN`; its objective is the full, unconditional theorem.
-These are Horizon stop thresholds, not guaranteed exact token or monetary
-caps. Budget or account limits pause the run; the service does not blindly
-restart it or bypass those limits. The service is independent of this chat
-but does not start automatically after a reboot. Agent-launched extra
-tasks/runs and GitHub issue synchronization are disabled.
+The continuing run uses Codex `gpt-6-astra` with explicit `xhigh` effort and
+one concurrent session. At the user's request, **there is no local session,
+run token, or cost ceiling** (`workspace.budget: {}`). Run `0002` originally
+paused at 100,165 output tokens because of the former 100,000-token session
+ceiling; continuation resumes the same run and preserves its progress.
+
+The controller drives 50 rounds per batch and automatically resumes another
+batch while `CAM-MAIN` remains unfinished. Completing a sub-milestone does
+not complete this task; its objective is the full, unconditional theorem.
+It exits when the task is done, or records an actual blocker, engine failure,
+or external account limit. It does not blindly retry failures or override a
+user stop. The service is independent of this chat but does not start
+automatically after a reboot. Agent-launched extra tasks/runs and GitHub issue
+synchronization are disabled.
 The configured GitHub repository is `YijunYuan/Camina1997`.
 The existing ChatGPT login supplies Codex authentication; `.env` has no active
 keys and remains excluded from version control.
