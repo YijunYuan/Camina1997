@@ -130,19 +130,6 @@ theorem liftEquiv_algebraMap (s : G) (d : K) (hd : s • γ - γ = d ^ p - d) (x
     liftEquiv γ s d hd (algebraMap K A x) = algebraMap K A (s • x) :=
   liftHom_algebraMap γ s d hd x
 
-omit [MulSemiringAction G K] in
-private theorem zmod_cast_pow (a : ZMod p) :
-    (ZMod.castHom (dvd_refl p) K a) ^ p = ZMod.castHom (dvd_refl p) K a := by
-  obtain ⟨n, rfl⟩ := ZMod.natCast_zmod_surjective a
-  simp only [map_natCast]
-  exact map_natCast (frobenius K p) n
-
-private theorem smul_zmod_cast (a : ZMod p) (s : G) :
-    s • ZMod.castHom (dvd_refl p) K a = ZMod.castHom (dvd_refl p) K a := by
-  obtain ⟨n, rfl⟩ := ZMod.natCast_zmod_surjective a
-  simp only [map_natCast]
-  exact map_natCast (MulSemiringAction.toRingHom G K s) n
-
 /-- The automorphism assigned to the central coordinates `(s, a)` in Witt's construction. -/
 noncomputable def wittLift (δ : G → K) (hγ : ∀ s, s • γ - γ = δ s ^ p - δ s)
     (s : G) (a : ZMod p) : A ≃+* A :=

@@ -143,14 +143,16 @@ theorem pow_sub_isOneCocycle_of_twoCocycle (δ : G → L) (c : G → G → L)
   ring
 
 omit [Fintype G] in
-private theorem smul_zmod_cast (c : ZMod p) (s : G) :
+/-- Field automorphisms fix the prime subfield. -/
+theorem smul_zmod_cast (c : ZMod p) (s : G) :
     s • (ZMod.castHom (dvd_refl p) L c) = ZMod.castHom (dvd_refl p) L c := by
   obtain ⟨n, rfl⟩ := ZMod.natCast_zmod_surjective c
   simp only [map_natCast]
   exact map_natCast (MulSemiringAction.toRingHom G L s) n
 
 omit [Fintype G] [MulSemiringAction G L] in
-private theorem zmod_cast_pow (c : ZMod p) :
+/-- Prime-subfield elements are fixed by Frobenius. -/
+theorem zmod_cast_pow (c : ZMod p) :
     (ZMod.castHom (dvd_refl p) L c) ^ p = ZMod.castHom (dvd_refl p) L c := by
   obtain ⟨n, rfl⟩ := ZMod.natCast_zmod_surjective c
   simp only [map_natCast]
