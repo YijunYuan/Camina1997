@@ -1,0 +1,329 @@
+\section{Reduced Artin--Schreier parameters and a common pole bound}
+
+Let $p$ be prime, put $k=\mathbf F_p$, and write
+$\wp(x)=x^p-x$. In any field containing $k$, this is a
+$k$-linear map: Frobenius is additive in characteristic $p$,
+and $c^p=c$ for $c\in k$. Thus its image is a $k$-subspace
+of the additive group, and the quotient by its image is a
+$k$-vector space.
+
+We give proofs of the reduced representatives in
+\cite{Camina1997}, Lemmas~2--3, and of the finite-kernel
+argument in the proof of her Theorem~4. The latter is expressed
+directly through additive characters instead of cohomology.
+The final parameter choice uses a single bound for all the
+finitely many desired pole inequalities.
+
+For the first three lemmas, let $K=k((T))$ and let $v_T$ be
+its additive order valuation, with $v_T(T)=1$ and
+$v_T(0)=+\infty$.
+
+\begin{lemma}[Positive-order series are Artin--Schreier images]
+\label{lem:artin-schreier-positive-tail}
+\notready
+For every $f\in T k[[T]]$, the series
+\[
+ h=-\sum_{j=0}^{\infty} f^{p^j}
+\]
+converges in $T k[[T]]$ and satisfies $\wp(h)=f$.
+\end{lemma}
+
+\begin{proof}
+If $f=0$, take $h=0$. Otherwise $v_T(f)\ge1$ and
+$v_T(f^{p^j})=p^jv_T(f)$ tends to infinity.
+The partial sums are Cauchy and converge by completeness of
+$k((T))$. Each partial sum has order at least one, as does
+the limit: for any convergent sequence of elements of order
+at least one, a sufficiently small difference between a term
+and its limit gives the same bound on the limit.
+For $h_N=-\sum_{j=0}^{N-1}f^{p^j}$, additivity of Frobenius
+gives the telescoping identity
+\[
+ \wp(h_N)
+   =-\sum_{j=1}^{N}f^{p^j}+\sum_{j=0}^{N-1}f^{p^j}
+   =f-f^{p^N}.
+\]
+The last term tends to $f$. Addition and multiplication are
+continuous for the valuation topology, so $\wp(h_N)$ also
+tends to $\wp(h)$. Uniqueness of the limit gives
+$\wp(h)=f$.
+\end{proof}
+
+\begin{lemma}[Unique reduced representative]
+\label{lem:artin-schreier-reduced-representative}
+\uses{lem:artin-schreier-positive-tail,lem:artin-schreier-no-root-from-pole}
+\source{camina1997:page-0005}
+\notready
+Every class in $K/\wp(K)$ has a unique representative of the
+form
+\[
+ r=c+\sum_{\substack{m>0\\p\nmid m}}a_m T^{-m},
+ \qquad c,a_m\in k,
+\]
+where only finitely many $a_m$ are nonzero.
+In particular every $\gamma\in K$ can be written
+$\gamma=r+\wp(\mu)$ with $\mu\in K$ and $r$ reduced in
+this sense. If $\gamma\notin\wp(K)$, then $r\ne0$,
+$v_T(r)\le0$, and a negative value of $v_T(r)$ is not
+divisible by $p$.
+\end{lemma}
+
+\begin{proof}
+Split a Laurent series into its constant coefficient, its
+finite negative-degree part, and its positive-order part.
+The positive-order part belongs to $\wp(K)$ by the preceding
+lemma. For a negative monomial $aT^{-n}$ with $a\in k$ and
+$n>0$, write $n=p^e m$ with $p\nmid m$. Repeated division
+of $n$ by $p$ produces such $e,m$, since the positive integer
+strictly decreases at each division. We have
+\[
+ \wp\left(\sum_{j=0}^{e-1}aT^{-p^j m}\right)
+   =aT^{-p^e m}-aT^{-m},
+\]
+where the sum is zero if $e=0$.
+Indeed the two sums in its Artin--Schreier image telescope,
+using $a^p=a$. Thus $aT^{-n}$ is congruent modulo
+$\wp(K)$ to $aT^{-m}$. Apply this to each of the finitely
+many negative monomials and collect the coefficients with
+equal $m$. Together with the positive-tail solution, this
+gives the stated expression $\gamma=r+\wp(\mu)$.
+
+For uniqueness, suppose the difference of two reduced
+expressions is $\wp(x)$. Their difference is reduced as
+well. If it has a nonzero negative term, choose its largest
+pole exponent $m$. Its valuation is $-m$, with $p\nmid m$,
+contradicting the pole obstruction lemma.
+The difference is therefore a constant $c\in k$.
+If $v_T(x)<0$, then $p v_T(x)<v_T(x)$, so
+$v_T(x^p-x)=p v_T(x)<0$, which cannot be the valuation of
+the constant $c$. Hence $x\in k[[T]]$.
+Taking constant coefficients in $x^p-x=c$ gives
+$c=x_0^p-x_0=0$, since $x_0\in k$.
+The reduced expressions are equal, and uniqueness of Laurent
+coefficients gives equality of all their displayed
+coefficients. Finally a reduced nonzero expression is either
+a nonzero constant or has lowest exponent $-m$ with
+$m>0$ and $p\nmid m$, proving the additional assertions.
+\end{proof}
+
+\begin{lemma}[Basis of the Artin--Schreier quotient]
+\label{lem:artin-schreier-quotient-basis}
+\uses{lem:artin-schreier-reduced-representative}
+\source{camina1997:page-0005}
+\notready
+The classes of
+\[
+ \{1\}\ \cup\ \{T^{-m}:m>0,\ p\nmid m\}
+\]
+form a $k$-basis of $K/\wp(K)$. In particular this quotient
+has infinite dimension over $k$.
+\end{lemma}
+
+\begin{proof}
+Existence of a reduced representative says exactly that these
+classes span the quotient. A finite linear combination which
+represents zero is a reduced representative of the zero
+class. Uniqueness forces all of its coefficients to be zero,
+so the displayed classes are linearly independent.
+The exponents $1+np$, for $n\ge0$, are distinct positive
+integers not divisible by $p$. They give an infinite subset
+of the basis, proving infinite dimension.
+\end{proof}
+
+For a field inclusion $F\subseteq K$ of characteristic $p$,
+write
+\[
+ \operatorname{res}:F/\wp(F)\longrightarrow K/\wp(K)
+\]
+for the $k$-linear map induced by the inclusion. It is
+well-defined because the inclusion commutes with $\wp$.
+
+\begin{lemma}[The kernel of restriction consists of additive characters]
+\label{lem:artin-schreier-restriction-kernel}
+\uses{lem:galois-trace-one,lem:witt-one-cocycle-solution}
+\source{camina1997:page-0009}
+\notready
+If $K/F$ is finite Galois with $G=\operatorname{Gal}(K/F)$,
+there is a canonical $k$-linear isomorphism
+\[
+ \ker(\operatorname{res})
+   \simeq \operatorname{Hom}(G,(k,+)).
+\]
+It sends the class of $a\in F$ with $a=\wp(\theta)$,
+$\theta\in K$, to the character
+$g\mapsto g(\theta)-\theta$.
+In particular the kernel is finite-dimensional over $k$.
+\end{lemma}
+
+\begin{proof}
+A class $[a]\in F/\wp(F)$ is in the kernel precisely when
+$a=\wp(\theta)$ for some $\theta\in K$.
+For such a root,
+\[
+ \wp(g(\theta)-\theta)=g(a)-a=0.
+\]
+The roots of $X^p-X$ in $K$ are exactly $k$, since its
+$p$ prime-field roots already exhaust its degree. Thus the
+proposed character has values in $k$.
+For $g,h\in G$,
+\[
+ (gh)(\theta)-\theta
+   =g(h(\theta)-\theta)+(g(\theta)-\theta)
+   =(h(\theta)-\theta)+(g(\theta)-\theta),
+\]
+because $G$ fixes $k$. This is the required group homomorphism
+to the additive group of $k$.
+
+Two choices of $\theta$ differ by an element of $k$, so give
+the same character. Replacing $a$ by $a+\wp(b)$ with $b\in F$
+allows replacing $\theta$ by $\theta+b$, which also leaves
+the character unchanged. These facts prove well-definedness
+on the kernel of restriction. Taking sums of roots and their
+$k$-multiples proves $k$-linearity.
+If the resulting character is zero, $\theta$ is fixed by
+all elements of $G$. The fixed field of $\operatorname{Gal}(K/F)$
+is $F$, so $\theta\in F$ and $[a]=0$ in $F/\wp(F)$.
+The map is therefore injective.
+
+Conversely, let $\chi:G\to(k,+)$ be a character.
+Regarded as a $K$-valued function it is a one-cocycle:
+$\chi(gh)=\chi(g)+g(\chi(h))$, because the action on $k$
+is trivial. Choose $\alpha\in K$ with
+$\sum_{t\in G}t(\alpha)=1$. The one-cocycle formula gives
+\[
+ \theta=-\sum_{t\in G}\chi(t)t(\alpha),\qquad
+ g(\theta)-\theta=\chi(g).
+\]
+Put $a=\wp(\theta)$. For every $g$,
+$g(a)-a=\wp(\chi(g))=0$, so again the fixed-field theorem
+gives $a\in F$. Its class lies in the restriction kernel,
+and the construction sends it to $\chi$.
+This proves surjectivity and the stated isomorphism.
+Finally the character space is a $k$-subspace of the function
+space $k^G$. Since $G$ is finite, $k^G$ has a finite basis
+given by its coordinate functions. Hence the kernel is
+finite-dimensional.
+\end{proof}
+
+\begin{lemma}[Restriction from a Laurent field has infinite-dimensional image]
+\label{lem:artin-schreier-restriction-infinite-image}
+\uses{lem:artin-schreier-quotient-basis,lem:artin-schreier-restriction-kernel}
+\source{camina1997:page-0009}
+\notready
+Let $F=k((t))$ and let $K/F$ be any finite Galois extension.
+The image of
+$\operatorname{res}:F/\wp(F)\to K/\wp(K)$ has infinite
+dimension over $k$.
+\end{lemma}
+
+\begin{proof}
+The domain is infinite-dimensional by the Laurent quotient
+basis, and the kernel is finite-dimensional by the preceding
+lemma. If the image had a finite basis, choose preimages of
+its finitely many basis vectors and a finite basis of the
+kernel. These two lists would span the domain: subtract from
+any vector the linear combination of the chosen preimages
+having the same image, and the difference lies in the kernel.
+That would make the domain finite-dimensional, a contradiction.
+\end{proof}
+
+\begin{lemma}[Infinite-dimensional subspaces have unbounded reduced poles]
+\label{lem:artin-schreier-unbounded-reduced-poles}
+\uses{lem:artin-schreier-reduced-representative,lem:artin-schreier-quotient-basis}
+\source{camina1997:page-0009}
+\notready
+Let $K=k((T))$ and let $U$ be an infinite-dimensional
+$k$-subspace of $K/\wp(K)$.
+For every integer $B\ge0$, there is a class in $U$ whose
+reduced representative $r$ satisfies $v_T(r)<-B$.
+\end{lemma}
+
+\begin{proof}
+Reduced representatives of valuation at least $-B$ are exactly
+the reduced expressions involving only $1$ and the monomials
+$T^{-m}$ with $1\le m\le B$ and $p\nmid m$.
+Their classes form the span of this finite list of basis
+vectors. If every element of $U$ had such a representative,
+$U$ would be a subspace of a finite-dimensional space and
+would itself be finite-dimensional. This contradicts the
+hypothesis.
+\end{proof}
+
+\begin{theorem}[One reduced parameter below a prescribed pole bound]
+\label{thm:witt-simultaneous-pole-adjustment}
+\uses{lem:artin-schreier-reduced-representative,lem:artin-schreier-restriction-infinite-image,lem:artin-schreier-unbounded-reduced-poles}
+\source{camina1997:page-0005,camina1997:page-0009,witt1936:page-0004}
+\notready
+Suppose $F=k((t))\subseteq K=k((T))$ is finite Galois,
+with group $G$. Let $c:G\times G\to k$ and let
+$\delta_s,\gamma\in K$ satisfy
+\[
+ \delta_1=0,\qquad
+ \delta_s+s(\delta_t)-\delta_{st}=c(s,t),\qquad
+ s(\gamma)-\gamma=\wp(\delta_s).
+\]
+For every integer $B\ge0$, there exist $b\in F$ and
+$\mu\in K$ such that
+\[
+ \widehat\gamma=\gamma+b-\wp(\mu),\qquad
+ \widehat\delta_s=\delta_s-(s(\mu)-\mu)
+\]
+satisfy the same three equations with $\gamma,\delta$
+replaced by $\widehat\gamma,\widehat\delta$ and with the
+same $c$. Moreover $\widehat\gamma$ is reduced and
+\[
+ v_T(\widehat\gamma)=-m<-B
+ \quad\text{for some }m>0\text{ with }p\nmid m.
+\]
+\end{theorem}
+
+\begin{proof}
+Write $\gamma=r_0+\wp(\mu_0)$ with $r_0$ reduced.
+Choose an integer $M\ge B$ at least as large as every pole
+exponent occurring in $r_0$, taking zero when none occurs.
+Then $v_T(r_0)\ge-M$, including the case $r_0=0$.
+The restriction image is infinite-dimensional, so it contains
+a class whose reduced representative $r_b$ has
+$v_T(r_b)<-M$. Choose $b\in F$ representing a preimage of
+that class. Reduction in $K$ gives
+$b=r_b+\wp(\mu_b)$ for some $\mu_b\in K$.
+Set $\mu=\mu_0+\mu_b$. Then
+\[
+ \gamma+b-\wp(\mu)=r_0+r_b.
+\]
+This is still a reduced expression. Its lowest-degree term
+comes from $r_b$, since $v_T(r_b)<-M\le v_T(r_0)$, so it
+cannot cancel. Consequently
+$v_T(\widehat\gamma)=v_T(r_b)<-M\le-B$.
+The reduced representative lemma makes this valuation $-m$
+with $m>0$ and $p\nmid m$.
+
+Since $b\in F$, every $s\in G$ fixes $b$.
+Additivity of $\wp$ and its commutation with automorphisms give
+\[
+\begin{aligned}
+ s(\widehat\gamma)-\widehat\gamma
+ &=s(\gamma)-\gamma-\wp(s(\mu)-\mu)\\
+ &=\wp(\delta_s-(s(\mu)-\mu))
+  =\wp(\widehat\delta_s).
+\end{aligned}
+\]
+Also $\widehat\delta_1=\delta_1=0$.
+For the other equation, the correction terms cancel because
+\[
+ (s(\mu)-\mu)+s(t(\mu)-\mu)-(st(\mu)-\mu)=0.
+\]
+Thus
+$\widehat\delta_s+s(\widehat\delta_t)-\widehat\delta_{st}
+ =\delta_s+s(\delta_t)-\delta_{st}=c(s,t)$,
+as required.
+\end{proof}
+
+In particular, for finitely many nonidentity quotient
+automorphisms with depths $d_1,\ldots,d_r$, choose
+$B=\max\{0,d_1,\ldots,d_r\}$.
+The same parameter then satisfies
+$v_T(\widehat\gamma)<-d_i$ for every $i$.
+This establishes the simultaneous pole condition used in
+Camina's Theorem~4; the comparison of the depths upstairs and
+downstairs requires the subsequent ramification arguments.
