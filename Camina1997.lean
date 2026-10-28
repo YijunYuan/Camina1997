@@ -1,5 +1,6 @@
 module
 
+public import Camina1997.Main
 public import Camina1997.ArtinSchreier.IntegerTopology
 public import Camina1997.ArtinSchreier.ValueGroup
 public import Camina1997.ArtinSchreier.Cyclic
