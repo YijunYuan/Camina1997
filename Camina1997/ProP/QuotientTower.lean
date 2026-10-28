@@ -131,3 +131,48 @@ theorem quotientTransition_self (N : OpenNormalSubgroup G) :
   | h x => rfl
 
 end OpenNormalSubgroup
+
+namespace Camina1997.IsProPGroup
+
+variable {p : ℕ} [Fact p.Prime] {G : Type*} [Group G] [TopologicalSpace G]
+  [IsProPGroup p G]
+
+/-- The continuous diagonal map to a sequence of finite open-normal quotients. -/
+def quotientDiagonal (N : ℕ → OpenNormalSubgroup G) :
+    ContinuousMonoidHom G (∀ n, G ⧸ (N n).toSubgroup) where
+  toFun x _ := QuotientGroup.mk x
+  map_one' := rfl
+  map_mul' _ _ := rfl
+  continuous_toFun := continuous_pi fun _ => QuotientGroup.continuous_mk
+
+include p in
+/-- A neighborhood basis makes the diagonal quotient map a closed embedding. -/
+theorem isClosedEmbedding_quotientDiagonal (N : ℕ → OpenNormalSubgroup G)
+    (hN : (𝓝 (1 : G)).HasBasis (fun _ : ℕ => True) (fun n => (N n : Set G))) :
+    Topology.IsClosedEmbedding (quotientDiagonal N) := by
+  let (n : ℕ) : DiscreteTopology (G ⧸ (N n).toSubgroup) :=
+    inferInstanceAs (DiscreteTopology (G ⧸ (N n).toOpenSubgroup.toSubgroup))
+  apply (quotientDiagonal N).continuous.isClosedEmbedding
+  apply (MonoidHom.ker_eq_bot_iff (quotientDiagonal N).toMonoidHom).mp
+  rw [Subgroup.eq_bot_iff_forall]
+  intro x hx
+  have hxN : x ∈ (⨅ n, (N n).toSubgroup) := by
+    apply Subgroup.mem_iInf.mpr
+    intro n
+    exact (QuotientGroup.eq_one_iff x).mp (congrFun hx n)
+  simpa only [iInf_eq_bot_of_openNormalBasis hN, Subgroup.mem_bot] using hxN
+
+/-- Countably based pro-p groups embed as closed subgroups of countable products
+of finite p-groups. -/
+theorem exists_closedEmbedding_quotient_product
+    [Filter.IsCountablyGenerated (𝓝 (1 : G))] :
+    ∃ N : ℕ → OpenNormalSubgroup G,
+      (∀ n, Finite (G ⧸ (N n).toSubgroup)) ∧
+      (∀ n, IsPGroup p (G ⧸ (N n).toSubgroup)) ∧
+      Topology.IsClosedEmbedding (quotientDiagonal N) := by
+  obtain ⟨N, _, hN⟩ := exists_antitone_openNormalBasis (p := p) (G := G)
+  exact ⟨N, fun n => finite_quotient (p := p) (N n),
+    fun n => isPGroup_quotient (p := p) (N n),
+    isClosedEmbedding_quotientDiagonal (p := p) N hN.toHasBasis⟩
+
+end Camina1997.IsProPGroup
