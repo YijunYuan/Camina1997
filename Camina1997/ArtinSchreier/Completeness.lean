@@ -121,4 +121,83 @@ theorem weightedOrder_hasBasis_uniformity :
     intro q hq
     exact hq
 
+/-- Every coordinate of the quotient basis is uniformly continuous. -/
+theorem uniformContinuous_rootBasis_coord (i : Fin p) :
+    letI := weightedValued γ m hm hpm hγ
+    UniformContinuous (fun x : L => (rootBasis γ).repr x i) := by
+  let := weightedValued γ m hm hpm hγ
+  change Tendsto (fun q : L × L =>
+    ((rootBasis γ).repr q.1 i, (rootBasis γ).repr q.2 i)) (𝓤 L) (𝓤 K)
+  rw [(weightedOrder_hasBasis_uniformity γ m hm hpm hγ).tendsto_iff
+    LaurentSeries.orderTop_hasBasis_uniformity]
+  intro n _
+  refine ⟨(p : ℤ) * n - (m : ℤ) * i, trivial, ?_⟩
+  intro q hq
+  have ht := hq.trans_le (weightedOrder_le_term γ m (q.2 - q.1) i)
+  simp only [map_sub, Finsupp.sub_apply] at ht
+  by_cases hz : (rootBasis γ).repr q.2 i - (rootBasis γ).repr q.1 i = 0
+  · simp only [Set.mem_ofPred_eq, hz, HahnSeries.orderTop_zero, le_top]
+  · rw [termWeight_of_ne_zero m i hz, WithTop.coe_lt_coe] at ht
+    change (n : WithTop ℤ) ≤
+      ((rootBasis γ).repr q.2 i - (rootBasis γ).repr q.1 i).orderTop
+    rw [← HahnSeries.order_eq_orderTop_of_ne_zero hz, WithTop.coe_le_coe]
+    have hp : (0 : ℤ) < p := by exact_mod_cast (Fact.out : p.Prime).pos
+    nlinarith
+
+/-- Each fixed basis term is uniformly continuous in its Laurent-series coefficient. -/
+theorem uniformContinuous_smul_root_pow (i : Fin p) :
+    letI := weightedValued γ m hm hpm hγ
+    UniformContinuous (fun a : K =>
+      a • AdjoinRoot.root ((X : K[X]) ^ p - X - C γ) ^ (i : ℕ)) := by
+  let := weightedValued γ m hm hpm hγ
+  change Tendsto (fun q : K × K =>
+    (q.1 • AdjoinRoot.root ((X : K[X]) ^ p - X - C γ) ^ (i : ℕ),
+      q.2 • AdjoinRoot.root ((X : K[X]) ^ p - X - C γ) ^ (i : ℕ))) (𝓤 K) (𝓤 L)
+  rw [LaurentSeries.orderTop_hasBasis_uniformity.tendsto_iff
+    (weightedOrder_hasBasis_uniformity γ m hm hpm hγ)]
+  intro n _
+  refine ⟨max n 0 + (m : ℤ) * i + 1, trivial, ?_⟩
+  intro q hq
+  change (n : WithTop ℤ) < weightedOrder γ m _
+  rw [← sub_smul, weightedOrder_smul_root_pow]
+  by_cases hz : q.2 - q.1 = 0
+  · simp [hz]
+  · rw [termWeight_of_ne_zero m i hz, WithTop.coe_lt_coe]
+    change ((max n 0 + (m : ℤ) * i + 1 : ℤ) : WithTop ℤ) ≤
+      (q.2 - q.1).orderTop at hq
+    rw [← HahnSeries.order_eq_orderTop_of_ne_zero hz, WithTop.coe_le_coe] at hq
+    have hp : (1 : ℤ) ≤ p := by exact_mod_cast (Fact.out : p.Prime).pos
+    have hmi : (0 : ℤ) ≤ (m : ℤ) * i := by positivity
+    have hmax := le_max_left n 0
+    have hmax0 := le_max_right n 0
+    nlinarith
+
+/-- Coordinates give a uniform equivalence with a finite product of complete Laurent fields. -/
+noncomputable def rootBasisUniformEquiv :
+    letI := weightedValued γ m hm hpm hγ
+    L ≃ᵤ (Fin p → K) := by
+  let := weightedValued γ m hm hpm hγ
+  refine
+    { (rootBasis γ).equivFun.toEquiv with
+      uniformContinuous_toFun := ?_
+      uniformContinuous_invFun := ?_ }
+  · exact uniformContinuous_pi.mpr (fun i => uniformContinuous_rootBasis_coord γ m hm hpm hγ i)
+  · have hsum : UniformContinuous (fun f : Fin p → K =>
+        ∑ i : Fin p, f i • AdjoinRoot.root ((X : K[X]) ^ p - X - C γ) ^ (i : ℕ)) :=
+      Finset.uniformContinuous_sum _ (fun i _ =>
+        (uniformContinuous_smul_root_pow γ m hm hpm hγ i).comp
+          (Pi.uniformContinuous_proj (fun _ : Fin p => K) i))
+    convert hsum using 1
+    funext f
+    have h := (rootBasis γ).sum_equivFun ((rootBasis γ).equivFun.symm f)
+    change (rootBasis γ).equivFun.symm f = _
+    simpa only [LinearEquiv.apply_symm_apply, rootBasis_apply] using h.symm
+
+/-- The actual reduced-pole quotient is complete for its weighted valuation. -/
+theorem weightedValued_completeSpace :
+    letI := weightedValued γ m hm hpm hγ
+    CompleteSpace L := by
+  let := weightedValued γ m hm hpm hγ
+  exact (rootBasisUniformEquiv γ m hm hpm hγ).completeSpace_iff.mpr inferInstance
+
 end Camina1997.ArtinSchreier
