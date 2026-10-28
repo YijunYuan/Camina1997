@@ -1,6 +1,13 @@
-import Mathlib.RingTheory.PowerSeries.Inverse
-import Mathlib.Topology.Algebra.Nonarchimedean.AdicTopology
-import Mathlib.Algebra.Algebra.Equiv
+/-
+Copyright (c) 2026 Archon Horizon contributors. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Archon Horizon contributors
+-/
+module
+
+public import Mathlib.RingTheory.PowerSeries.Inverse
+public import Mathlib.Topology.Algebra.Nonarchimedean.AdicTopology
+public import Mathlib.Algebra.Algebra.Equiv
 
 /-!
 # Algebra automorphisms of formal power series
@@ -12,6 +19,8 @@ of its value on a series is the product of the two linear coefficients.
 These facts justify the ring-automorphism model of the Nottingham group in
 Camina, *Subgroups of the Nottingham Group* (1997), pp. 101–102.
 -/
+
+@[expose] public section
 
 namespace PowerSeries
 

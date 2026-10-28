@@ -137,7 +137,8 @@ Substitution in the product formula proves the assertion.
 \begin{definition}[Normalization]
 \label{def:normalized-aut}
 \source{camina1997:page-0001,camina1997:page-0002}
-\notready
+\lean{PowerSeries.IsNormalized}
+\leanok
 A $k$-algebra automorphism $\sigma$ of $R$ is normalized if
 $[t]\sigma(t)=1$.
 \end{definition}
@@ -146,7 +147,8 @@ $[t]\sigma(t)=1$.
 \label{lem:normalization-iff}
 \uses{def:normalized-aut,lem:power-series-aut-linear-coeff}
 \source{camina1997:page-0001,camina1997:page-0002}
-\notready
+\lean{PowerSeries.isNormalized_iff_X_sq_dvd, PowerSeries.isNormalized_iff_forall_X_sq_dvd, PowerSeries.isNormalized_iff_forall_X_dvd}
+\leanok
 For a $k$-algebra automorphism $\sigma$ of $R$, the following conditions
 are equivalent:
 \begin{enumerate}
@@ -178,7 +180,8 @@ this action is the identity.
 \label{lem:normalized-aut-closure}
 \uses{def:normalized-aut,lem:power-series-aut-linear-coeff}
 \source{camina1997:page-0002}
-\notready
+\lean{PowerSeries.isNormalized_one, PowerSeries.IsNormalized.mul, PowerSeries.IsNormalized.inv}
+\leanok
 The identity is normalized. The composite of two normalized
 $k$-algebra automorphisms is normalized, and the inverse of a normalized
 $k$-algebra automorphism is normalized.
@@ -199,7 +202,8 @@ $1=[t]\sigma^{-1}(t)$, proving closure under inverse.
 \label{def:nottingham-group}
 \uses{lem:normalized-aut-closure,lem:normalization-iff,lem:power-series-aut-continuity}
 \source{camina1997:page-0001,camina1997:page-0002}
-\notready
+\lean{PowerSeries.normalizedAutSubgroup, Camina1997.Nottingham}
+\leanok
 For a prime $p$, the Nottingham group $J_p$ is the subgroup of
 $\operatorname{Aut}_{\mathbf F_p\text{-alg}}(\mathbf F_p[[t]])$
 consisting of normalized automorphisms, with multiplication given by

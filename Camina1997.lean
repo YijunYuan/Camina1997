@@ -1,1 +1,3 @@
-import Camina1997.Basic
+module
+
+public import Camina1997.Nottingham.Basic
