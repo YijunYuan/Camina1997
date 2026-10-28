@@ -6,13 +6,17 @@ Authors: Archon Horizon contributors
 module
 
 public import Camina1997.Nottingham.Laurent
+public import Camina1997.Nottingham.Parameters
 
 /-!
-# Valuation continuity of extended Nottingham automorphisms
+# The Laurent-series description of the Nottingham group
 
 The extension of a Nottingham automorphism to Laurent series preserves the
 canonical `X`-adic valuation. It and its inverse are uniformly continuous for
-the corresponding valuation topology.
+the corresponding valuation topology. Rational-function density proves that a
+continuous Laurent automorphism is determined by its parameter. Parameter
+realization then identifies the continuous normalized Laurent automorphisms
+with the Nottingham group, with restriction as the inverse of extension.
 
 Reference: Camina (1997), pp. 101–102.
 -/
@@ -55,6 +59,41 @@ theorem valuation_coe_algEquiv (e : k⟦X⟧ ≃ₐ[k] k⟦X⟧) (f : k⟦X⟧) 
     exact (hbound m).mp hm.le
 
 end PowerSeries
+
+namespace LaurentSeries
+
+open scoped RatFunc
+
+variable {k : Type*} [Field k]
+
+/-- Continuous Laurent-series automorphisms agreeing on the parameter are equal. -/
+theorem algEquiv_ext_of_continuous
+    {e f : LaurentSeries k ≃ₐ[k] LaurentSeries k}
+    (he : Continuous e) (hf : Continuous f)
+    (hX : e (HahnSeries.single 1 1) = f (HahnSeries.single 1 1)) : e = f := by
+  let ι : Polynomial k →ₐ[k] LaurentSeries k :=
+    { toRingHom := algebraMap (Polynomial k) (LaurentSeries k)
+      commutes' := fun a ↦ by
+        change algebraMap (Polynomial k) (LaurentSeries k) (Polynomial.C a) =
+          algebraMap k (LaurentSeries k) a
+        simp only [Polynomial.algebraMap_hahnSeries_apply, Polynomial.coe_C]
+        rw [HahnSeries.algebraMap_apply']
+        rfl }
+  have hpoly :
+      e.toAlgHom.comp ι = f.toAlgHom.comp ι := by
+    apply Polynomial.algHom_ext
+    simpa [ι] using hX
+  apply DFunLike.ext'
+  apply coe_range_dense.equalizer he hf
+  funext q
+  change e (algebraMap (RatFunc k) (LaurentSeries k) q) =
+    f (algebraMap (RatFunc k) (LaurentSeries k) q)
+  obtain ⟨a, b, _, rfl⟩ := IsFractionRing.div_surjective (Polynomial k) q
+  simp only [map_div₀,
+    ← IsScalarTower.algebraMap_apply (Polynomial k) (RatFunc k) (LaurentSeries k)]
+  exact congrArg₂ (· / ·) (DFunLike.congr_fun hpoly a) (DFunLike.congr_fun hpoly b)
+
+end LaurentSeries
 
 namespace Camina1997.Nottingham
 
@@ -103,5 +142,84 @@ noncomputable def toLaurentHomeomorph (g : Nottingham p) :
   toEquiv := (toLaurent g).toEquiv
   continuous_toFun := continuous_toLaurent g
   continuous_invFun := continuous_toLaurent_symm g
+
+/-- A continuous normalized Laurent automorphism is the extension of a unique
+Nottingham automorphism. Normalization uses a power-series witness. -/
+theorem existsUnique_toLaurent
+    (e : LaurentSeries (ZMod p) ≃ₐ[ZMod p] LaurentSeries (ZMod p))
+    (he : Continuous e)
+    (hn : ∃ a : PowerSeries (ZMod p),
+      e (algebraMap (PowerSeries (ZMod p)) (LaurentSeries (ZMod p)) X) -
+        algebraMap (PowerSeries (ZMod p)) (LaurentSeries (ZMod p)) X =
+          algebraMap (PowerSeries (ZMod p)) (LaurentSeries (ZMod p)) (X ^ 2 * a)) :
+    ∃! g : Nottingham p, toLaurent g = e := by
+  obtain ⟨a, ha⟩ := hn
+  let g := ofSeries (X + X ^ 2 * a) (by simp) (by simp [coeff_X_pow_mul'])
+  have hg : toLaurent g = e := by
+    apply LaurentSeries.algEquiv_ext_of_continuous (continuous_toLaurent g) he
+    rw [← PowerSeries.coe_X, ← LaurentSeries.coe_algebraMap, toLaurent_algebraMap]
+    change algebraMap (PowerSeries (ZMod p)) (LaurentSeries (ZMod p))
+        (ofSeries (X + X ^ 2 * a) _ _ X) = _
+    rw [ofSeries_X, map_add]
+    exact (add_comm _ _).trans (eq_add_of_sub_eq ha).symm
+  refine ⟨g, hg, ?_⟩
+  intro h hh
+  exact toLaurent_injective (hh.trans hg.symm)
+
+/-- The image of extension is exactly the continuous normalized Laurent automorphisms. -/
+theorem mem_range_toLaurent_iff
+    (e : LaurentSeries (ZMod p) ≃ₐ[ZMod p] LaurentSeries (ZMod p)) :
+    e ∈ toLaurent.range ↔ Continuous e ∧ ∃ a : PowerSeries (ZMod p),
+      e (algebraMap (PowerSeries (ZMod p)) (LaurentSeries (ZMod p)) X) -
+        algebraMap (PowerSeries (ZMod p)) (LaurentSeries (ZMod p)) X =
+          algebraMap (PowerSeries (ZMod p)) (LaurentSeries (ZMod p)) (X ^ 2 * a) := by
+  constructor
+  · rintro ⟨g, rfl⟩
+    refine ⟨continuous_toLaurent g, ?_⟩
+    exact (toLaurent_congruence_iff g 1).mp (by
+      rw [mem_congruenceSubgroup_iff]
+      exact X_sq_dvd_sub g X)
+  · rintro ⟨he, hn⟩
+    exact (existsUnique_toLaurent e he hn).exists
+
+/-- The intrinsic image criterion can equivalently be expressed by the first two
+coefficients of a power-series parameter. -/
+theorem mem_range_toLaurent_iff_parameter
+    (e : LaurentSeries (ZMod p) ≃ₐ[ZMod p] LaurentSeries (ZMod p)) :
+    e ∈ toLaurent.range ↔ Continuous e ∧ ∃ f : PowerSeries (ZMod p),
+      constantCoeff f = 0 ∧ coeff 1 f = 1 ∧
+        e (algebraMap (PowerSeries (ZMod p)) (LaurentSeries (ZMod p)) X) =
+          algebraMap (PowerSeries (ZMod p)) (LaurentSeries (ZMod p)) f := by
+  constructor
+  · rintro ⟨g, rfl⟩
+    exact ⟨continuous_toLaurent g, g X, by simp, by simp, toLaurent_algebraMap g X⟩
+  · rintro ⟨he, f, h0, h1, hf⟩
+    refine ⟨ofSeries f h0 h1, ?_⟩
+    apply LaurentSeries.algEquiv_ext_of_continuous
+      (continuous_toLaurent (ofSeries f h0 h1)) he
+    rw [← PowerSeries.coe_X, ← LaurentSeries.coe_algebraMap, toLaurent_algebraMap,
+      ofSeries_X]
+    exact hf.symm
+
+/-- Extension is a group isomorphism onto the continuous normalized Laurent automorphisms,
+characterized intrinsically by `mem_range_toLaurent_iff`. -/
+noncomputable def laurentEquiv : Nottingham p ≃* (toLaurent (p := p)).range :=
+  MulEquiv.ofBijective toLaurent.rangeRestrict
+    ⟨fun _ _ h ↦ toLaurent_injective (congrArg Subtype.val h),
+      toLaurent.rangeRestrict_surjective⟩
+
+@[simp]
+theorem coe_laurentEquiv (g : Nottingham p) :
+    (laurentEquiv g : LaurentSeries (ZMod p) ≃ₐ[ZMod p] LaurentSeries (ZMod p)) =
+      toLaurent g := rfl
+
+/-- The inverse of extension is restriction to the power-series ring. -/
+theorem laurentEquiv_symm_algebraMap (e : (toLaurent (p := p)).range)
+    (f : PowerSeries (ZMod p)) :
+    algebraMap (PowerSeries (ZMod p)) (LaurentSeries (ZMod p)) (laurentEquiv.symm e f) =
+      e.val (algebraMap (PowerSeries (ZMod p)) (LaurentSeries (ZMod p)) f) := by
+  have he : toLaurent (laurentEquiv.symm e) = e.val :=
+    congrArg Subtype.val (laurentEquiv.apply_symm_apply e)
+  rw [← toLaurent_algebraMap, he]
 
 end Camina1997.Nottingham

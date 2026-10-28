@@ -289,7 +289,8 @@ Camina's observation that an automorphism is determined by its action on $t$.
 \begin{lemma}[Continuous Laurent automorphisms are determined by the parameter]
 \label{lem:laurent-aut-ext}
 \source{camina1997:page-0001,camina1997:page-0002}
-\notready
+\lean{LaurentSeries.algEquiv_ext_of_continuous}
+\leanok
 Two continuous $\mathbf F_p$-algebra automorphisms of
 $K=\mathbf F_p((t))$ that agree on $t$ are equal.
 \end{lemma}
@@ -313,7 +314,8 @@ on every Laurent series.
 \label{lem:nottingham-laurent-equivalence}
 \uses{lem:nottingham-laurent-isometry,lem:laurent-aut-ext,lem:nottingham-parameters}
 \source{camina1997:page-0001,camina1997:page-0002}
-\notready
+\lean{Camina1997.Nottingham.existsUnique_toLaurent, Camina1997.Nottingham.mem_range_toLaurent_iff, Camina1997.Nottingham.mem_range_toLaurent_iff_parameter, Camina1997.Nottingham.laurentEquiv, Camina1997.Nottingham.laurentEquiv_symm_algebraMap, Camina1997.Nottingham.toLaurent_congruence_iff}
+\leanok
 Put $K=\mathbf F_p((t))$, with its valuation topology, and identify
 $R=\mathbf F_p[[t]]$ with its valuation ring. Extension to fractions
 is a group isomorphism from $J_p$ to the group of continuous
@@ -656,6 +658,8 @@ $\mathcal U_p(J_p)$, for each prime $p$.
 This definition specifies the full countably based assertion. It does
 not assert that the property holds, and topological finite generation
 is not part of its hypothesis on $P$.
+
+\input{artin-schreier}
 
 \section{The unconditional universality target}
 
