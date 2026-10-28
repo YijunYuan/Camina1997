@@ -6,6 +6,7 @@ Authors: Archon Horizon contributors
 module
 
 public import Mathlib.GroupTheory.Sylow
+public import Mathlib.GroupTheory.Nilpotent
 
 /-!
 # Central prime-order quotients of finite p-groups
@@ -53,6 +54,37 @@ theorem exists_central_prime_step [Nontrivial G] (hG : IsPGroup p G) :
   obtain ⟨N, hc, hcard⟩ := hG.exists_central_subgroup_card_prime
   let : N.Normal := Subgroup.normal_of_le_center hc
   exact ⟨N, inferInstance, hc, hcard, hG.to_quotient N,
+    N.card_quotient_lt_of_card_eq_prime hcard⟩
+
+/-- Every nontrivial normal subgroup of a finite p-group contains a central subgroup of order p. -/
+theorem exists_central_subgroup_card_prime_le_normal (hG : IsPGroup p G)
+    (K : Subgroup G) [K.Normal] (hK : K ≠ ⊥) :
+    ∃ N : Subgroup G, N ≤ K ∧ N ≤ Subgroup.center G ∧ Nat.card N = p := by
+  let : Group.IsNilpotent G := hG.isNilpotent
+  have hI : K ⊓ Subgroup.center G ≠ ⊥ :=
+    Group.IsNilpotent.inf_center_ne_bot_of_normal hK
+  let : Nontrivial ↥(K ⊓ Subgroup.center G) :=
+    (Subgroup.nontrivial_iff_ne_bot _).mpr hI
+  obtain ⟨n, hn, hcard⟩ :=
+    (hG.to_subgroup (K ⊓ Subgroup.center G)).nontrivial_iff_card.mp inferInstance
+  have hdiv : p ∣ Nat.card ↥(K ⊓ Subgroup.center G) :=
+    hcard.symm ▸ dvd_pow_self p hn.ne'
+  have hle : p ^ 1 ≤ Nat.card ↥(K ⊓ Subgroup.center G) := by
+    simpa only [pow_one] using Nat.le_of_dvd Nat.card_pos hdiv
+  obtain ⟨N, hNI, hNcard⟩ :=
+    Sylow.exists_subgroup_le_card_pow_prime_of_le_card (Fact.out : p.Prime) hG hle
+  exact ⟨N, hNI.trans inf_le_left, hNI.trans inf_le_right, by simpa using hNcard⟩
+
+/-- A central prime-order quotient can be taken inside any nontrivial normal kernel. -/
+theorem exists_central_prime_step_le_normal (hG : IsPGroup p G)
+    (K : Subgroup G) [K.Normal] (hK : K ≠ ⊥) :
+    ∃ (N : Subgroup G) (hN : N.Normal),
+      N ≤ K ∧ N ≤ Subgroup.center G ∧ Nat.card N = p ∧
+      letI := hN
+      IsPGroup p (G ⧸ N) ∧ Nat.card (G ⧸ N) < Nat.card G := by
+  obtain ⟨N, hNK, hc, hcard⟩ := hG.exists_central_subgroup_card_prime_le_normal K hK
+  let : N.Normal := Subgroup.normal_of_le_center hc
+  exact ⟨N, inferInstance, hNK, hc, hcard, hG.to_quotient N,
     N.card_quotient_lt_of_card_eq_prime hcard⟩
 
 end IsPGroup
